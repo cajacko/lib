@@ -1,9 +1,9 @@
 {
-  "env": {
-    "compiler": "none",
-    "tester": "none"
-  },
-  "dependencies": {},
-  "componentsDefaultDirectory": "components/{namespace}/{name}",
-  "packageManager": "yarn"
+    "env": {
+        "compiler": "none",
+        "tester": "bit.envs/testers/jest@0.0.32"
+    },
+    "dependencies": {},
+    "componentsDefaultDirectory": "components/{namespace}/{name}",
+    "packageManager": "yarn"
 }
