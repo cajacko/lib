@@ -13,7 +13,8 @@
     "status": "bit status",
     "tag": "bit tag --all",
     "tag:all": "bit tag --scope",
-    "export": "bit export cajacko.lib"
+    "export": "bit export cajacko.lib",
+    "add": "bit add src/**/* -t '{PARENT}/{FILE_NAME}.spec.js'"
   },
   "dependencies": {
     "react": "^16.3.2"
