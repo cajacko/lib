@@ -1,0 +1,9 @@
+{
+  "name": "lib",
+  "version": "0.1.0",
+  "description": "Code library for Charlie Jackson",
+  "main": "index.js",
+  "author": "Charlie Jackson <contact@charliejackson.com>",
+  "license": "MIT",
+  "private": false
+}
