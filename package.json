@@ -6,6 +6,11 @@
   "author": "Charlie Jackson <contact@charliejackson.com>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "status": "bit status",
+    "tag": "bit tag --all",
+    "tag:all": "bit tag --scope"
+  },
   "dependencies": {
     "react": "^16.3.2"
   }
