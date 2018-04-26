@@ -1,0 +1,8 @@
+deploy:
+  provider: npm
+  email: contact@charliejackson.com
+  api_key:
+    secure: AAQFCW7fScGKDWX7C3d/hBe3VKXSnVRU0vkZJVyB7+yIh7GJchIYqCxCgLNl6pKZRSVz46sASmDCSZWq5mplyD3ms6H9oTJ9Oyuq1SnLq8pOP0TAioTJT/bCvMsZbWCYr3VEM6RIAFcYvdqRCLe09mYxt7tKtrtr6U4u3V5q/l146zIPRfsmMgzBEoSJnrajIdiaMnhQNhbfPFkFyghAXJ0Yo/BgKvlPHVm0sncLTYAo+iVzugfbV+kyMf+As/vSD7dZ0+zuFay39zd6cFQ2QT798rR83mEkMYhINviqmp64ng2PSuqso9ur+D+2ZE6PkAwUcc3NO61bluB66cKyDUfUC4WLM2e5jNSi5C7pNYvZx3X0YK6Jo53A/9bstPFi0aOj1YHq0fW1cZUuQ4Wab+qvyWX87NBu6ozUAVRAfpNfO/QOdPof3MWVV5Cy42+4z6fv7EzqG3mse1bdeBtmRYfkPK9RFFLZQYR3WbgDds6g7DQWaZTRb0aGtvqDOKnpZyrUoOrOeaAak2OaKUPGYMrlEMm27iCqQY6tTgy/tg3S+RHZhdptVQ3hCC2sk/WvstpIuEpTFZLUlNsM+regRnob37KxGcknb/9+8+ZEO2OLFmQbLo2kAV6oc3ZNpCEDFGOgsPXrKaXtfL06mMfto+htvGPRvpg392TWSHGBQQs=
+  on:
+    tags: true
+    repo: cajacko/lib
