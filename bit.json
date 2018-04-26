@@ -1,9 +1,0 @@
-{
-    "env": {
-        "compiler": "bit.envs/bundlers/webpack@0.0.10",
-        "tester": "bit.envs/testers/jest@0.0.32"
-    },
-    "dependencies": {},
-    "componentsDefaultDirectory": "components/{namespace}/{name}",
-    "packageManager": "yarn"
-}
