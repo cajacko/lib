@@ -1,5 +1,8 @@
 import React from "react";
+import ButtonsButton from "../Button";
 
-const ButtonsText = ({ text }) => <button>{text}</button>;
+const ButtonsText = ({ text, action }) => (
+  <ButtonsButton action={action}>{text}</ButtonsButton>
+);
 
 export default ButtonsText;
