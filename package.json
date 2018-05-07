@@ -1,8 +1,7 @@
 {
   "name": "@cajacko/lib",
   "version": "1.0.1",
-  "description":
-    "Shared components, utils and project code for projects by Charlie Jackson",
+  "description": "Shared components, utils and project code for projects by Charlie Jackson",
   "main": "index.js",
   "repository": "git@github.com:cajacko/lib.git",
   "author": "Charlie Jackson <contact@charliejackson.com>",
@@ -10,5 +9,8 @@
   "private": false,
   "scripts": {
     "build": "node index.js"
+  },
+  "dependencies": {
+    "styled-components": "^3.2.6"
   }
 }

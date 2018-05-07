@@ -1,7 +1,8 @@
 import React from "react";
+import { Button } from "./Button.style";
 
 const ButtonsButton = ({ children, action }) => (
-  <button onClick={action}>{children}</button>
+  <Button onClick={action}>{children}</Button>
 );
 
 export default ButtonsButton;
