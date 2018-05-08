@@ -1,6 +1,6 @@
 {
-  "name": "@cajacko/lib",
-  "version": "1.0.1",
+  "name": "@cajacko/cj-lib",
+  "version": "1.0.3",
   "description": "Shared components, utils and project code for projects by Charlie Jackson",
   "main": "index.js",
   "repository": "git@github.com:cajacko/lib.git",
