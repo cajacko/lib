@@ -10,7 +10,7 @@
   "private": false,
   "scripts": {
     "build": "node index.js",
-    "publish": "yarn publish --access=public"
+    "deploy": "yarn publish --access=public"
   },
   "dependencies": {
     "styled-components": "^3.2.6"
