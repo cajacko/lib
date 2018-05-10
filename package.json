@@ -9,8 +9,9 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "node index.js",
-    "deploy": "yarn publish --access=public"
+    "build": "echo \"build\"",
+    "test": "echo \"test\"",
+    "prepareDeploy": "babel-node scripts/prepareDeploy.js"
   },
   "dependencies": {
     "styled-components": "^3.2.6"

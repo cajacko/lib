@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+- stable
+cache:
+  directories:
+  - node_modules
+script:
+- yarn install
+- yarn test
+- yarn prepareDeploy
+- git add -A && git commit -m "Updated version"
+deploy:
+  provider: npm
+  email: contact@charliejackson.com
+  api_key:
+    secure: W5XK9iQmqeGrp0UcXW7d2TKree5ukxqHHDvO/lqbOTokG/XbyokPfNz7eOECwI/qHe3R0hFMb/uuHUDWMTSVBeavHF3Vlc3JQJjLFXv8YH5P80K3iS0Jco67bwfZKtOSu1DEcVhJMgPNbbcz5dyGLTDG1sdgAAD+S3I1XQnsxb0Tvtd32oytwZ0Bq3VYlZI07oXrIFTyXLhyyRBPI3otQcxtLq2v7ljniu2EM7yPsfFlwkNLEIb2Vv1co654gPxBdiMaJMcxqTXeGtLMNxcDhYl0O8IlR02In/RNZIn/VGAJvQrL2CI4Krwit9XOs8Bc5i5ZFKsvoZn8GT9xC/D9WVGycW2ZJsiwcCUItJCDDyubzPYPMKVtQUz6fk0RrxwA16jJqEjZPgp6qCafp5mWFr4NRMul2j6f6AKPv7NcuS4mnu8YwYNI72uzsf0pcjxdfroo+z1BbXNg0tX8u40bNCEprJfidywGNi43qBdra3dmygrks/TPWGjISCn+eHnDKnXrfhvYYhn5RX8ycHzbX0BnmYIifT+t5bxKdLWN8uXOAuvGYQaq6ZbX7qEVc0MZoCxoVArMUpQl0wzoaw02QCyY0E08M4DeJApaLpjJ4TDMc61ENsHwBEvENr/TSfwqE2lWslGQxKeBrGmOtFXdmx8M51hv0n0Vmajs54iGOEc=
+  on:
+    all_branches: true
