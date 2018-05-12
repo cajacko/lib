@@ -9,7 +9,7 @@ class ButtonsButtonComponent extends Component {
   }
 
   action(event) {
-    event.preventDefault();
+    if (event.preventDefault) event.preventDefault();
 
     this.props.action(event);
   }
