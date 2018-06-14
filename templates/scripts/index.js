@@ -1,3 +1,10 @@
 #! /usr/bin/env node
 
-console.log("index");
+const program = require('commander');
+const config = require('../../package.json');
+
+program.version(config.version);
+
+require('./init');
+
+program.parse(process.argv);
