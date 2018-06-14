@@ -25,7 +25,9 @@
     ]
   },
   "dependencies": {
-    "commander": "^2.15.1"
+    "commander": "^2.15.1",
+    "inquirer": "^6.0.0",
+    "is-git-repository": "^1.1.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",

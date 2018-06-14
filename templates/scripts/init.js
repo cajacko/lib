@@ -1,4 +1,5 @@
 const program = require('commander');
+const inquirer = require('inquirer');
 const { getIsGitRepo, setupNewRepo } = require('../utils/git');
 const {
   getProjectConfig,
@@ -9,7 +10,16 @@ const {
 const deleteExistingFiles = require('../utils/deleteAllFiles');
 const setProjectFiles = require('../utils/setProjectFiles');
 
-const getShouldDeleteExistingFiles = () => {};
+const getShouldDeleteExistingFiles = () =>
+  inquirer
+    .prompt([
+      {
+        type: 'confirm',
+        name: 'shouldDelete',
+        message: 'Do you want to delete all current files in this repo?',
+      },
+    ])
+    .then(({ shouldDelete }) => shouldDelete);
 
 const init = () => {
   getIsGitRepo()
