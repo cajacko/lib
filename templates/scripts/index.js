@@ -14,6 +14,12 @@ program
 
 require('./init');
 
+program.command('*', { noHelp: true }).action(() => {
+  console.error('\nUnknown given! See the help below');
+  program.outputHelp();
+  process.exit(1);
+});
+
 program.parse(process.argv);
 
 if (!cmdValue) {
