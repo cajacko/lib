@@ -5,5 +5,8 @@
   "main": "index.js",
   "repository": "git@github.com:cajacko/lib.git",
   "author": "Charlie Jackson <contact@charliejackson.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "bin": {
+    "lib": "templates/scripts/index.js"
+  }
 }
