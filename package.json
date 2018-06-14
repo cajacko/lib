@@ -26,8 +26,10 @@
   },
   "dependencies": {
     "commander": "^2.15.1",
+    "globby": "^8.0.1",
     "inquirer": "^6.0.0",
-    "is-git-repository": "^1.1.1"
+    "is-git-repository": "^1.1.1",
+    "rimraf": "^2.6.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
