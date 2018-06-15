@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 const { pathExists, ensureDir } = require('fs-extra');
 const { join } = require('path');
 const simpleGit = require('simple-git');
-const getProjectDir = require('./getProjectDir');
+const projectDir = require('./projectDir');
 const {
   getDoesRepoExist,
   createRepoAndClone,
@@ -12,8 +12,10 @@ const {
 } = require('./github');
 
 const createLocalRepo = (name, parentDir) => {
-  const projectDir = join(parentDir, name);
-  return ensureDir(projectDir).then(() => simpleGit(projectDir).init());
+  const dir = join(parentDir, name);
+  return ensureDir(dir)
+    .then(() => simpleGit(dir).init())
+    .then(() => projectDir.set(dir));
 };
 
 const askToResortToLocal = (name, parentDir, message) =>
@@ -45,8 +47,9 @@ const createAndCloneRepoOrResortToLocal = (name, parentDir) =>
 exports.getIsGitRepo = () => Promise.resolve(isGit());
 
 exports.setupNewRepo = () =>
-  getProjectDir()
-    .then(projectDir =>
+  projectDir
+    .get()
+    .then(dir =>
       inquirer.prompt([
         {
           type: 'input',
@@ -65,7 +68,7 @@ exports.setupNewRepo = () =>
           name: 'parentDir',
           message:
             "Where do you want to create this project (don't include the project name)",
-          default: projectDir,
+          default: dir,
           validate: parentDir => pathExists(parentDir),
         },
         {

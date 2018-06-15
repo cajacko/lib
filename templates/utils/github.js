@@ -4,6 +4,7 @@ const simpleGit = require('simple-git');
 const { ensureDir } = require('fs-extra');
 const { join } = require('path');
 const settings = require('./settings');
+const projectDir = require('./projectDir');
 
 const getCanConnectToGithub = (username, token) => {
   const gitHubToken = token || settings.get('gitHubToken');
@@ -61,13 +62,17 @@ exports.getDoesRepoExist = (name) => {
 const createRepo = name =>
   octokit.repos.create({ name }).then(repo => repo.data.ssh_url);
 
+const cloneRepo = (url, dir) =>
+  ensureDir(dir)
+    .then(() => simpleGit().clone(url, dir))
+    .then(() => {
+      projectDir.set(dir);
+      console.log(`Cloned repo to: ${dir}`);
+    });
+
 exports.createRepoAndClone = (name, parentDir) =>
   createRepo(name).then((url) => {
-    const projectDir = join(parentDir, name);
+    const dir = join(parentDir, name);
 
-    return ensureDir(projectDir)
-      .then(() => simpleGit().clone(url, projectDir))
-      .then(() => {
-        console.log(`Cloned repo to: ${projectDir}`);
-      });
+    return cloneRepo(url, dir);
   });
