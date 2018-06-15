@@ -1,6 +1,12 @@
-// TODO:
+const projectConfigFile = require('./projectConfigFile');
+const packageJSON = require('./config/packageJSON');
+
 module.exports = (config) => {
-  console.log('config');
-  console.log(config || 'No config defined');
-  return Promise.resolve();
+  const promises = [];
+
+  promises.push(projectConfigFile.set(config));
+
+  promises.push(packageJSON.set(config));
+
+  return Promise.all(promises);
 };
