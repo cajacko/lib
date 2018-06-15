@@ -5,6 +5,7 @@ const { ensureDir } = require('fs-extra');
 const { join } = require('path');
 const settings = require('./settings');
 const projectDir = require('./projectDir');
+const projectName = require('./projectName');
 
 const getCanConnectToGithub = (username, token) => {
   const gitHubToken = token || settings.get('gitHubToken');
@@ -67,6 +68,7 @@ const cloneRepo = (url, dir) =>
     .then(() => simpleGit().clone(url, dir))
     .then(() => {
       projectDir.set(dir);
+      projectName.setProjectNameFromProjectDir();
       console.log(`Cloned repo to: ${dir}`);
     });
 

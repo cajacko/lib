@@ -1,11 +1,12 @@
+const general = require('./config/general');
+
 // TODO:
 exports.getProjectConfig = () => Promise.resolve(null);
 
 // TODO:
-exports.isProjectConfigUpToDate = () => Promise.resolve(true);
+exports.isProjectConfigUpToDate = () => Promise.resolve(false);
 
-// TODO:
-exports.askAndSetProjectConfig = () => Promise.resolve(true);
+exports.askAndSetProjectConfig = () => general();
 
 // TODO:
 exports.askForOutstandingProjectConfigAndSet = () => Promise.resolve(true);

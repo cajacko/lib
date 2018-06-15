@@ -4,6 +4,7 @@ const { pathExists, ensureDir } = require('fs-extra');
 const { join } = require('path');
 const simpleGit = require('simple-git');
 const projectDir = require('./projectDir');
+const projectName = require('./projectName');
 const {
   getDoesRepoExist,
   createRepoAndClone,
@@ -17,6 +18,7 @@ const createLocalRepo = (name, parentDir) => {
     .then(() => simpleGit(dir).init())
     .then(() => {
       projectDir.set(dir);
+      projectName.set(name);
       console.log(`Created a new repo at ${dir}`);
     });
 };
