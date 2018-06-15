@@ -13,8 +13,8 @@ const getPackageJSONFromConfig = (config) => {
     version: config.version,
     name: config.projectName,
     description: config.description,
-    license: config.license,
-    private: config.private,
+    license: config.noLicense ? 'NO_LICENSE' : 'MIT',
+    private: !config.publicOnNPM,
     author: {
       name: config.authorName,
       email: config.authorEmail,

@@ -1,12 +1,29 @@
-const general = require('./config/general');
+const { run, configKeys } = require('./config/general');
+const projectConfigFile = require('./projectConfigFile');
 
-// TODO:
-exports.getProjectConfig = () => Promise.resolve(null);
+const getAllProjectConfigKeys = () => configKeys;
 
-// TODO:
-exports.isProjectConfigUpToDate = () => Promise.resolve(false);
+exports.getProjectConfig = projectConfigFile.get;
 
-exports.askAndSetProjectConfig = () => general();
+exports.getMissingConfigKeys = (config) => {
+  const allConfigKeys = getAllProjectConfigKeys();
+  const suppliedConfigKeys = Object.keys(config);
 
-// TODO:
-exports.askForOutstandingProjectConfigAndSet = () => Promise.resolve(true);
+  const missingKeys = [];
+
+  allConfigKeys.forEach((key) => {
+    if (suppliedConfigKeys.includes(key)) return;
+
+    missingKeys.push(key);
+  });
+
+  return Promise.resolve(missingKeys.length ? missingKeys : null);
+};
+
+const askAndSetProjectConfig = (config, missingKeys) =>
+  run(config, missingKeys);
+
+exports.askAndSetProjectConfig = askAndSetProjectConfig;
+
+exports.askForOutstandingProjectConfigAndSet = (config, missingKeys) =>
+  askAndSetProjectConfig(config, missingKeys);

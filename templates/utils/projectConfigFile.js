@@ -9,4 +9,7 @@ exports.set = contents =>
   getProjectConfigFilePath().then(path =>
     writeJSON(path, contents, { spaces: 2 }));
 
-exports.get = () => getProjectConfigFilePath().then(path => readJSON(path));
+exports.get = () =>
+  getProjectConfigFilePath()
+    .then(path => readJSON(path))
+    .catch(() => null);

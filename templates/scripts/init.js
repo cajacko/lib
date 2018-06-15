@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 const { getIsGitRepo, setupNewRepo } = require('../utils/git');
 const {
   getProjectConfig,
-  isProjectConfigUpToDate,
+  getMissingConfigKeys,
   askAndSetProjectConfig,
   askForOutstandingProjectConfigAndSet,
 } = require('../utils/projectConfig');
@@ -31,10 +31,14 @@ const init = () => {
 
       return getProjectConfig().then((projectConfig) => {
         if (projectConfig) {
-          return isProjectConfigUpToDate().then((projectConfigIsUpToDate) => {
-            if (projectConfigIsUpToDate) return projectConfig;
+          return getMissingConfigKeys(projectConfig).then((missingKeys) => {
+            if (!missingKeys || !missingKeys.length) return projectConfig;
 
-            return askForOutstandingProjectConfigAndSet(projectConfig);
+            console.log('Project config is not up to date, asking you for missing info');
+            return askForOutstandingProjectConfigAndSet(
+              projectConfig,
+              missingKeys,
+            );
           });
         }
 
