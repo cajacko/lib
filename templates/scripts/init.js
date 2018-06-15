@@ -24,7 +24,10 @@ const getShouldDeleteExistingFiles = () =>
 const init = () => {
   getIsGitRepo()
     .then((isGitRepo) => {
-      if (!isGitRepo) return setupNewRepo().then(askAndSetProjectConfig);
+      if (!isGitRepo) {
+        console.log("Looks like you are not in a git repo, let's set one up. \nIf you want to run this for an existing project, cd into the project then run this command");
+        return setupNewRepo().then(askAndSetProjectConfig);
+      }
 
       return getProjectConfig().then((projectConfig) => {
         if (projectConfig) {

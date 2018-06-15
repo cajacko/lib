@@ -15,7 +15,10 @@ const createLocalRepo = (name, parentDir) => {
   const dir = join(parentDir, name);
   return ensureDir(dir)
     .then(() => simpleGit(dir).init())
-    .then(() => projectDir.set(dir));
+    .then(() => {
+      projectDir.set(dir);
+      console.log(`Created a new repo at ${dir}`);
+    });
 };
 
 const askToResortToLocal = (name, parentDir, message) =>
@@ -54,7 +57,7 @@ exports.setupNewRepo = () =>
         {
           type: 'input',
           name: 'name',
-          message: 'Repo name',
+          message: 'Name for the new repo',
           validate: (name) => {
             if (!name.match(/^[a-z][a-z\-]*[a-z]$/)) {
               return 'The repo name must be in a url slug like format e.g. repo-name';
