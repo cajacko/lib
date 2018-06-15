@@ -1,5 +1,6 @@
 const program = require('commander');
 const inquirer = require('inquirer');
+const merge = require('lodash/merge');
 const { getIsGitRepo, setupNewRepo } = require('../utils/git/git');
 const {
   getProjectConfig,
@@ -9,6 +10,7 @@ const {
 } = require('../utils/project/projectConfig');
 const deleteExistingFiles = require('../utils/deleteAllFiles');
 const setProjectFiles = require('../utils/project/setProjectFiles');
+const add = require('../utils/add');
 
 const getShouldDeleteExistingFiles = () =>
   inquirer
@@ -50,6 +52,31 @@ const init = () => {
           })
           .then(askAndSetProjectConfig);
       });
+    })
+    .then((config) => {
+      const addWithSideEffect = () =>
+        add((updatedConfig) => {
+          merge(config, updatedConfig);
+        }).then(() => config);
+
+      if (!config.templates) {
+        return addWithSideEffect();
+      }
+
+      return inquirer
+        .prompt([
+          {
+            type: 'confirm',
+            name: 'addTemplate',
+            message: 'Do you want to add another template to this project?',
+            default: false,
+          },
+        ])
+        .then(({ addTemplate }) => {
+          if (addTemplate) return addWithSideEffect();
+
+          return Promise.resolve(config);
+        });
     })
     .then(setProjectFiles);
 };

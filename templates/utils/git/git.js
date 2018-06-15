@@ -11,6 +11,7 @@ const {
   getCanConnectToGithub,
   setupGitHubConnection,
 } = require('./github');
+const isSlug = require('../conditionals/isSlug');
 
 const createLocalRepo = (name, parentDir) => {
   const dir = join(parentDir, name);
@@ -61,7 +62,7 @@ exports.setupNewRepo = () =>
           name: 'name',
           message: 'Name for the new repo',
           validate: (name) => {
-            if (!name.match(/^[a-z][a-z\-]*[a-z]$/)) {
+            if (!isSlug(name)) {
               return 'The repo name must be in a url slug like format e.g. repo-name';
             }
 

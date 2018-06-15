@@ -23,6 +23,18 @@ const getPackageJSONFromConfig = (config) => {
     bugs: {
       email: config.bugEmail || config.authorEmail,
     },
+    scripts: {
+      start: 'lib start',
+      run: 'lib run',
+      test: 'lib test',
+      link: 'lib link',
+      unlink: 'lib unlink',
+      build: 'lib build',
+      deploy: 'lib deploy',
+      'pre-commit': 'lib precommit',
+      'pre-push': 'lib prepush',
+      'commit-msg': 'lib commitmsg',
+    },
   };
 
   if (keywords && keywords.length) {
