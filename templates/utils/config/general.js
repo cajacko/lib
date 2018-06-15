@@ -1,8 +1,8 @@
 const inquirer = require('inquirer');
 const merge = require('lodash/merge');
 const questions = require('./questions/general');
-const projectName = require('../projectName');
-const { getOrigin } = require('../git');
+const projectName = require('../project/projectName');
+const { getOrigin } = require('../git/git');
 
 const setProjectName = (cb, missingKeys) => {
   if (missingKeys && !missingKeys.includes('projectName')) {

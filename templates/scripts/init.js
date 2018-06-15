@@ -1,14 +1,14 @@
 const program = require('commander');
 const inquirer = require('inquirer');
-const { getIsGitRepo, setupNewRepo } = require('../utils/git');
+const { getIsGitRepo, setupNewRepo } = require('../utils/git/git');
 const {
   getProjectConfig,
   getMissingConfigKeys,
   askAndSetProjectConfig,
   askForOutstandingProjectConfigAndSet,
-} = require('../utils/projectConfig');
+} = require('../utils/project/projectConfig');
 const deleteExistingFiles = require('../utils/deleteAllFiles');
-const setProjectFiles = require('../utils/setProjectFiles');
+const setProjectFiles = require('../utils/project/setProjectFiles');
 
 const getShouldDeleteExistingFiles = () =>
   inquirer
@@ -45,6 +45,8 @@ const init = () => {
         return getShouldDeleteExistingFiles()
           .then((shouldDeleteExistingFiles) => {
             if (shouldDeleteExistingFiles) return deleteExistingFiles();
+
+            return Promise.resolve();
           })
           .then(askAndSetProjectConfig);
       });

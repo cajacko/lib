@@ -1,4 +1,4 @@
-const { run, configKeys } = require('./config/general');
+const { run, configKeys } = require('../config/general');
 const projectConfigFile = require('./projectConfigFile');
 
 const getAllProjectConfigKeys = () => configKeys;

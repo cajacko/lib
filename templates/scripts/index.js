@@ -6,9 +6,10 @@ const config = require('../../package.json');
 program.version(config.version).arguments('<cmd> [options]');
 
 require('./init');
+require('./add');
 
-program.command('*', { noHelp: true }).action((cmd) => {
-  console.error('\nUnknown given! See the help below');
+program.command('*', { noHelp: true }).action(() => {
+  console.error('\nUnknown command given! See the help below');
   program.outputHelp();
   process.exit(1);
 });

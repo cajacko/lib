@@ -1,7 +1,7 @@
 const rimraf = require('rimraf');
 const globby = require('globby');
 
-const projectDir = require('./projectDir');
+const projectDir = require('./project/projectDir');
 
 module.exports = (dir) => {
   const deleteDir = dirToDelete =>

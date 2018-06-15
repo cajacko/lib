@@ -3,9 +3,9 @@ const inquirer = require('inquirer');
 const simpleGit = require('simple-git');
 const { ensureDir } = require('fs-extra');
 const { join } = require('path');
-const settings = require('./settings');
-const projectDir = require('./projectDir');
-const projectName = require('./projectName');
+const settings = require('../settings');
+const projectDir = require('../project/projectDir');
+const projectName = require('../project/projectName');
 
 const getCanConnectToGithub = (username, token) => {
   const gitHubToken = token || settings.get('gitHubToken');

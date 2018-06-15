@@ -3,8 +3,8 @@ const inquirer = require('inquirer');
 const { pathExists, ensureDir } = require('fs-extra');
 const { join } = require('path');
 const simpleGit = require('simple-git');
-const projectDir = require('./projectDir');
-const projectName = require('./projectName');
+const projectDir = require('../project/projectDir');
+const projectName = require('../project/projectName');
 const {
   getDoesRepoExist,
   createRepoAndClone,

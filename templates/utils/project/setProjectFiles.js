@@ -1,5 +1,5 @@
 const projectConfigFile = require('./projectConfigFile');
-const packageJSON = require('./config/packageJSON');
+const packageJSON = require('../config/packageJSON');
 
 module.exports = (config) => {
   const promises = [];

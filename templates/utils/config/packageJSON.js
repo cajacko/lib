@@ -1,7 +1,7 @@
 const { writeJSON } = require('fs-extra');
 const { join } = require('path');
 const merge = require('lodash/merge');
-const projectDir = require('../projectDir');
+const projectDir = require('../project/projectDir');
 
 const getPackageJSONPath = () =>
   projectDir.get().then(dir => join(dir, 'package.json'));
