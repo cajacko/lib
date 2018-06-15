@@ -103,3 +103,16 @@ exports.setupNewRepo = () =>
         });
       });
     });
+
+exports.getOrigin = () =>
+  projectDir.get().then(dir =>
+    new Promise((resolve) => {
+      simpleGit(dir).raw(
+        ['config', '--get', 'remote.origin.url'],
+        (err, result) => {
+          if (err) resolve(null);
+
+          resolve(result);
+        },
+      );
+    }));
