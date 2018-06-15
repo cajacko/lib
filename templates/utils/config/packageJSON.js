@@ -7,7 +7,7 @@ const getPackageJSONPath = () =>
   projectDir.get().then(dir => join(dir, 'package.json'));
 
 const getPackageJSONFromConfig = (config) => {
-  const { githubRepo } = config;
+  const { githubRepo, keywords } = config;
 
   const packageJSON = {
     version: config.version,
@@ -20,7 +20,14 @@ const getPackageJSONFromConfig = (config) => {
       email: config.authorEmail,
       url: config.authorUrl,
     },
+    bugs: {
+      email: config.bugEmail || config.authorEmail,
+    },
   };
+
+  if (keywords && keywords.length) {
+    packageJSON.keywords = keywords;
+  }
 
   if (githubRepo) {
     merge(packageJSON, {
