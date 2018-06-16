@@ -1,7 +1,23 @@
 const semver = require('semver');
 const validator = require('validator');
+const projectName = require('../../project/projectName');
 
 module.exports = [
+  {
+    type: 'input',
+    name: 'title',
+    message: 'Project title. Will be used for things like the Readme title',
+    default: () =>
+      projectName
+        .get()
+        .then(name =>
+          name
+            .replace('-', ' ')
+            .replace(
+              /\w\S*/g,
+              txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(),
+            )),
+  },
   {
     type: 'input',
     name: 'version',
