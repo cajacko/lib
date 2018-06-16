@@ -3,6 +3,40 @@ const { join } = require('path');
 const merge = require('lodash/merge');
 const projectDir = require('../project/projectDir');
 
+const order = (packageJSON) => {
+  const unorderedObj = Object.assign({}, packageJSON);
+  const orderedKeys = [
+    'name',
+    'version',
+    'description',
+    'homepage',
+    'scripts',
+    'repository',
+    'bugs',
+    'author',
+    'license',
+    'private',
+    'keywords',
+    'peerDependencies',
+    'optionalDependencies',
+    'dependencies',
+    'devDependencies',
+  ];
+
+  const orderedObj = {};
+
+  orderedKeys.forEach((key) => {
+    if (unorderedObj[key]) {
+      orderedObj[key] = unorderedObj[key];
+      delete unorderedObj[key];
+    }
+  });
+
+  merge(orderedObj, unorderedObj);
+
+  return orderedObj;
+};
+
 const getPackageJSONPath = () =>
   projectDir.get().then(dir => join(dir, 'package.json'));
 
@@ -27,10 +61,10 @@ const getPackageJSONFromConfig = (config) => {
       start: 'lib start',
       run: 'lib run',
       test: 'lib test',
-      link: 'lib link',
-      unlink: 'lib unlink',
       build: 'lib build',
       deploy: 'lib deploy',
+      link: 'lib link',
+      unlink: 'lib unlink',
       'pre-commit': 'lib precommit',
       'pre-push': 'lib prepush',
       'commit-msg': 'lib commitmsg',
@@ -54,7 +88,7 @@ const getPackageJSONFromConfig = (config) => {
     });
   }
 
-  return packageJSON;
+  return order(packageJSON);
 };
 
 exports.set = (config) => {
