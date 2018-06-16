@@ -25,6 +25,12 @@ class TemplateBase {
     });
   }
 
+  forEachTemplate(callback) {
+    Object.keys(this.config.templates).forEach((key) => {
+      callback(this.config.templates[key]);
+    });
+  }
+
   tmplPath(path) {
     return join(__dirname, 'files', path);
   }
