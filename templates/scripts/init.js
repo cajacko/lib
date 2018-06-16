@@ -11,6 +11,11 @@ const {
 const deleteExistingFiles = require('../utils/deleteAllFiles');
 const setProjectFiles = require('../utils/project/setProjectFiles');
 const add = require('../utils/add');
+const setTemplateFiles = require('../utils/setTemplateFiles');
+
+// TODO:
+// editorconfig
+// gitattributes
 
 const getShouldDeleteExistingFiles = () =>
   inquirer
@@ -78,7 +83,8 @@ const init = () => {
           return Promise.resolve(config);
         });
     })
-    .then(setProjectFiles);
+    .then(config =>
+      setProjectFiles(config).then(() => setTemplateFiles(config)));
 };
 
 program.command('init').action(init);
