@@ -1,4 +1,4 @@
-const { copy, ensureFile } = require('fs-extra');
+const { copy, ensureFile, pathExists } = require('fs-extra');
 const { join } = require('path');
 const projectDir = require('../utils/project/projectDir');
 
@@ -33,19 +33,40 @@ class TemplateBase {
     const promises = [];
 
     Object.keys(this.copyFiles).forEach((key) => {
-      const { src, dest } = this.copyFiles[key];
+      let promise;
+      const { src, dest, onlyIfDoesNotExist } = this.copyFiles[key];
 
-      promises.push(ensureFile(dest).then(() => copy(src, dest)));
+      const copyFile = () =>
+        ensureFile(dest).then(() => {
+          copy(src, dest);
+        });
+
+      if (onlyIfDoesNotExist) {
+        promise = pathExists(dest).then((exists) => {
+          if (exists) return Promise.resolve();
+
+          return copyFile();
+        });
+      } else {
+        promise = copyFile();
+      }
+
+      promises.push(promise);
     });
 
     return Promise.all(promises);
   }
 
-  copy(src, dest, key) {
+  copy(src, dest, key, additionalProps) {
     this.copyFiles[key || 'main'] = {
       src,
       dest: join(this.projectDir, dest),
+      ...additionalProps,
     };
+  }
+
+  copyIfDoesNotExist(src, dest, key) {
+    return this.copy(src, dest, key, { onlyIfDoesNotExist: true });
   }
 }
 

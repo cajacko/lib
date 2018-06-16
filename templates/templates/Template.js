@@ -12,6 +12,7 @@ const Travis = require('./Travis');
 const Privacy = require('./Privacy');
 const EditorConfig = require('./EditorConfig');
 const GitAttributes = require('./GitAttributes');
+const Changelog = require('./Changelog');
 
 class Template {
   constructor(config) {
@@ -31,6 +32,7 @@ class Template {
     this.privacy = new Privacy(config);
     this.editorConfig = new EditorConfig(config);
     this.gitAttributes = new GitAttributes(config);
+    this.changelog = new Changelog(config);
 
     this.writeAllFiles = this.writeAllFiles.bind(this);
   }
@@ -50,7 +52,8 @@ class Template {
       .then(this.travis.defineFromConfig)
       .then(this.privacy.defineFromConfig)
       .then(this.editorConfig.defineFromConfig)
-      .then(this.gitAttributes.defineFromConfig);
+      .then(this.gitAttributes.defineFromConfig)
+      .then(this.changelog.defineFromConfig);
   }
 
   writeAllFiles() {
@@ -69,6 +72,7 @@ class Template {
       this.privacy.write(),
       this.editorConfig.write(),
       this.gitAttributes.write(),
+      this.changelog.write(),
     ]);
   }
 
