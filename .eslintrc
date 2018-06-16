@@ -18,7 +18,8 @@
         "ignoreRegExpLiterals": true,
         "ignoreTemplateLiterals": true
       }
-    ]
+    ],
+    "class-methods-use-this": ["off"]
   },
   "parser": "babel-eslint"
 }
