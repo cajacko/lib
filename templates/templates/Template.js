@@ -68,7 +68,7 @@ class Template {
       this.travis.write(),
       this.privacy.write(),
       this.editorConfig.write(),
-      this.privacy.write(),
+      this.gitAttributes.write(),
     ]);
   }
 

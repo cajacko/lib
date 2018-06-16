@@ -2,7 +2,7 @@ const TemplateBase = require('./TemplateBase');
 
 class EditorConfig extends TemplateBase {
   define() {
-    this.copy(this.tmplPath('.editorconfig'), '.editorconfig');
+    return this.copy(this.tmplPath('.editorconfig'), '.editorconfig');
   }
 }
 
