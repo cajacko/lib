@@ -10,6 +10,8 @@ const VSCode = require('./VSCode');
 const EntryFiles = require('./EntryFiles');
 const Travis = require('./Travis');
 const Privacy = require('./Privacy');
+const EditorConfig = require('./EditorConfig');
+const GitAttributes = require('./GitAttributes');
 
 class Template {
   constructor(config) {
@@ -27,6 +29,8 @@ class Template {
     this.entryFiles = new EntryFiles(config);
     this.travis = new Travis(config);
     this.privacy = new Privacy(config);
+    this.editorConfig = new EditorConfig(config);
+    this.gitAttributes = new GitAttributes(config);
 
     this.writeAllFiles = this.writeAllFiles.bind(this);
   }
@@ -44,7 +48,9 @@ class Template {
       .then(this.vscode.defineFromConfig)
       .then(this.entryFiles.defineFromConfig)
       .then(this.travis.defineFromConfig)
-      .then(this.privacy.defineFromConfig);
+      .then(this.privacy.defineFromConfig)
+      .then(this.editorConfig.defineFromConfig)
+      .then(this.gitAttributes.defineFromConfig);
   }
 
   writeAllFiles() {
@@ -60,6 +66,8 @@ class Template {
       this.vscode.write(),
       this.entryFiles.write(),
       this.travis.write(),
+      this.privacy.write(),
+      this.editorConfig.write(),
       this.privacy.write(),
     ]);
   }

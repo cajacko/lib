@@ -13,10 +13,6 @@ const setProjectFiles = require('../utils/project/setProjectFiles');
 const add = require('../utils/add');
 const setTemplateFiles = require('../utils/setTemplateFiles');
 
-// TODO:
-// editorconfig
-// gitattributes
-
 const getShouldDeleteExistingFiles = () =>
   inquirer
     .prompt([
