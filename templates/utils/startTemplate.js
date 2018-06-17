@@ -19,7 +19,7 @@ const setEntryFile = (entryFile, templateDir) => {
 
   const relativeEntryPath = entryFile.replace('src/', '');
 
-  const contents = `// @flow\n\nexport { default } from './projectFiles/${relativeEntryPath}';`;
+  const contents = `// @flow\n\nexport { default } from './projectFiles/${relativeEntryPath}';\n`;
 
   return ensureFile(templateEntryFilePath).then(() =>
     writeFile(templateEntryFilePath, contents));
