@@ -3,3 +3,4 @@ node_modules
 .DS_Store
 /templates/runTemplates/**/config.js
 /templates/runTemplates/**/projectFiles
+/dist

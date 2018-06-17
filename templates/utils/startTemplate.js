@@ -36,7 +36,12 @@ module.exports = (key, { entryFile, template }) => {
   return runCommand('yarn', templateDir)
     .then(projectDir.get)
     .then(dir =>
-      syncDirs(join(dir, 'src'), join(templateDir, 'src/projectFiles')))
-    .then(() => setEntryFile(entryFile, templateDir))
+      Promise.all([
+        syncDirs(join(dir, 'src'), join(templateDir, 'src/projectFiles')).then(() => setEntryFile(entryFile, templateDir)),
+        syncDirs(
+          join(__dirname, '../../dist'),
+          join(templateDir, 'node_modules/@cajacko/lib/dist'),
+        ),
+      ]))
     .then(() => runCommand('yarn start', templateDir));
 };
