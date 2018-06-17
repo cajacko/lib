@@ -1,4 +1,4 @@
-const TemplateBase = require('./TemplateBase');
+const TemplateBase = require('../TemplateBase');
 
 class JSDocs extends TemplateBase {
   define() {

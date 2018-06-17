@@ -1,4 +1,4 @@
-const TemplateBase = require('./TemplateBase');
+const TemplateBase = require('../TemplateBase');
 const { MAX_LINE_LENGTH } = require('../config/constants');
 
 class VSCode extends TemplateBase {

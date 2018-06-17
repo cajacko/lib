@@ -1,4 +1,4 @@
-const TemplateBase = require('./TemplateBase');
+const TemplateBase = require('../TemplateBase');
 
 class Readme extends TemplateBase {
   define() {
