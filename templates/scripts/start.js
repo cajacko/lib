@@ -19,13 +19,17 @@ program.command('start [package]').action(temlplateArg =>
     if (!templateKeys.length) return noTemplates();
 
     if (temlplateArg) {
-      if (templates[temlplateArg]) return startTemplate(temlplateArg);
+      if (templates[temlplateArg]) {
+        return startTemplate(temlplateArg, templates[temlplateArg]);
+      }
 
-      console.log(`The template ${temlplateArg} does not exist in your project.json, let\'s add it!`);
+      console.log(`The template ${temlplateArg} does not exist in your project.json, let's add it!`);
       return add();
     }
 
-    if (templateKeys.length === 1) return startTemplate(templateKeys[0]);
+    if (templateKeys.length === 1) {
+      return startTemplate(templateKeys[0], templates[templateKeys[0]]);
+    }
 
     return inquirer
       .prompt([
@@ -36,5 +40,5 @@ program.command('start [package]').action(temlplateArg =>
           choices: templateKeys,
         },
       ])
-      .then(({ template }) => startTemplate(template));
+      .then(({ template }) => startTemplate(template, templates[template]));
   }));
