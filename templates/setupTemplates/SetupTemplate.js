@@ -1,6 +1,6 @@
 const Queue = require('promise-queue');
 const merge = require('lodash/merge');
-const runCommand = require('./utils/runCommand');
+const runCommand = require('../utils/runCommand');
 const Eslint = require('./templates/Eslint');
 const Flow = require('./templates/Flow');
 const Jest = require('./templates/Jest');

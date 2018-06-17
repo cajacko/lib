@@ -1,4 +1,4 @@
-const TemplateBase = require('../TemplateBase');
+const TemplateBase = require('../SetupTemplateBase');
 
 class Prettier extends TemplateBase {}
 

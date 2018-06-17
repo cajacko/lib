@@ -1,5 +1,5 @@
 const { ensureFile } = require('fs-extra');
-const TemplateBase = require('../TemplateBase');
+const TemplateBase = require('../SetupTemplateBase');
 
 class EntryFiles extends TemplateBase {
   define() {

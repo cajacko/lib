@@ -1,5 +1,5 @@
-const TemplateBase = require('../TemplateBase');
-const { MAX_LINE_LENGTH } = require('../config/constants');
+const TemplateBase = require('../SetupTemplateBase');
+const { MAX_LINE_LENGTH } = require('../../config/constants');
 
 const eslintConfig = {
   extends: ['airbnb'],
