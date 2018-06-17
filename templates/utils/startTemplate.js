@@ -15,11 +15,16 @@ const getTemplateDir = (template) => {
 };
 
 const setEntryFile = (entryFile, templateDir) => {
-  const templateEntryFilePath = join(templateDir, 'src/entry.js');
+  const templateEntryFilePath = join(templateDir, 'src/config.js');
 
-  const relativeEntryPath = entryFile.replace('src/', '');
+  const relativeEntryPath = entryFile.replace('src/', '').replace('.js', '');
 
-  const contents = `// @flow\n\nexport { default } from './projectFiles/${relativeEntryPath}';\n`;
+  const contents = `// @flow
+
+import * as config from './projectFiles/${relativeEntryPath}';
+
+export default config;
+export * from './projectFiles/${relativeEntryPath}';\n`;
 
   return ensureFile(templateEntryFilePath).then(() =>
     writeFile(templateEntryFilePath, contents));
