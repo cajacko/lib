@@ -2,7 +2,7 @@ const { join } = require('path');
 const { ensureFile, writeFile } = require('fs-extra');
 const runCommand = require('./runCommand');
 const projectDir = require('./project/projectDir');
-const syncDirs = require('./syncDirs');
+const syncDirs = require('./fs/syncDirs');
 
 const getTemplateDir = (template) => {
   switch (template) {
@@ -19,7 +19,7 @@ const setEntryFile = (entryFile, templateDir) => {
 
   const relativeEntryPath = entryFile.replace('src/', '');
 
-  const contents = `export { default } from './projectFiles/${relativeEntryPath}'`;
+  const contents = `// @flow\n\nexport { default } from './projectFiles/${relativeEntryPath}';`;
 
   return ensureFile(templateEntryFilePath).then(() =>
     writeFile(templateEntryFilePath, contents));

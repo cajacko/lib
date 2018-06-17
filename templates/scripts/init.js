@@ -8,7 +8,7 @@ const {
   askAndSetProjectConfig,
   askForOutstandingProjectConfigAndSet,
 } = require('../utils/project/projectConfig');
-const deleteExistingFiles = require('../utils/deleteAllFiles');
+const deleteExistingFiles = require('../utils/fs/deleteAllFiles');
 const setProjectFiles = require('../utils/project/setProjectFiles');
 const add = require('../utils/add');
 const setTemplateFiles = require('../utils/setTemplateFiles');

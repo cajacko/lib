@@ -1,7 +1,7 @@
 const { join } = require('path');
 const { ensureFile, writeFile } = require('fs-extra');
 const projectDir = require('../utils/project/projectDir');
-const copyFile = require('../utils/copyFile');
+const copyFile = require('../utils/fs/copyFile');
 
 class TemplateBase {
   constructor(config, template) {
