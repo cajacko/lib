@@ -1,3 +1,5 @@
 node_modules
 *.log
 .DS_Store
+/templates/runTemplates/**/entry.js
+/templates/runTemplates/**/projectFiles
