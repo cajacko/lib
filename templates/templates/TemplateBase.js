@@ -4,8 +4,9 @@ const projectDir = require('../utils/project/projectDir');
 const copyFile = require('../utils/copyFile');
 
 class TemplateBase {
-  constructor(config) {
+  constructor(config, template) {
     this.config = config;
+    this.template = template;
 
     this.copyFiles = {};
     this.writeFiles = {};
@@ -79,6 +80,10 @@ class TemplateBase {
       dest: join(this.projectDir, dest),
       content,
     };
+  }
+
+  addNodeModules(...args) {
+    return this.template.addNodeModules(...args);
   }
 }
 

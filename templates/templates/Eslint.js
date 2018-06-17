@@ -76,7 +76,29 @@ const eslintConfig = {
 
 class Eslint extends TemplateBase {
   define() {
-    return this.writeJSON(eslintConfig, '.eslintrc');
+    // TODO: run on test script
+    const promises = [];
+
+    promises.push(this.writeJSON(eslintConfig, '.eslintrc'));
+
+    promises.push(this.addNodeModules({
+      'babel-eslint': { type: 'dev', version: '8.2.2' },
+      eslint: { type: 'dev', version: '4.18.1' },
+      'eslint-config-airbnb': { type: 'dev', version: '16.1.0' },
+      'eslint-config-react-app': { type: 'dev', version: '2.1.0' },
+      'eslint-import-resolver-babel-module': {
+        type: 'dev',
+        version: '4.0.0',
+      },
+      'eslint-loader': { type: 'dev', version: '1.9.0' },
+      'eslint-plugin-flowtype': { type: 'dev', version: '2.46.1' },
+      'eslint-plugin-import': { type: 'dev', version: '2.9.0' },
+      'eslint-plugin-jest': { type: 'dev', version: '21.12.2' },
+      'eslint-plugin-jsx-a11y': { type: 'dev', version: '6.0.3' },
+      'eslint-plugin-react': { type: 'dev', version: '7.7.0' },
+    }));
+
+    return Promise.all(promises);
   }
 }
 
