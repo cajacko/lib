@@ -7,7 +7,7 @@ program.version(config.version).arguments('<cmd> [options]');
 
 require('./init');
 require('./add');
-// TODO: Implement the scripts from packageJSON
+require('./start');
 
 program.command('*', { noHelp: true }).action(() => {
   console.error('\nUnknown command given! See the help below');
