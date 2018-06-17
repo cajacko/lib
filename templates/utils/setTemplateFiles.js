@@ -1,4 +1,4 @@
-const Template = require('../templates/Template');
+const Template = require('../Template');
 
 module.exports = (config) => {
   const template = new Template(config);

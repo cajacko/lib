@@ -35,7 +35,7 @@ class TemplateBase {
   }
 
   tmplPath(path) {
-    return join(__dirname, 'files', path);
+    return join(__dirname, 'templates/files', path);
   }
 
   write() {
