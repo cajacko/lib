@@ -1,4 +1,5 @@
 const { join } = require('path');
+const { ensureFile, writeFile } = require('fs-extra');
 const projectDir = require('../utils/project/projectDir');
 const copyFile = require('../utils/copyFile');
 
@@ -7,6 +8,7 @@ class TemplateBase {
     this.config = config;
 
     this.copyFiles = {};
+    this.writeFiles = {};
 
     this.defineFromConfig = this.defineFromConfig.bind(this);
   }
@@ -42,6 +44,12 @@ class TemplateBase {
       promises.push(copyFile(this.copyFiles[key]));
     });
 
+    Object.keys(this.writeFiles).forEach((key) => {
+      const { dest, content } = this.writeFiles[key];
+
+      promises.push(ensureFile(dest).then(() => writeFile(dest, content)));
+    });
+
     return Promise.all(promises);
   }
 
@@ -62,6 +70,15 @@ class TemplateBase {
 
   copyTmpl(src, dest, data, key, additionalProps) {
     return this.copy(src, dest, key, { data, ...additionalProps });
+  }
+
+  writeJSON(data, dest, key) {
+    const content = JSON.stringify(data, null, 2);
+
+    this.writeFiles[key || 'main'] = {
+      dest: join(this.projectDir, dest),
+      content,
+    };
   }
 }
 
