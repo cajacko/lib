@@ -3,18 +3,20 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import logger from 'redux-logger';
-import { REDUCERS } from '../config';
+import config from '../config';
 
-const reducers = combineReducers(REDUCERS);
+const reducers = config.REDUCERS && combineReducers(config.REDUCERS);
 
-const store = createStore(
-  reducers,
-  compose(
-    applyMiddleware(logger),
-    autoRehydrate(),
-  ),
-);
+const store =
+  config.REDUCERS &&
+  createStore(
+    reducers,
+    compose(
+      applyMiddleware(logger),
+      autoRehydrate(),
+    ),
+  );
 
-persistStore(store);
+if (config.REDUCERS) persistStore(store);
 
 export default store;
