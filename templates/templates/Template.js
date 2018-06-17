@@ -1,5 +1,6 @@
 const Queue = require('promise-queue');
 const merge = require('lodash/merge');
+const runCommand = require('../utils/runCommand');
 const Eslint = require('./Eslint');
 const Flow = require('./Flow');
 const Jest = require('./Jest');
@@ -15,7 +16,7 @@ const Privacy = require('./Privacy');
 const EditorConfig = require('./EditorConfig');
 const GitAttributes = require('./GitAttributes');
 const Changelog = require('./Changelog');
-const runCommand = require('../utils/runCommand');
+const JSDocs = require('./JSDocs');
 
 class Template {
   constructor(config) {
@@ -37,6 +38,7 @@ class Template {
     this.editorConfig = new EditorConfig(config, this);
     this.gitAttributes = new GitAttributes(config, this);
     this.changelog = new Changelog(config, this);
+    this.jsDocs = new JSDocs(config, this);
 
     this.writeAllFiles = this.writeAllFiles.bind(this);
     this.installDependencies = this.installDependencies.bind(this);
@@ -59,7 +61,8 @@ class Template {
       .then(this.privacy.defineFromConfig)
       .then(this.editorConfig.defineFromConfig)
       .then(this.gitAttributes.defineFromConfig)
-      .then(this.changelog.defineFromConfig);
+      .then(this.changelog.defineFromConfig)
+      .then(this.jsDocs.defineFromConfig);
   }
 
   writeAllFiles() {
@@ -79,6 +82,7 @@ class Template {
       this.editorConfig.write(),
       this.gitAttributes.write(),
       this.changelog.write(),
+      this.jsDocs.write(),
     ]);
   }
 
