@@ -3,16 +3,20 @@ const { ensureFile, writeFile } = require('fs-extra');
 const runCommand = require('./runCommand');
 const projectDir = require('./project/projectDir');
 const syncDirs = require('./fs/syncDirs');
+const watchLib = require('./watchLib');
 
 const getTemplateDir = (template) => {
   switch (template) {
     case 'website':
-      return join(__dirname, '../runTemplates/web');
+      return 'web';
 
     default:
       throw new Error(`Given template does not exist in @cajacko/lib: ${String(template)}`);
   }
 };
+
+const getTemplatePath = template =>
+  join(__dirname, '../runTemplates', getTemplateDir(template));
 
 const setEntryFile = (entryFile, templateDir) => {
   const templateEntryFilePath = join(templateDir, 'src/config.js');
@@ -32,16 +36,14 @@ export * from './projectFiles/${relativeEntryPath}';\n`;
 
 module.exports = (key, { entryFile, template }) => {
   const templateDir = getTemplateDir(template);
+  const templatePath = getTemplatePath(template);
 
-  return runCommand('yarn', templateDir)
+  return runCommand('yarn', templatePath)
     .then(projectDir.get)
     .then(dir =>
       Promise.all([
-        syncDirs(join(dir, 'src'), join(templateDir, 'src/projectFiles')).then(() => setEntryFile(entryFile, templateDir)),
-        syncDirs(
-          join(__dirname, '../../dist'),
-          join(templateDir, 'node_modules/@cajacko/lib/dist'),
-        ),
+        watchLib(templateDir),
+        syncDirs(join(dir, 'src'), join(templatePath, 'src/projectFiles')).then(() => setEntryFile(entryFile, templatePath)),
       ]))
-    .then(() => runCommand('yarn start', templateDir));
+    .then(() => runCommand('yarn start', templatePath));
 };
