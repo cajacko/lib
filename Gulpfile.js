@@ -11,7 +11,7 @@ const src = [
 ];
 
 gulp.task('build', () => {
-  const templateDir = process.argv[2].replace('--', '');
+  const templateDir = process.argv[3].replace('--', '');
 
   return gulp
     .src(src)
