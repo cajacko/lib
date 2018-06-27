@@ -1,44 +1,59 @@
 const program = require('commander');
-const inquirer = require('inquirer');
-const add = require('../utils/add');
-const { getProjectConfig } = require('../utils/project/projectConfig');
-const startTemplate = require('../utils/startTemplate');
+const ensureProjectSelected = require('../utils/ensureProjectSelected');
+const { join } = require('path');
+const { ensureFile, writeFile } = require('fs-extra');
+const runCommand = require('../utils/runCommand');
+const projectDir = require('../utils/project/projectDir');
+const syncDirs = require('../utils/fs/syncDirs');
+const watchLib = require('../utils/watchLib');
+
+const getTemplateDir = (template) => {
+  switch (template) {
+    case 'website':
+      return 'web';
+
+    default:
+      throw new Error(`Given template does not exist in @cajacko/lib: ${String(template)}`);
+  }
+};
+
+const getTemplatePath = template =>
+  join(__dirname, '../runTemplates', getTemplateDir(template));
+
+const setEntryFile = (entryFile, templateDir) => {
+  const templateEntryFilePath = join(templateDir, 'src/config.js');
+
+  const relativeEntryPath = entryFile.replace('src/', '').replace('.js', '');
+
+  const contents = `// @flow
+
+import * as config from './projectFiles/${relativeEntryPath}';
+
+export default config;
+export * from './projectFiles/${relativeEntryPath}';\n`;
+
+  return ensureFile(templateEntryFilePath).then(() =>
+    writeFile(templateEntryFilePath, contents));
+};
 
 program.command('start [package]').action(temlplateArg =>
-  getProjectConfig().then(({ templates }) => {
-    const noTemplates = () => {
-      console.log("Looks like you have no templates in your project.json, let's add one");
+  ensureProjectSelected(temlplateArg).then((data) => {
+    const {
+      config: { entryFile, template },
+    } = data;
 
-      return add();
-    };
+    const templateDir = getTemplateDir(template);
+    const templatePath = getTemplatePath(template);
 
-    if (!templates) return noTemplates();
-
-    const templateKeys = Object.keys(templates);
-
-    if (!templateKeys.length) return noTemplates();
-
-    if (temlplateArg) {
-      if (templates[temlplateArg]) {
-        return startTemplate(temlplateArg, templates[temlplateArg]);
-      }
-
-      console.log(`The template ${temlplateArg} does not exist in your project.json, let's add it!`);
-      return add();
-    }
-
-    if (templateKeys.length === 1) {
-      return startTemplate(templateKeys[0], templates[templateKeys[0]]);
-    }
-
-    return inquirer
-      .prompt([
-        {
-          name: 'template',
-          type: 'list',
-          message: 'Choose which tempalte you want to start',
-          choices: templateKeys,
-        },
-      ])
-      .then(({ template }) => startTemplate(template, templates[template]));
+    return runCommand('yarn', templatePath)
+      .then(projectDir.get)
+      .then(dir =>
+        Promise.all([
+          watchLib(templateDir),
+          syncDirs(
+            join(dir, 'src'),
+            join(templatePath, 'src/projectFiles'),
+          ).then(() => setEntryFile(entryFile, templatePath)),
+        ]))
+      .then(() => runCommand('yarn start', templatePath));
   }));
