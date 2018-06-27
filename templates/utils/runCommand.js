@@ -1,29 +1,34 @@
-const { spawn } = require('child_process');
+const spawn = require('react-dev-utils/crossSpawn');
 
-// Spawn a new command, streaming the logs as they happen, returning a promise
-module.exports = (command, cwd = process.cwd(), dataCallback) =>
+module.exports = (command, cwd = process.cwd(), opts) =>
   new Promise((resolve, reject) => {
-    const commands = command.split(' ').filter(string => string !== '');
+    try {
+      const commands = command.split(' ').filter(string => string !== '');
+      const firstCommand = commands.splice(0, 1)[0];
 
-    const ls = spawn(commands.splice(0, 1)[0], commands, {
-      cwd,
-    });
+      process.chdir(cwd);
 
-    ls.stdout.on('data', (data) => {
-      console.log(`${data}`);
-      if (dataCallback) dataCallback(`${data}`);
-    });
+      const options = Object.assign(
+        {
+          stdio: 'inherit',
+        },
+        opts || {},
+      );
 
-    ls.stderr.on('data', (data) => {
-      console.log(`${data}`);
-      if (dataCallback) dataCallback(`${data}`);
-    });
-
-    ls.on('close', (code) => {
-      if (code) {
-        reject();
-      } else {
-        resolve(`Process exited with code ${code}`);
+      if (!options.cwd) {
+        options.cwd = cwd;
       }
-    });
+
+      const ls = spawn(firstCommand, commands, options);
+
+      ls.on('close', (code) => {
+        if (code) {
+          reject(new Error(`child process exited with code ${code}`));
+        } else {
+          resolve();
+        }
+      });
+    } catch (e) {
+      reject(e);
+    }
   });

@@ -45,6 +45,7 @@
     "is-git-repository": "^1.1.1",
     "lodash": "^4.17.10",
     "promise-queue": "^2.2.5",
+    "react-dev-utils": "^5.0.1",
     "rimraf": "^2.6.2",
     "semver": "^5.5.0",
     "simple-git": "^1.96.0",
