@@ -4,3 +4,5 @@ node_modules
 /templates/runTemplates/**/config.js
 /templates/runTemplates/**/projectFiles
 /dist
+build/
+
