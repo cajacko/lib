@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
-const isSlug = require('../utils/conditionals/isSlug');
+const isSlug = require('../conditionals/isSlug');
+const getTemplateConfig = require('./getTemplateConfig');
 
 const add = implement =>
   inquirer
@@ -14,7 +15,7 @@ const add = implement =>
         type: 'input',
         name: 'key',
         message:
-          'Give this tempalte a unique key to distinguish it from other templates in this project.',
+          'Give this template a unique key to distinguish it from other templates in this project.',
         validate: (name) => {
           if (!isSlug(name)) {
             return 'The key must be in a url slug like format e.g. repo-name';
@@ -31,11 +32,11 @@ const add = implement =>
         default: 'src/entry.js',
       },
     ])
-    .then(({ template, key, entryFile }) => {
-      const config = { templates: { [key]: { template, entryFile } } };
-
-      return implement(config);
-    })
+    .then(({ template, key, entryFile }) =>
+      getTemplateConfig(template).then(templateConfig => ({
+        templates: { [key]: { template, entryFile, ...templateConfig } },
+      })))
+    .then(implement)
     .then(() =>
       inquirer.prompt([
         {

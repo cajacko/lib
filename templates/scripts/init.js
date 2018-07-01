@@ -10,8 +10,9 @@ const {
 } = require('../utils/project/projectConfig');
 const deleteExistingFiles = require('../utils/fs/deleteAllFiles');
 const setProjectFiles = require('../utils/project/setProjectFiles');
-const add = require('../utils/add');
+const add = require('../utils/config/add');
 const setTemplateFiles = require('../utils/setTemplateFiles');
+const packageJSON = require('../../package.json');
 
 const getShouldDeleteExistingFiles = () =>
   inquirer
@@ -34,6 +35,10 @@ const init = () => {
 
       return getProjectConfig().then((projectConfig) => {
         if (projectConfig) {
+          if (projectConfig.setWithLibVersion !== packageJSON.version) {
+            return askAndSetProjectConfig(projectConfig);
+          }
+
           return getMissingConfigKeys(projectConfig).then((missingKeys) => {
             if (!missingKeys || !missingKeys.length) return projectConfig;
 
@@ -56,7 +61,7 @@ const init = () => {
     })
     .then((config) => {
       const addWithSideEffect = () =>
-        add((updatedConfig) => {
+        add(config, (updatedConfig) => {
           merge(config, updatedConfig);
         }).then(() => config);
 
@@ -79,8 +84,13 @@ const init = () => {
           return Promise.resolve(config);
         });
     })
-    .then(config =>
-      setProjectFiles(config).then(() => setTemplateFiles(config)));
+    .then((config) => {
+      const finalConfig = Object.assign({}, config);
+      finalConfig.setWithLibVersion = finalConfig.version;
+
+      return setProjectFiles(finalConfig).then(() =>
+        setTemplateFiles(finalConfig));
+    });
 };
 
 program.command('init').action(init);

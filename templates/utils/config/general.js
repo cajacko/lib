@@ -42,9 +42,21 @@ exports.run = (existingConfig, missingKeys) => {
   return setProjectName(set, missingKeys)
     .then(defineConfigFromRepo(set, missingKeys))
     .then(() => {
-      const filteredQuestions = !missingKeys
+      let filteredQuestions = !missingKeys
         ? questions
         : questions.filter(({ name }) => missingKeys.includes(name));
+
+      if (existingConfig) {
+        filteredQuestions = filteredQuestions.map((question) => {
+          if (existingConfig[question.name] === undefined) return question;
+
+          const newQuestion = Object.assign({}, question);
+
+          newQuestion.default = existingConfig[question.name];
+
+          return newQuestion;
+        });
+      }
 
       return inquirer.prompt(filteredQuestions);
     })

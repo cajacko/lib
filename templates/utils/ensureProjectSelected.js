@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const add = require('../utils/add');
+const add = require('../utils/config/add');
 const { getProjectConfig } = require('../utils/project/projectConfig');
 
 module.exports = temlplateArg =>

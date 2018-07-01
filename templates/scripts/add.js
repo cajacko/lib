@@ -1,5 +1,5 @@
 const program = require('commander');
-const add = require('../utils/add');
+const add = require('../utils/config/add');
 const projectConfigFile = require('../utils/project/projectConfigFile');
 
 program
