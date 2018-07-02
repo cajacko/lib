@@ -1,6 +1,6 @@
-const Utils = require('./Utils');
+const FileManagement = require('./FileManagement');
 
-class Runner extends Utils {
+class Runner extends FileManagement {
   constructor(globalTemplates) {
     super();
 
@@ -25,18 +25,28 @@ class Runner extends Utils {
       Object.keys(globalTemplates).forEach((key) => {
         const ClassToInitiate = globalTemplates[key];
         this[key] = new ClassToInitiate(this);
+
+        this.stepsOrder.forEach((step) => {
+          if (typeof this[key][step] === 'function') {
+            this.add(step, () => this[key][step]());
+          }
+        });
       });
     }
-
-    if (this.init) this.init();
   }
 
   run() {
-    const queue = this.newQueue();
+    this.utilsSetup
+      .then(() => {
+        const queue = this.newQueue();
 
-    this.stepsOrder.forEach(step => queue.add(this.runStep(step)));
+        this.stepsOrder.forEach(step => queue.add(this.runStep(step)));
 
-    return queue;
+        return queue;
+      })
+      .then(() => {
+        console.log(this.writeFiles);
+      });
   }
 
   getStepOrder(step = this.currentStep) {
@@ -68,10 +78,6 @@ class Runner extends Utils {
       throw new Error(`Can't add another ${step} step, as we're doing that step already, or have already completed it`);
     }
 
-    return this.setSteps(step, funcs);
-  }
-
-  setSteps(step, funcs) {
     if (!this.steps[step]) this.steps[step] = [];
 
     if (Array.isArray(funcs)) {

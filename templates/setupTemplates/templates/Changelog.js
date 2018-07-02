@@ -1,10 +1,10 @@
-const TemplateBase = require('../SetupTemplateBase');
+const RunnerTemplate = require('../RunnerTemplate');
 
-class Changelog extends TemplateBase {
-  define() {
-    return this.copyIfDoesNotExist(
+class Changelog extends RunnerTemplate {
+  setupFiles() {
+    return this.runner.copyIfDoesNotExist(
       this.tmplPath('CHANGELOG.md'),
-      'CHANGELOG.md',
+      this.destPath('CHANGELOG.md'),
     );
   }
 }

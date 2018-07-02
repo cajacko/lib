@@ -1,4 +1,4 @@
-const RunnerTemplate = require('./RunnerTemplate');
+const RunnerTemplate = require('../setupTemplates/RunnerTemplate');
 
 class Env extends RunnerTemplate {
   init() {

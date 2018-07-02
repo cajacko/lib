@@ -1,7 +1,7 @@
-const RunnerTemplate = require('./RunnerTemplate');
-const WebTemplate = require('./WebTemplate');
+const RunnerTemplate = require('../RunnerTemplate');
+const WebTemplate = require('./Website');
 
-class SetProject extends RunnerTemplate {
+class Projects extends RunnerTemplate {
   init() {
     this.runner.add('setupFiles', [
       this.createProjectOrReuse,
@@ -38,4 +38,4 @@ class SetProject extends RunnerTemplate {
   }
 }
 
-module.exports = SetProject;
+module.exports = Projects;

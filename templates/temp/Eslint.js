@@ -1,4 +1,4 @@
-const RunnerTemplate = require('./RunnerTemplate');
+const RunnerTemplate = require('../setupTemplates/RunnerTemplate');
 
 class Eslint extends RunnerTemplate {
   init() {

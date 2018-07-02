@@ -1,4 +1,4 @@
-const TemplateBase = require('../SetupTemplateBase');
+const RunnerTemplate = require('../RunnerTemplate');
 const { MAX_LINE_LENGTH } = require('../../config/constants');
 
 const eslintConfig = {
@@ -74,14 +74,13 @@ const eslintConfig = {
   },
 };
 
-class Eslint extends TemplateBase {
-  define() {
+class Eslint extends RunnerTemplate {
+  setupFiles() {
     // TODO: run on test script
-    const promises = [];
 
-    promises.push(this.writeJSON(eslintConfig, '.eslintrc'));
+    this.runner.writeJSON(eslintConfig, this.destPath('.eslintrc'));
 
-    promises.push(this.addNodeModules({
+    this.runner.addNodeModules({
       'babel-eslint': { type: 'dev', version: '8.2.2' },
       eslint: { type: 'dev', version: '4.18.1' },
       'eslint-config-airbnb': { type: 'dev', version: '16.1.0' },
@@ -96,9 +95,7 @@ class Eslint extends TemplateBase {
       'eslint-plugin-jest': { type: 'dev', version: '21.12.2' },
       'eslint-plugin-jsx-a11y': { type: 'dev', version: '6.0.3' },
       'eslint-plugin-react': { type: 'dev', version: '7.7.0' },
-    }));
-
-    return Promise.all(promises);
+    });
   }
 }
 
