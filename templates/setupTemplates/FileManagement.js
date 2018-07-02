@@ -30,6 +30,13 @@ class FileManagement extends Dependencies {
       json,
     };
   }
+
+  copy(src, dest) {
+    this.writeFiles[dest] = {
+      type: 'copy',
+      path: src,
+    };
+  }
 }
 
 module.exports = FileManagement;

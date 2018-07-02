@@ -36,17 +36,13 @@ class Runner extends FileManagement {
   }
 
   run() {
-    this.utilsSetup
-      .then(() => {
-        const queue = this.newQueue();
+    this.utilsSetup.then(() => {
+      const queue = [];
 
-        this.stepsOrder.forEach(step => queue.add(this.runStep(step)));
+      this.stepsOrder.forEach(step => queue.push(() => this.runStep(step)));
 
-        return queue;
-      })
-      .then(() => {
-        console.log(this.writeFiles);
-      });
+      return this.promiseQueue(queue);
+    });
   }
 
   getStepOrder(step = this.currentStep) {
@@ -56,21 +52,19 @@ class Runner extends FileManagement {
   }
 
   runStep(step) {
-    return () => {
-      this.currentStep = step;
+    this.currentStep = step;
 
-      if (!this.steps[step]) return Promise.resolve();
+    const queue = [];
 
-      const queue = this.newQueue();
-
-      this.steps[step].forEach((callback) => {
+    if (this.steps[step]) {
+      this.steps[step].forEach((callback, i) => {
         if (typeof callback !== 'function') return;
 
-        queue.add(() => callback());
+        queue.push(() => Promise.resolve(callback()));
       });
+    }
 
-      return queue;
-    };
+    return this.promiseQueue(queue);
   }
 
   add(step, funcs) {

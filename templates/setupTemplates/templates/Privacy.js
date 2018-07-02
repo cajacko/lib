@@ -1,10 +1,10 @@
-const TemplateBase = require('../SetupTemplateBase');
+const RunnerTemplate = require('../RunnerTemplate');
 
-class Privacy extends TemplateBase {
-  define() {
-    return this.copyTmpl(
+class Privacy extends RunnerTemplate {
+  setupFiles() {
+    return this.runner.copyTmpl(
       this.tmplPath('PRIVACY.md'),
-      'PRIVACY.md',
+      this.destPath('PRIVACY.md'),
       this.config,
     );
   }

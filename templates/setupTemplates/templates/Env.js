@@ -1,5 +1,5 @@
-const TemplateBase = require('../SetupTemplateBase');
+const RunnerTemplate = require('../RunnerTemplate');
 
-class Env extends TemplateBase {}
+class Env extends RunnerTemplate {}
 
 module.exports = Env;

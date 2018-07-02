@@ -1,11 +1,11 @@
-const TemplateBase = require('../SetupTemplateBase');
+const RunnerTemplate = require('../RunnerTemplate');
 const { MAX_LINE_LENGTH } = require('../../config/constants');
 
-class VSCode extends TemplateBase {
-  define() {
-    return this.copyTmpl(
+class VSCode extends RunnerTemplate {
+  setupFiles() {
+    return this.runner.copyTmpl(
       this.tmplPath('.vscode/settings.json'),
-      '.vscode/settings.json',
+      this.destPath('.vscode/settings.json'),
       {
         maxLineLength: MAX_LINE_LENGTH,
       },

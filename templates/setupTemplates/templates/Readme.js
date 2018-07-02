@@ -1,10 +1,10 @@
-const TemplateBase = require('../SetupTemplateBase');
+const RunnerTemplate = require('../RunnerTemplate');
 
-class Readme extends TemplateBase {
-  define() {
-    return this.copyTmpl(
+class Readme extends RunnerTemplate {
+  setupFiles() {
+    return this.runner.copyTmpl(
       this.tmplPath('readme/header.md'),
-      'README.md',
+      this.destPath('README.md'),
       this.config,
     );
   }

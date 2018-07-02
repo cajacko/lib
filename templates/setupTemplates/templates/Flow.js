@@ -1,5 +1,5 @@
-const TemplateBase = require('../SetupTemplateBase');
+const RunnerTemplate = require('../RunnerTemplate');
 
-class Flow extends TemplateBase {}
+class Flow extends RunnerTemplate {}
 
 module.exports = Flow;

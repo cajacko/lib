@@ -1,8 +1,11 @@
-const TemplateBase = require('../SetupTemplateBase');
+const RunnerTemplate = require('../RunnerTemplate');
 
-class GitIgnore extends TemplateBase {
-  define() {
-    return this.copy(this.tmplPath('.gitignore'), '.gitignore');
+class GitIgnore extends RunnerTemplate {
+  setupFiles() {
+    return this.runner.copy(
+      this.tmplPath('.gitignore'),
+      this.destPath('.gitignore'),
+    );
   }
 }
 

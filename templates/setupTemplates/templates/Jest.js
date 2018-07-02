@@ -1,5 +1,5 @@
-const TemplateBase = require('../SetupTemplateBase');
+const RunnerTemplate = require('../RunnerTemplate');
 
-class Jest extends TemplateBase {}
+class Jest extends RunnerTemplate {}
 
 module.exports = Jest;

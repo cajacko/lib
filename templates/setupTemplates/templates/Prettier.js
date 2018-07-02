@@ -1,5 +1,5 @@
-const TemplateBase = require('../SetupTemplateBase');
+const RunnerTemplate = require('../RunnerTemplate');
 
-class Prettier extends TemplateBase {}
+class Prettier extends RunnerTemplate {}
 
 module.exports = Prettier;

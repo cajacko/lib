@@ -17,14 +17,14 @@ class Projects extends RunnerTemplate {
     return () => {
       if (!this.runner.projectConfig.projects) return Promise.resolve();
 
-      const queue = this.newQueue();
+      const queue = [];
 
       this.runner.projectConfig.projects.forEach((projectConfig) => {
-        queue.add(() =>
+        queue.push(() =>
           this.setupProject(projectConfig.template, projectConfig));
       });
 
-      return queue;
+      return this.promiseQueue(queue);
     };
   }
 

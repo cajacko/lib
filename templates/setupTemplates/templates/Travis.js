@@ -1,5 +1,5 @@
-const TemplateBase = require('../SetupTemplateBase');
+const RunnerTemplate = require('../RunnerTemplate');
 
-class Travis extends TemplateBase {}
+class Travis extends RunnerTemplate {}
 
 module.exports = Travis;

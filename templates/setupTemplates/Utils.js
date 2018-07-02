@@ -15,8 +15,19 @@ class Utils {
     });
   }
 
-  newQueue() {
-    return new Queue(1, Infinity);
+  promiseQueue(promises) {
+    let i = 0;
+
+    const runAllPromises = () => {
+      if (!promises[i]) return Promise.resolve();
+
+      return promises[i]().then(() => {
+        i += 1;
+        return runAllPromises();
+      });
+    };
+
+    return runAllPromises();
   }
 
   tmplPath(path) {

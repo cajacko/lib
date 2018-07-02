@@ -1,8 +1,11 @@
-const TemplateBase = require('../SetupTemplateBase');
+const RunnerTemplate = require('../RunnerTemplate');
 
-class GitAttributes extends TemplateBase {
-  define() {
-    return this.copy(this.tmplPath('.gitattributes'), '.gitattributes');
+class GitAttributes extends RunnerTemplate {
+  setupFiles() {
+    return this.runner.copy(
+      this.tmplPath('.gitattributes'),
+      this.destPath('.gitattributes'),
+    );
   }
 }
 
