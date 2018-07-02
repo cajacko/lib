@@ -5,7 +5,7 @@ class Readme extends RunnerTemplate {
     return this.runner.copyTmpl(
       this.tmplPath('readme/header.md'),
       this.destPath('README.md'),
-      this.config,
+      this.projectConfig,
     );
   }
 }

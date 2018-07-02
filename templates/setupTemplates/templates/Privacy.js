@@ -5,7 +5,7 @@ class Privacy extends RunnerTemplate {
     return this.runner.copyTmpl(
       this.tmplPath('PRIVACY.md'),
       this.destPath('PRIVACY.md'),
-      this.config,
+      this.projectConfig,
     );
   }
 }

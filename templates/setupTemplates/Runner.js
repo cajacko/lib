@@ -10,9 +10,9 @@ class Runner extends FileManagement {
       'preRun',
       'setupFiles',
       'postSetupFiles',
-      'writeFiles',
+      'preWriteFiles',
       'postWriteFiles',
-      'installDependencies',
+      'preInstallDependencies',
       'postInstallDependencies',
       'postRun',
     ];
@@ -39,7 +39,28 @@ class Runner extends FileManagement {
     this.utilsSetup.then(() => {
       const queue = [];
 
-      this.stepsOrder.forEach(step => queue.push(() => this.runStep(step)));
+      this.stepsOrder.forEach((step) => {
+        queue.push(() => this.runStep(step));
+
+        switch (step) {
+          case 'preWriteFiles':
+            queue.push(() => {
+              console.log('STEP - Writing files');
+              return this.writeFiles();
+            });
+
+            break;
+
+          case 'preInstallDependencies':
+            queue.push(() => {
+              console.log('STEP - Installing dependencies');
+              return this.installDependencies();
+            });
+
+            break;
+          default:
+        }
+      });
 
       return this.promiseQueue(queue);
     });
@@ -52,6 +73,7 @@ class Runner extends FileManagement {
   }
 
   runStep(step) {
+    console.log(`STEP - ${step}`);
     this.currentStep = step;
 
     const queue = [];

@@ -3,8 +3,6 @@
 const program = require('commander');
 const config = require('../../package.json');
 
-console.log('\n\n\n\n\n\n\n\n');
-
 program.version(config.version).arguments('<cmd> [options]');
 
 require('./init');

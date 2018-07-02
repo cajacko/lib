@@ -15,13 +15,13 @@ class Utils {
     });
   }
 
-  promiseQueue(promises) {
+  promiseQueue(promises, throttle = 1) {
     let i = 0;
 
     const runAllPromises = () => {
       if (!promises[i]) return Promise.resolve();
 
-      return promises[i]().then(() => {
+      return Promise.resolve(promises[i]()).then(() => {
         i += 1;
         return runAllPromises();
       });
