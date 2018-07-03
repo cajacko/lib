@@ -35,7 +35,8 @@ module.exports = () => {
     jsdocs: JSDocs,
   });
 
-  runner.add('preRun', () => new Projects(runner));
+  // eslint-disable-next-line
+  new Projects(runner);
 
   return runner.run();
 };

@@ -18,9 +18,19 @@ class Runner extends FileManagement {
       'postRun',
     ];
 
-    this.projectConfig = {};
+    this.projectConfig = null;
 
-    this.prompt = inquirer.prompt;
+    this.prompt = (questions) => {
+      if (Array.isArray(questions)) {
+        return inquirer.prompt(questions);
+      }
+
+      const question = Object.assign({}, questions);
+
+      question.name = 'answer';
+
+      return inquirer.prompt([question]).then(({ answer }) => answer);
+    };
 
     if (globalTemplates) {
       Object.keys(globalTemplates).forEach((key) => {
@@ -82,7 +92,7 @@ class Runner extends FileManagement {
     const queue = [];
 
     if (this.steps[step]) {
-      this.steps[step].forEach((callback, i) => {
+      this.steps[step].forEach((callback) => {
         if (typeof callback !== 'function') return;
 
         queue.push(() => Promise.resolve(callback()));

@@ -1,5 +1,5 @@
 const { join } = require('path');
-const { ensurePath } = require('fs-extra');
+const { ensureDir } = require('fs-extra');
 const RunnerTemplate = require('../RunnerTemplate');
 const projectDir = require('../../utils/project/projectDir');
 const { getProjectConfig } = require('../../utils/project/projectConfig');
@@ -7,7 +7,7 @@ const { getIsGitRepo } = require('../../utils/git/git');
 
 class Projects extends RunnerTemplate {
   init() {
-    this.runner.add('setupFiles', [
+    this.runner.add('preRun', [
       () => this.getExistingConfig(),
       () => this.createProjectOrUseDir(),
       // () => this.getExistingConfig(),
@@ -39,15 +39,15 @@ class Projects extends RunnerTemplate {
 
           return this.runner.prompt({
             type: 'input',
-            message: `Enter a relative folder name/path for your project, or leave blank to run here: ${dir}`,
+            message: `Enter a relative folder name/path for your project, or leave blank to run here:\n${dir}\n`,
             default: null,
-            validate: () => {},
+            // validate: () => {},
           });
         })
         .then((relativePath) => {
           if (relativePath) {
             const absolutePath = join(dir, relativePath);
-            return ensurePath(absolutePath).then(projectDir.set(absolutePath));
+            return ensureDir(absolutePath).then(projectDir.set(absolutePath));
           }
 
           return Promise.resolve();
