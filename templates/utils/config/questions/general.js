@@ -76,7 +76,7 @@ module.exports = [
   {
     type: 'input',
     name: 'authorUrl',
-    default: 'https://charliejackson.copm',
+    default: 'https://charliejackson.com',
     message: 'The project authors url',
   },
   {
