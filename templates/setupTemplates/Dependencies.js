@@ -1,5 +1,6 @@
 const Utils = require('./Utils');
 const runCommand = require('../utils/runCommand');
+const projectDir = require('../utils/project/projectDir');
 
 class Dependencies extends Utils {
   constructor() {
@@ -31,7 +32,8 @@ class Dependencies extends Utils {
 
       command = `${command} ${nodeModulesCommands[key]}`;
 
-      promises.push(() => runCommand(command, this.projectDir));
+      promises.push(() =>
+        projectDir.get().then(dir => runCommand(command, dir)));
     });
 
     return this.promiseQueue(promises);

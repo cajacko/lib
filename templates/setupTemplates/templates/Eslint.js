@@ -78,9 +78,11 @@ class Eslint extends RunnerTemplate {
   setupFiles() {
     // TODO: run on test script
 
-    this.runner.writeJSON(eslintConfig, this.destPath('.eslintrc'));
+    const promises = [];
 
-    this.runner.addNodeModules({
+    promises.push(this.runner.writeJSON(eslintConfig, '.eslintrc'));
+
+    promises.push(this.runner.addNodeModules({
       'babel-eslint': { type: 'dev', version: '8.2.2' },
       eslint: { type: 'dev', version: '4.18.1' },
       'eslint-config-airbnb': { type: 'dev', version: '16.1.0' },
@@ -95,7 +97,9 @@ class Eslint extends RunnerTemplate {
       'eslint-plugin-jest': { type: 'dev', version: '21.12.2' },
       'eslint-plugin-jsx-a11y': { type: 'dev', version: '6.0.3' },
       'eslint-plugin-react': { type: 'dev', version: '7.7.0' },
-    });
+    }));
+
+    return Promise.all(promises);
   }
 }
 

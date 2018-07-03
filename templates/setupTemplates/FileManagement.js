@@ -64,30 +64,38 @@ class FileManagement extends Dependencies {
     return cb();
   }
 
-  copyIfDoesNotExist(src, dest) {
-    this.filesToWrite[dest] = {
-      onlyIfDoesNotExist: true,
-      path: src,
-    };
+  copyIfDoesNotExist(src, relativeDest) {
+    return this.destPath(relativeDest).then((dest) => {
+      this.filesToWrite[dest] = {
+        onlyIfDoesNotExist: true,
+        path: src,
+      };
+    });
   }
 
-  copyTmpl(src, dest, options) {
-    this.filesToWrite[dest] = {
-      path: src,
-      variables: options,
-    };
+  copyTmpl(src, relativeDest, options) {
+    return this.destPath(relativeDest).then((dest) => {
+      this.filesToWrite[dest] = {
+        path: src,
+        variables: options,
+      };
+    });
   }
 
-  writeJSON(json, dest) {
-    this.filesToWrite[dest] = {
-      json,
-    };
+  writeJSON(json, relativeDest) {
+    return this.destPath(relativeDest).then((dest) => {
+      this.filesToWrite[dest] = {
+        json,
+      };
+    });
   }
 
-  copy(src, dest) {
-    this.filesToWrite[dest] = {
-      path: src,
-    };
+  copy(src, relativeDest) {
+    return this.destPath(relativeDest).then((dest) => {
+      this.filesToWrite[dest] = {
+        path: src,
+      };
+    });
   }
 }
 

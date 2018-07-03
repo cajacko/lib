@@ -1,3 +1,4 @@
+const inquirer = require('inquirer');
 const FileManagement = require('./FileManagement');
 
 class Runner extends FileManagement {
@@ -17,9 +18,9 @@ class Runner extends FileManagement {
       'postRun',
     ];
 
-    this.projectConfig = {
-      projects: [],
-    };
+    this.projectConfig = {};
+
+    this.prompt = inquirer.prompt;
 
     if (globalTemplates) {
       Object.keys(globalTemplates).forEach((key) => {
@@ -35,35 +36,37 @@ class Runner extends FileManagement {
     }
   }
 
+  setProp(key, val) {
+    this[key] = val;
+  }
+
   run() {
-    this.utilsSetup.then(() => {
-      const queue = [];
+    const queue = [];
 
-      this.stepsOrder.forEach((step) => {
-        queue.push(() => this.runStep(step));
+    this.stepsOrder.forEach((step) => {
+      queue.push(() => this.runStep(step));
 
-        switch (step) {
-          case 'preWriteFiles':
-            queue.push(() => {
-              console.log('STEP - Writing files');
-              return this.writeFiles();
-            });
+      switch (step) {
+        case 'preWriteFiles':
+          queue.push(() => {
+            console.log('STEP - Writing files');
+            return this.writeFiles();
+          });
 
-            break;
+          break;
 
-          case 'preInstallDependencies':
-            queue.push(() => {
-              console.log('STEP - Installing dependencies');
-              return this.installDependencies();
-            });
+        case 'preInstallDependencies':
+          queue.push(() => {
+            console.log('STEP - Installing dependencies');
+            // return this.installDependencies();
+          });
 
-            break;
-          default:
-        }
-      });
-
-      return this.promiseQueue(queue);
+          break;
+        default:
+      }
     });
+
+    return this.promiseQueue(queue);
   }
 
   getStepOrder(step = this.currentStep) {

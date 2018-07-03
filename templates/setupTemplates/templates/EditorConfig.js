@@ -5,7 +5,7 @@ class EditorConfig extends RunnerTemplate {
   setupFiles() {
     return this.runner.copyTmpl(
       this.tmplPath('.editorconfig'),
-      this.destPath('.editorconfig'),
+      '.editorconfig',
       {
         maxLineLength: MAX_LINE_LENGTH,
       },

@@ -5,7 +5,7 @@ class VSCode extends RunnerTemplate {
   setupFiles() {
     return this.runner.copyTmpl(
       this.tmplPath('.vscode/settings.json'),
-      this.destPath('.vscode/settings.json'),
+      '.vscode/settings.json',
       {
         maxLineLength: MAX_LINE_LENGTH,
       },

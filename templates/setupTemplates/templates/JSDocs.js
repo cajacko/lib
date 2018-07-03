@@ -2,11 +2,15 @@ const RunnerTemplate = require('../RunnerTemplate');
 
 class JSDocs extends RunnerTemplate {
   setupFiles() {
-    this.runner.copy(this.tmplPath('jsdoc.json'), this.destPath('jsdoc.json'));
+    const promises = [];
 
-    this.runner.addNodeModules({
+    promises.push(this.runner.copy(this.tmplPath('jsdoc.json'), 'jsdoc.json'));
+
+    promises.push(this.runner.addNodeModules({
       jsdoc: { type: 'dev', version: '3.5.5' },
-    });
+    }));
+
+    return Promise.all(promises);
   }
 }
 

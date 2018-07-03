@@ -1,20 +1,7 @@
-const Queue = require('promise-queue');
 const { join } = require('path');
 const projectDir = require('../utils/project/projectDir');
 
 class Utils {
-  constructor() {
-    this.projectDir = null;
-
-    this.utilsSetup = this.getProjectDir();
-  }
-
-  getProjectDir() {
-    return projectDir.get().then((dir) => {
-      this.projectDir = dir;
-    });
-  }
-
   promiseQueue(promises, throttle = 1) {
     let i = 0;
 
@@ -35,7 +22,7 @@ class Utils {
   }
 
   destPath(path) {
-    return join(this.projectDir, path);
+    return projectDir.get().then(dir => join(dir, path));
   }
 }
 
