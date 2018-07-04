@@ -1,4 +1,4 @@
-const RunnerTemplate = require('../RunnerTemplate');
+const { RunnerTemplate } = require('@cajacko/template');
 
 class Flow extends RunnerTemplate {}
 

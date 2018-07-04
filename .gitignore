@@ -5,4 +5,4 @@ node_modules
 /templates/runTemplates/**/projectFiles
 /dist
 build/
-
+package-lock.json

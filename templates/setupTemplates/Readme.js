@@ -1,9 +1,9 @@
-const RunnerTemplate = require('../RunnerTemplate');
+const { RunnerTemplate } = require('@cajacko/template');
 
 class Readme extends RunnerTemplate {
   setupFiles() {
     return this.runner.copyTmpl(
-      this.tmplPath('readme/header.md'),
+      this.getTmplPath('readme/header.md'),
       'README.md',
       this.projectConfig,
     );

@@ -14,7 +14,7 @@
     "precommit": "lint-staged"
   },
   "bin": {
-    "lib": "templates/scripts/index.js"
+    "lib": "templates/index.js"
   },
   "lint-staged": {
     "*.js": [

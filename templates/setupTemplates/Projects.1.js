@@ -10,7 +10,7 @@ const {
 // const add = require('../../utils/config/add');
 // const setTemplateFiles = require('../../utils/setTemplateFiles');
 const packageJSON = require('../../../package.json');
-const RunnerTemplate = require('../RunnerTemplate');
+const { RunnerTemplate } = require('@cajacko/template');
 const WebTemplate = require('./Website');
 
 class Projects extends RunnerTemplate {

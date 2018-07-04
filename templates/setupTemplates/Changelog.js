@@ -1,9 +1,9 @@
-const RunnerTemplate = require('../RunnerTemplate');
+const { RunnerTemplate } = require('@cajacko/template');
 
 class Changelog extends RunnerTemplate {
   setupFiles() {
     return this.runner.copyIfDoesNotExist(
-      this.tmplPath('CHANGELOG.md'),
+      this.getTmplPath('CHANGELOG.md'),
       'CHANGELOG.md',
     );
   }
