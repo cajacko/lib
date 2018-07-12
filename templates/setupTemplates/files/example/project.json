@@ -1,7 +1,8 @@
 {
   "templates": {
     "main-site": {
-      "entryFile": "src/entry.js"
+      "entryFile": "src/entry.js",
+      "type": "website"
     }
   }
 }
