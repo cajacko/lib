@@ -1,0 +1,16 @@
+{
+  "name": "example",
+  "version": "0.1.0",
+  "description": "Example project",
+  "license": "MIT",
+  "scripts": {
+    "start": "lib start",
+    "test": "lib test",
+    "build": "lib build",
+    "deploy": "lib deploy",
+    "link": "lib link",
+    "unlink": "lib unlink",
+    "postinstall": "lib postinstall",
+    "precommit": "lib precommit"
+  }
+}

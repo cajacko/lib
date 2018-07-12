@@ -1,0 +1,7 @@
+{
+  "templates": {
+    "main-site": {
+      "entryFile": "src/entry.js"
+    }
+  }
+}

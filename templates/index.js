@@ -24,12 +24,13 @@ const EditorConfig = require('./setupTemplates/EditorConfig');
 const GitAttributes = require('./setupTemplates/GitAttributes');
 const Changelog = require('./setupTemplates/Changelog');
 const JSDocs = require('./setupTemplates/JSDocs');
+const Example = require('./setupTemplates/Example');
 
 setVersion(config.version);
 setTmplPath(join(__dirname, './setupTemplates/files'));
 
 setSetupFiles({
-  project: Projects,
+  // project: Projects,
   eslint: Eslint,
   env: Env,
   flow: Flow,
@@ -45,6 +46,7 @@ setSetupFiles({
   gitattributes: GitAttributes,
   changelog: Changelog,
   jsdocs: JSDocs,
+  example: Example,
 });
 
 run();

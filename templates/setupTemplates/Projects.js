@@ -9,9 +9,10 @@ class Projects extends RunnerTemplate {
   init() {
     this.runner.add('preRun', [
       () => this.getExistingConfig(),
-      () => this.createProjectOrUseDir(),
+      () => this.createProjectCloneOrUseDir(),
       () => this.getExistingConfig(),
-      () => this.ensureGitRepo(),
+      () => this.ensureGithubSetup(),
+      () => this.ensureTravisSetup(),
       // () => this.getShouldSetMissingConfigOnly(),
       // () => this.goThroughGenericProjectConfig(),
       // () => this.goThroughExistingTemplatesConfig(),
@@ -39,23 +40,18 @@ class Projects extends RunnerTemplate {
       .then((isGitRepo) => {
         if (isGitRepo) return Promise.resolve();
 
-        return Promise.reject(new Error('Need to define the code here'));
-
-        // return this.runner.prompt({
-        //   type: 'input',
-        //   message: `Enter a relative folder name/path for your project, or leave blank to run here:\n${dir}\n`,
-        //   default: null,
-        //   // validate: () => {},
-        // });
+        return this.runner.prompt({
+          type: 'list',
+          message: `Do you want to clone an existing project from github or create a new one?`,
+          default: 'clone',
+          choices: ['clone', 'new']
+        });
       })
-      .then((relativePath) => {
-        if (relativePath) {
-          const absolutePath = join(destPath, relativePath);
-          return ensureDir(absolutePath).then(this.setDestPath(absolutePath));
-        }
+      .then((action) => {
+        if (action === 'clone') return this.cloneFromGithub();
 
-        return Promise.resolve();
-      });
+        return this.newGithub();
+      }).then(gitPath => this.setDestPath(gitPath));
   }
 
   ensureGitRepo() {
