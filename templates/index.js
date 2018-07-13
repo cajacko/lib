@@ -7,9 +7,11 @@ const {
   setSetupFiles,
   setTmplPath,
   setTemplateClasses,
+  setPackageName,
 } = require('@cajacko/template');
 const config = require('../package.json');
 
+setPackageName(config.name);
 setVersion(config.version);
 setTmplPath(join(__dirname, './setupTemplates/files'));
 

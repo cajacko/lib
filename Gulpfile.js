@@ -1,6 +1,5 @@
 const gulp = require('gulp');
 const babel = require('gulp-babel');
-const { join } = require('path');
 
 const src = [
   '!node_modules',
@@ -11,7 +10,7 @@ const src = [
 ];
 
 gulp.task('build', () => {
-  const templateDir = process.argv[3].replace('--', '');
+  const buildTo = process.argv[3].replace('--', '');
 
   return gulp
     .src(src)
@@ -24,12 +23,7 @@ gulp.task('build', () => {
       ],
     }))
     .pipe(gulp.dest('dist'))
-    .pipe(gulp.dest(join(
-      __dirname,
-      './templates/runTemplates',
-      templateDir,
-      'node_modules/@cajacko/lib/dist',
-    )));
+    .pipe(gulp.dest(buildTo));
 });
 
 gulp.task('watch', () => gulp.watch(src, ['build']));

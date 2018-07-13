@@ -10,10 +10,14 @@ class Website extends StartTemplate {
 
     this.installDependencies = this.installDependencies.bind(this);
     this.copy = this.copy.bind(this);
+    this.run = this.run.bind(this);
   }
 
   copy() {
     const entryPath = this.config.entryFile;
+
+    // TODO:
+    // Copy dependencies from lib, and put inside the template dir
 
     return Promise.all([
       this.fs.copyTmpl(
@@ -31,6 +35,14 @@ class Website extends StartTemplate {
 
   run() {
     return this.runCommand('yarn start', this.tmpDir);
+  }
+
+  postWatch() {
+    const buildTo = join(this.tmpDir, 'node_modules/@cajacko/lib/dist');
+
+    return this.runCommand(`yarn build:lib --${buildTo}`, join(__dirname, '../../')).then(() => {
+      this.runCommand(`yarn watch:lib --${buildTo}`, join(__dirname, '../../'));
+    });
   }
 }
 
