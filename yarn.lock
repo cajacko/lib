@@ -92,9 +92,9 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
-"@cajacko/template@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@cajacko/template/-/template-0.2.0.tgz#438a2904324d7b0fc656823b8b1056b5013af96f"
+"@cajacko/template@0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@cajacko/template/-/template-0.2.1.tgz#57818b4b9e0f25bfd0df5ad35350c4aec2a6285c"
   dependencies:
     commander "^2.16.0"
     ejs "^2.6.1"
