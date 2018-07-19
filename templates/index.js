@@ -18,7 +18,7 @@ setTmplPath(join(__dirname, './setupTemplates/files'));
 setSetupFiles({
   // project: require('./setupTemplates/Projects'),
   eslint: require('./setupTemplates/Eslint'),
-  env: require('./setupTemplates/Env'),
+  dotenv: require('./setupTemplates/Env'),
   flow: require('./setupTemplates/Flow'),
   jest: require('./setupTemplates/Jest'),
   cucumber: require('./setupTemplates/Cucumber'),
