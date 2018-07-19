@@ -42,16 +42,17 @@ class Projects extends RunnerTemplate {
 
         return this.runner.prompt({
           type: 'list',
-          message: `Do you want to clone an existing project from github or create a new one?`,
+          message: 'Do you want to clone an existing project from github or create a new one?',
           default: 'clone',
-          choices: ['clone', 'new']
+          choices: ['clone', 'new'],
         });
       })
       .then((action) => {
         if (action === 'clone') return this.cloneFromGithub();
 
         return this.newGithub();
-      }).then(gitPath => this.setDestPath(gitPath));
+      })
+      .then(gitPath => this.setDestPath(gitPath));
   }
 
   ensureGitRepo() {

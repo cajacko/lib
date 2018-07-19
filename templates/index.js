@@ -1,5 +1,7 @@
 #! /usr/bin/env node
 
+/* eslint global-require: 0 */
+
 const { join } = require('path');
 const {
   setVersion,
@@ -13,28 +15,28 @@ const config = require('../package.json');
 
 setPackageName(config.name);
 setVersion(config.version);
-setTmplPath(join(__dirname, './setupTemplates/files'));
+setTmplPath(join(__dirname, './templates/files'));
 
 setSetupFiles({
-  project: require('./setupTemplates/Projects.2'),
-  packagejson: require('./setupTemplates/PackageJSON'),
-  git: require('./setupTemplates/Git'),
-  eslint: require('./setupTemplates/Eslint'),
-  dotenv: require('./setupTemplates/Env'),
-  flow: require('./setupTemplates/Flow'),
-  jest: require('./setupTemplates/Jest'),
-  cucumber: require('./setupTemplates/Cucumber'),
-  gitignore: require('./setupTemplates/GitIgnore'),
-  readme: require('./setupTemplates/Readme'),
-  prettier: require('./setupTemplates/Prettier'),
-  vscode: require('./setupTemplates/VSCode'),
-  travis: require('./setupTemplates/Travis'),
-  privacy: require('./setupTemplates/Privacy'),
-  editorconfig: require('./setupTemplates/EditorConfig'),
-  gitattributes: require('./setupTemplates/GitAttributes'),
-  changelog: require('./setupTemplates/Changelog'),
-  jsdocs: require('./setupTemplates/JSDocs'),
-  example: require('./setupTemplates/Example'),
+  project: require('./templates/Projects.2'),
+  packagejson: require('./templates/PackageJSON'),
+  git: require('./templates/Git'),
+  eslint: require('./templates/Eslint'),
+  dotenv: require('./templates/Env'),
+  flow: require('./templates/Flow'),
+  jest: require('./templates/Jest'),
+  cucumber: require('./templates/Cucumber'),
+  gitignore: require('./templates/GitIgnore'),
+  readme: require('./templates/Readme'),
+  prettier: require('./templates/Prettier'),
+  vscode: require('./templates/VSCode'),
+  travis: require('./templates/Travis'),
+  privacy: require('./templates/Privacy'),
+  editorconfig: require('./templates/EditorConfig'),
+  gitattributes: require('./templates/GitAttributes'),
+  changelog: require('./templates/Changelog'),
+  jsdocs: require('./templates/JSDocs'),
+  example: require('./templates/Example'),
 });
 
 setTemplateClasses({
