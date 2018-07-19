@@ -1,9 +1,9 @@
 // @flow
 
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import { persistStore, autoRehydrate } from 'redux-persist';
-import logger from 'redux-logger';
-import config from '../config';
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import { persistStore, autoRehydrate } from "redux-persist";
+import logger from "redux-logger";
+import config from "../config";
 
 const reducers = config.REDUCERS && combineReducers(config.REDUCERS);
 
@@ -13,8 +13,8 @@ const store =
     reducers,
     compose(
       applyMiddleware(logger),
-      autoRehydrate(),
-    ),
+      autoRehydrate()
+    )
   );
 
 if (config.REDUCERS) persistStore(store);

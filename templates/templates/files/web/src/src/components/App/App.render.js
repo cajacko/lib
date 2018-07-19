@@ -1,20 +1,20 @@
 // @flow
 
-import React from 'react';
-import { Provider } from 'react-redux';
-import config from '../../config';
-import store from '../../store';
-import Router from '../Router';
+import React from "react";
+import { Provider } from "react-redux";
+import config from "../../config";
+import store from "../../store";
+import Router from "../Router";
 
 const Error = ({ text }) => {
-  const errorMessage = text || 'Undefined error';
+  const errorMessage = text || "Undefined error";
 
   console.error(errorMessage);
   return <p>{errorMessage}</p>;
 };
 
 const WithRedux = ({ children }) =>
-  (config.REDUCERS ? <Provider store={store}>{children}</Provider> : children);
+  config.REDUCERS ? <Provider store={store}>{children}</Provider> : children;
 
 const WithRouter = () => {
   if (config.ROUTES) {

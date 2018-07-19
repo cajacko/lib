@@ -40,7 +40,7 @@ setSetupFiles({
 });
 
 setTemplateClasses({
-  website: require('./startTemplates/Website'),
+  website: require('./templates/Website'),
 });
 
 run();
