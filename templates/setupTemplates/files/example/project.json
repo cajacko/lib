@@ -1,4 +1,11 @@
 {
+  "title": "Example",
+  "slug": "example",
+  "description": "Example description.",
+  "authorName": "Charlie Jackson",
+  "authorUrl": "https://charliejackson.com",
+  "authorEmail": "contact@charliejackson.com",
+  "license": "MIT",
   "templates": {
     "main-site": {
       "entryFile": "src/entry.js",

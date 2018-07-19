@@ -7,11 +7,7 @@ class Example extends RunnerTemplate {
         this.getTmplPath('example/entry.js'),
         'src/entry.js',
       ),
-      this.runner.copy(
-        this.getTmplPath('example/package.json'),
-        'package.json',
-      ),
-      this.runner.copy(
+      this.runner.copyIfDoesNotExist(
         this.getTmplPath('example/project.json'),
         'project.json',
       ),
