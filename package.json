@@ -1,6 +1,6 @@
 {
   "name": "@cajacko/lib",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Personal library for projects by Charlie Jackson",
   "main": "index.js",
   "repository": "git@github.com:cajacko/lib.git",
