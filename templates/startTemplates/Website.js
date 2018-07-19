@@ -1,4 +1,5 @@
 const { StartTemplate } = require('@cajacko/template');
+const { copy, ensureDir, remove } = require('fs-extra');
 const { join } = require('path');
 
 class Website extends StartTemplate {
@@ -10,7 +11,8 @@ class Website extends StartTemplate {
 
     this.installDependencies = this.installDependencies.bind(this);
     this.copy = this.copy.bind(this);
-    this.run = this.run.bind(this);
+    this.start = this.start.bind(this);
+    this.build = this.build.bind(this);
   }
 
   copy() {
@@ -33,16 +35,46 @@ class Website extends StartTemplate {
     return this.runCommand('yarn install', this.tmpDir);
   }
 
-  run() {
+  start() {
     return this.runCommand('yarn start', this.tmpDir);
   }
 
-  postWatch() {
-    const buildTo = join(this.tmpDir, 'node_modules/@cajacko/lib/dist');
+  getLibBuildDir() {
+    return join(this.tmpDir, 'node_modules/@cajacko/lib/dist');
+  }
 
-    return this.runCommand(`yarn build:lib --${buildTo}`, join(__dirname, '../../')).then(() => {
+  buildLib() {
+    const buildTo = this.getLibBuildDir();
+
+    return this.runCommand(
+      `yarn build:lib --${buildTo}`,
+      join(__dirname, '../../'),
+    );
+  }
+
+  postWatch() {
+    const buildTo = this.getLibBuildDir();
+
+    return this.buildLib().then(() => {
       this.runCommand(`yarn watch:lib --${buildTo}`, join(__dirname, '../../'));
     });
+  }
+
+  postCopy() {
+    return this.buildLib();
+  }
+
+  cleanBuildDir(buildDir) {
+    return ensureDir(buildDir).then(() => remove(buildDir));
+  }
+
+  build(key) {
+    const buildDir = join(this.getDestPath(), 'build', key);
+
+    return Promise.all([
+      this.cleanBuildDir(buildDir),
+      this.runCommand('yarn build', this.tmpDir),
+    ]).then(() => copy(join(this.tmpDir, 'build'), buildDir));
   }
 }
 
