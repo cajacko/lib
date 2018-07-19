@@ -13,6 +13,7 @@ class Website extends StartTemplate {
     this.copy = this.copy.bind(this);
     this.start = this.start.bind(this);
     this.build = this.build.bind(this);
+    this.test = this.test.bind(this);
   }
 
   copy() {
@@ -75,6 +76,10 @@ class Website extends StartTemplate {
       this.cleanBuildDir(buildDir),
       this.runCommand('yarn build', this.tmpDir),
     ]).then(() => copy(join(this.tmpDir, 'build'), buildDir));
+  }
+
+  test() {
+    return this.runCommand('yarn test', this.tmpDir);
   }
 }
 
