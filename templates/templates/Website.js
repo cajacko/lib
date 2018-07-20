@@ -56,12 +56,12 @@ class Website extends StartTemplate {
   postWatch() {
     const buildTo = this.getLibBuildDir();
 
-    return this.buildLib().then(() => {
-      this.runCommand(`yarn watch:lib --${buildTo}`, join(__dirname, '../../'));
-    });
+    this.runCommand(`yarn watch:lib --${buildTo}`, join(__dirname, '../../'));
   }
 
   postCopy() {
+    // TODO:
+    console.log('-- Copy flow, eslint, jsdocs to the tmp dir --');
     return this.buildLib();
   }
 

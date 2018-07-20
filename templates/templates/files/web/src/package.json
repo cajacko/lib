@@ -60,7 +60,10 @@
     "build:css": "node-sass-chokidar src/ -o src/",
     "build": "npm-run-all build:css build:js", 
     "build:js": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "jsdoc": "jsdoc src -r -d docs -c jsdoc.json", 
+    "flow": "flow", 
+    "test:lint": "node ./node_modules/eslint/bin/eslint.js --ext .js --ext .jsx src", 
+    "test": "yarn test:lint && yarn flow && yarn jsdoc"
   },
   "jest": {
     "collectCoverageFrom": [
