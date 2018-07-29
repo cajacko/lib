@@ -41,6 +41,7 @@ setSetupFiles({
 
 setTemplateClasses({
   website: require('./templates/Website'),
+  'mobile-app': require('./templates/MobileApp'),
 });
 
 run();
