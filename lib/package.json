@@ -1,8 +1,4 @@
 {
   "name": "@cajacko/lib",
-  "version": "0.1.0",
-  "dependencies": {
-    "lodash": "^4.17.10",
-    "react": "^16.4.1"
-  }
+  "version": "0.1.0"
 }
