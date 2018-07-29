@@ -43,9 +43,12 @@ class PackageJSON extends RunnerTemplate {
   }
 
   postSetupFiles() {
-    this.packageJSON.name = this.runner.projectConfig.slug;
-    this.packageJSON.description = this.runner.projectConfig.description;
-    this.packageJSON.license = this.runner.projectConfig.license;
+    if (this.runner.projectConfig) {
+      const { slug, description, license } = this.runner.projectConfig;
+      this.packageJSON.name = slug;
+      this.packageJSON.description = description;
+      this.packageJSON.license = license;
+    }
 
     return this.runner.writeJSON(this.packageJSON, 'package.json');
   }
