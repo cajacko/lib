@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Text } from 'react-native';
+import Router from '../Router';
 import config from '../../config';
 
 const Error = ({ text }) => {
@@ -12,13 +13,13 @@ const Error = ({ text }) => {
 };
 
 const WithRouter = () => {
-  // if (config.ROUTES) {
-  //   if (!config.ROUTES.length) {
-  //     return <Error text="ROUTES does not contain any routes" />;
-  //   }
+  if (config.ROUTES) {
+    if (!config.ROUTES.length) {
+      return <Error text="ROUTES does not contain any routes" />;
+    }
 
-  //   return <Router routes={config.ROUTES} />;
-  // }
+    return <Router routes={config.ROUTES} />;
+  }
 
   if (config.ENTRY_COMPONENT) {
     const EntryComponent = config.ENTRY_COMPONENT;

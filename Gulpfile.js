@@ -10,9 +10,10 @@ const src = [
 ];
 
 gulp.task('build', () => {
-  const buildTo = process.argv[3].replace('--', '');
+  const buildArg = process.argv[3];
+  const buildTo = buildArg && buildArg.replace('--', '');
 
-  return gulp
+  const task = gulp
     .src(src)
     .pipe(babel({
       presets: ['react', 'env', 'flow'],
@@ -22,8 +23,13 @@ gulp.task('build', () => {
         'babel-plugin-styled-components',
       ],
     }))
-    .pipe(gulp.dest('dist'))
-    .pipe(gulp.dest(buildTo));
+    .pipe(gulp.dest('dist'));
+
+  if (buildTo) return task.pipe(gulp.dest(buildTo));
+
+  return task;
 });
 
 gulp.task('watch', () => gulp.watch(src, ['build']));
+
+gulp.task('buildAndWatch', ['build', 'watch']);
