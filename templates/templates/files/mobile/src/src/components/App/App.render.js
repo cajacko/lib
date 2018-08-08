@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Text } from 'react-native';
+import SafeAreaView from '@cajacko/lib/dist/components/SafeAreaView';
 import Router from '../Router';
 import config from '../../config';
 
@@ -31,6 +32,10 @@ const WithRouter = () => {
   );
 };
 
-const Root = () => <WithRouter />;
+const Root = () => (
+  <SafeAreaView>
+    <WithRouter />
+  </SafeAreaView>
+);
 
 export default Root;
