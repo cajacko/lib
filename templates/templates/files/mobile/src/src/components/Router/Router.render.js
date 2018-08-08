@@ -1,12 +1,13 @@
 // @flow
 
 import React from 'react';
-import { NativeRouter, Route, Switch } from 'react-router-native';
+import * as router from 'react-router-native';
+import withRouter from '@cajacko/lib/dist/components/HOCs/withRouter';
 
-const Router = ({ routes }) => (
-  <NativeRouter>
-    <Switch>{routes.map(r => <Route {...r} key={r.path || ''} />)}</Switch>
-  </NativeRouter>
+const { NativeRouter } = router;
+
+const Router = props => (
+  <NativeRouter>{withRouter(router)(props)}</NativeRouter>
 );
 
 export default Router;
