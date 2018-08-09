@@ -3,13 +3,15 @@
 import React from 'react';
 import { Text } from 'react-native';
 import SafeAreaView from '@cajacko/lib/dist/components/SafeAreaView';
+import GenericErrorBoundary from '@cajacko/lib/dist/components/GenericErrorBoundary';
+import logger from '@cajacko/lib/dist/utils/logger';
 import Router from '../Router';
 import config from '../../config';
 
 const Error = ({ text }) => {
   const errorMessage = text || 'Undefined error';
 
-  console.error(errorMessage);
+  logger.error(errorMessage);
   return <Text>{errorMessage}</Text>;
 };
 
@@ -33,9 +35,13 @@ const WithRouter = () => {
 };
 
 const Root = () => (
-  <SafeAreaView>
-    <WithRouter />
-  </SafeAreaView>
+  <GenericErrorBoundary>
+    <SafeAreaView>
+      <GenericErrorBoundary>
+        <WithRouter />
+      </GenericErrorBoundary>
+    </SafeAreaView>
+  </GenericErrorBoundary>
 );
 
 export default Root;
