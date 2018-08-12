@@ -6,13 +6,14 @@ import { Provider } from 'react-redux';
 import SafeAreaView from '@cajacko/lib/dist/components/SafeAreaView';
 import GenericErrorBoundary from '@cajacko/lib/dist/components/GenericErrorBoundary';
 import { init } from '@cajacko/lib/dist/utils/store';
+import AppError from '@cajacko/lib/dist/modules/AppError';
 import Router from '../Router';
 import config from '../../config';
 
 const WithRouter = () => {
   if (config.ROUTES) {
     if (!config.ROUTES.length) {
-      throw new Error('ROUTES does not contain any routes');
+      throw new AppError('ROUTES does not contain any routes');
     }
 
     return <Router routes={config.ROUTES} />;
@@ -23,7 +24,7 @@ const WithRouter = () => {
     return <EntryComponent />;
   }
 
-  throw new Error('Error: No ROUTES or ENTRY_COMPONENT defined in the entry file');
+  throw new AppError('Error: No ROUTES or ENTRY_COMPONENT defined in the entry file');
 };
 
 const WithStore = ({ children }) => {
