@@ -1,24 +1,18 @@
 // @flow
 
 import React from 'react';
-import { Text } from 'react-native';
+import { AsyncStorage } from 'react-native';
+import { Provider } from 'react-redux';
 import SafeAreaView from '@cajacko/lib/dist/components/SafeAreaView';
 import GenericErrorBoundary from '@cajacko/lib/dist/components/GenericErrorBoundary';
-import logger from '@cajacko/lib/dist/utils/logger';
+import { init } from '@cajacko/lib/dist/utils/store';
 import Router from '../Router';
 import config from '../../config';
-
-const Error = ({ text }) => {
-  const errorMessage = text || 'Undefined error';
-
-  logger.error(errorMessage);
-  return <Text>{errorMessage}</Text>;
-};
 
 const WithRouter = () => {
   if (config.ROUTES) {
     if (!config.ROUTES.length) {
-      return <Error text="ROUTES does not contain any routes" />;
+      throw new Error('ROUTES does not contain any routes');
     }
 
     return <Router routes={config.ROUTES} />;
@@ -29,18 +23,28 @@ const WithRouter = () => {
     return <EntryComponent />;
   }
 
-  return (
-    <Error text="Error: No ROUTES or ENTRY_COMPONENT defined in the entry file" />
-  );
+  throw new Error('Error: No ROUTES or ENTRY_COMPONENT defined in the entry file');
+};
+
+const WithStore = ({ children }) => {
+  const { REDUCERS, EXISTING_STATE, BLACKLIST } = config;
+
+  if (!REDUCERS) return children;
+
+  const store = init(REDUCERS, EXISTING_STATE, AsyncStorage, BLACKLIST);
+
+  return <Provider store={store}>{children}</Provider>;
 };
 
 const Root = () => (
   <GenericErrorBoundary>
-    <SafeAreaView>
-      <GenericErrorBoundary>
-        <WithRouter />
-      </GenericErrorBoundary>
-    </SafeAreaView>
+    <WithStore>
+      <SafeAreaView>
+        <GenericErrorBoundary>
+          <WithRouter />
+        </GenericErrorBoundary>
+      </SafeAreaView>
+    </WithStore>
   </GenericErrorBoundary>
 );
 
