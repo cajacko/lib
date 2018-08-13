@@ -7,6 +7,7 @@ import SafeAreaView from '@cajacko/lib/dist/components/SafeAreaView';
 import GenericErrorBoundary from '@cajacko/lib/dist/components/GenericErrorBoundary';
 import { init } from '@cajacko/lib/dist/utils/store';
 import AppError from '@cajacko/lib/dist/modules/AppError';
+import { Provider as DatePickerProvider } from '@cajacko/lib/dist/components/context/DatePicker';
 import Router from '../Router';
 import config from '../../config';
 
@@ -42,7 +43,9 @@ const Root = () => (
     <WithStore>
       <SafeAreaView>
         <GenericErrorBoundary>
-          <WithRouter />
+          <DatePickerProvider>
+            <WithRouter />
+          </DatePickerProvider>
         </GenericErrorBoundary>
       </SafeAreaView>
     </WithStore>
