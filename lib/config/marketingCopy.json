@@ -1,4 +1,11 @@
 {
+  "General": {
+    "Set": "Set",
+    "Cancel": "Cancel"
+  },
+  "GenericErrorBoundary": {
+    "ErrorCode": "Error Code"
+  },
   "Errors": {
     "General": {
       "Title": "Damn! We've had a crash",
