@@ -1,10 +1,6 @@
 // Bootstrap the project and load in things in the correct order
 
-import { NativeModules } from 'react-native';
-import './src/config';
-import '@cajacko/lib/dist/utils/bootstrap';
+import * as config from './src/config';
+import entry from '@cajacko/lib/dist/entry';
 
-console.disableYellowBox = true;
-NativeModules.ExceptionsManager = null;
-
-export { default } from './src/components/App';
+export default entry(config);
