@@ -8,6 +8,7 @@ import GenericErrorBoundary from '@cajacko/lib/dist/components/GenericErrorBound
 import { init } from '@cajacko/lib/dist/utils/store';
 import AppError from '@cajacko/lib/dist/modules/AppError';
 import { Provider as DatePickerProvider } from '@cajacko/lib/dist/components/context/DatePicker';
+import AppLoading from '@cajacko/lib/dist/components/AppLoading';
 import Router from '../Router';
 import config from '../../config';
 
@@ -42,11 +43,13 @@ const Root = () => (
   <GenericErrorBoundary>
     <WithStore>
       <SafeAreaView>
-        <GenericErrorBoundary>
-          <DatePickerProvider>
-            <WithRouter />
-          </DatePickerProvider>
-        </GenericErrorBoundary>
+        <AppLoading>
+          <GenericErrorBoundary>
+            <DatePickerProvider>
+              <WithRouter />
+            </DatePickerProvider>
+          </GenericErrorBoundary>
+        </AppLoading>
       </SafeAreaView>
     </WithStore>
   </GenericErrorBoundary>
