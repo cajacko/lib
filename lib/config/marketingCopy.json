@@ -3,6 +3,10 @@
     "Set": "Set",
     "Cancel": "Cancel"
   },
+  "Navigation": {
+    "GoBack": "Go back",
+    "GoToHome": "Go to home"
+  },
   "GenericErrorBoundary": {
     "ErrorCode": "Error Code"
   },
