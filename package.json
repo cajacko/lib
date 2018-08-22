@@ -28,7 +28,7 @@
     ]
   },
   "dependencies": {
-    "@cajacko/template": "0.4.1",
+    "@cajacko/template": "0.5.0",
     "@octokit/rest": "^15.8.2",
     "babel-cli": "^6.26.0",
     "babel-plugin-styled-components": "^1.5.1",
