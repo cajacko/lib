@@ -8,8 +8,14 @@
   "license": "MIT",
   "templates": {
     "main-site": {
-      "entryFile": "src/entry.js",
-      "type": "website"
+      "type": "website",
+      "entryFile": "src/entry.js"
+    },
+    "main-package": {
+      "type": "npm-module",
+      "bin": {
+        "example": "dist/example.js"
+      }
     }
   }
 }
