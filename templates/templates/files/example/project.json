@@ -9,6 +9,7 @@
   "templates": {
     "main-site": {
       "type": "website",
+      "splashIcon": "src/assets/splash-icon.png",
       "entryFile": "src/entry.js"
     },
     "main-package": {

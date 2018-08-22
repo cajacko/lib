@@ -1,5 +1,7 @@
 const { StartTemplate } = require('@cajacko/template');
-const { copy, ensureDir, remove } = require('fs-extra');
+const {
+  copy, ensureDir, remove, readJSON, writeJSON,
+} = require('fs-extra');
 const { join } = require('path');
 
 class Website extends StartTemplate {
@@ -26,7 +28,7 @@ class Website extends StartTemplate {
       this.fs.copyTmpl(
         join(__dirname, 'files/mobile/nativeConfig.js'),
         join(this.tmpDir, 'src/config.js'),
-        { entryPath },
+        { entryPath }
       ),
       this.copySrcDependencies(),
     ]);
@@ -49,7 +51,7 @@ class Website extends StartTemplate {
 
     return this.runCommand(
       `yarn build:lib --${buildTo}`,
-      join(__dirname, '../../'),
+      join(__dirname, '../../')
     );
   }
 
@@ -62,7 +64,32 @@ class Website extends StartTemplate {
   postCopy() {
     // TODO:
     console.log('-- Copy flow, eslint, jsdocs to the tmp dir --');
-    return this.buildLib();
+
+    const promises = [];
+
+    const { splashIcon, splashBackgroundColor } = this.config;
+
+    if (splashIcon || splashBackgroundColor) {
+      const appJSONPath = join(this.tmpDir, 'app.json');
+
+      promises.push(readJSON(appJSONPath).then((appJSON) => {
+        const newAppJSON = Object.assign({}, appJSON);
+
+        if (splashIcon) {
+          newAppJSON.expo.splash.image = `./src/projectFiles/${splashIcon}`;
+        }
+
+        if (splashBackgroundColor) {
+          newAppJSON.expo.splash.backgroundColor = splashBackgroundColor;
+        }
+
+        return writeJSON(appJSONPath, newAppJSON, { spaces: 2 });
+      }));
+    }
+
+    promises.push(this.buildLib());
+
+    return Promise.all(promises);
   }
 
   cleanBuildDir(buildDir) {
