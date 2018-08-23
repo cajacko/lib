@@ -1,5 +1,8 @@
 const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
+const admin = require('firebase-admin');
+
+admin.initializeApp();
 
 const graphql = (request, response) => {
   // Construct a schema, using GraphQL schema language
@@ -12,7 +15,24 @@ const graphql = (request, response) => {
   // Provide resolver functions for your schema fields
   const resolvers = {
     Query: {
-      hello: () => 'Hello world!',
+      hello: () =>
+        admin
+          .database()
+          .ref('/posts/1234')
+          .set({ yeah: 'baby' })
+          .then((...args) => {
+            console.log(args);
+
+            return admin
+              .database()
+              .ref('/posts/1234')
+              .once('value')
+              .then((snapshot) => {
+                console.log(snapshot.val());
+                return 'Success';
+              });
+          })
+          .catch(() => 'Failure'),
     },
   };
 
@@ -22,16 +42,7 @@ const graphql = (request, response) => {
 
   server.applyMiddleware({ app });
 
-  // app.get('*', (req, res) => {
-  //   res.send('Hello from Express on Firebase!');
-  // });
-
-  console.log(server.graphqlPath);
-
   return app(request, response);
-
-  // app.listen({ port: 4000 }, () =>
-  //   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`));
 };
 
 module.exports = graphql;
