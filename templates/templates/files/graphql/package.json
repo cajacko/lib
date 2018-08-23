@@ -1,0 +1,13 @@
+{
+  "name": "graphql",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "firebase": "firebase"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "firebase-tools": "^4.2.0"
+  }
+}
