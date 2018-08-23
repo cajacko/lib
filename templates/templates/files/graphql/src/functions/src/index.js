@@ -20,18 +20,12 @@ const graphql = (request, response) => {
           .database()
           .ref('/posts/1234')
           .set({ yeah: 'baby' })
-          .then((...args) => {
-            console.log(args);
-
-            return admin
+          .then((...args) =>
+            admin
               .database()
               .ref('/posts/1234')
               .once('value')
-              .then((snapshot) => {
-                console.log(snapshot.val());
-                return 'Success';
-              });
-          })
+              .then(snapshot => 'Success'))
           .catch(() => 'Failure'),
     },
   };

@@ -42,6 +42,7 @@ setSetupFiles({
 setTemplateClasses({
   website: require('./templates/Website'),
   'mobile-app': require('./templates/MobileApp'),
+  graphql: require('./templates/GraphQL'),
 });
 
 run();
