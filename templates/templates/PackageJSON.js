@@ -9,12 +9,12 @@ const projectJSON = {
   description: 'Example project',
   license: 'MIT',
   scripts: {
-    start: 'lib start',
-    test: 'lib test',
-    build: 'lib build',
-    deploy: 'lib deploy',
-    postinstall: 'lib postinstall',
-    precommit: 'lib precommit',
+    start: 'template start',
+    test: 'template test',
+    deploy: 'template deploy',
+    upgrade: 'template upgrade',
+    postinstall: 'template postinstall',
+    precommit: 'template precommit',
   },
 };
 
