@@ -19,8 +19,13 @@ const jsonSrc = ignore.concat(json);
 const dest = 'dist';
 
 const getBuildTo = () => {
-  const buildArg = process.argv[3];
-  return buildArg && buildArg.replace('--', '');
+  if (!process.argv[3]) return null;
+
+  const buildPaths = process.argv.slice();
+
+  buildPaths.splice(0, 3);
+
+  return buildPaths.map(path => `${path.replace('--', '')}/dist`);
 };
 
 gulp.task('copyJSON', () => {
@@ -28,7 +33,13 @@ gulp.task('copyJSON', () => {
 
   const task = gulp.src(jsonSrc).pipe(gulp.dest(dest));
 
-  if (buildTo) return task.pipe(gulp.dest(buildTo));
+  if (buildTo && buildTo.length) {
+    buildTo.forEach((buildPath) => {
+      task.pipe(gulp.dest(buildPath));
+    });
+
+    return task;
+  }
 
   return task;
 });
@@ -48,7 +59,13 @@ gulp.task('build', ['copyJSON'], () => {
     }))
     .pipe(gulp.dest(dest));
 
-  if (buildTo) return task.pipe(gulp.dest(buildTo));
+  if (buildTo && buildTo.length) {
+    buildTo.forEach((buildPath) => {
+      task.pipe(gulp.dest(buildPath));
+    });
+
+    return task;
+  }
 
   return task;
 });
