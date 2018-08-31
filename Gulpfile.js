@@ -1,16 +1,11 @@
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 
-const ignore = [
-  '!node_modules',
-  '!node_modules/**',
-  '!lib/node_modules',
-  '!lib/node_modules/**',
-];
+const ignore = ['!node_modules', '!node_modules/**'];
 
-const js = ['lib/**/*.js'];
+const js = ['src/**/*.js'];
 
-const json = ['lib/**/*.json'];
+const json = ['src/**/*.json'];
 
 const watch = ignore.concat(js, json);
 const babelSrc = ignore.concat(js);
