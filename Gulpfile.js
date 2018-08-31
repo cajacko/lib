@@ -25,7 +25,7 @@ const getBuildTo = () => {
 
   buildPaths.splice(0, 3);
 
-  return buildPaths.map(path => `${path.replace('--', '')}/dist`);
+  return buildPaths.map(path => `${path.replace('--', '')}`);
 };
 
 gulp.task('copyJSON', () => {
