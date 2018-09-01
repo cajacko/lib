@@ -28,6 +28,7 @@
     ]
   },
   "dependencies": {
+    "apollo-server-express": "^2.0.4",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.3",
     "babel-plugin-styled-components": "^1.5.1",
@@ -42,6 +43,10 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.9.1",
     "eslint": "^4.19.1",
+    "express": "^4.16.3",
+    "firebase-admin": "~6.0.0",
+    "firebase-functions": "^2.0.3",
+    "graphql": "^0.13.2",
     "gulp-babel": "^7.0.1",
     "gulp": "^3.9.1",
     "immutable": "^3.8.2",
