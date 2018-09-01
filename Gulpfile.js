@@ -11,7 +11,7 @@ const watch = ignore.concat(js, json);
 const babelSrc = ignore.concat(js);
 const jsonSrc = ignore.concat(json);
 
-const dest = 'dist';
+const dest = './';
 
 const getBuildTo = () => {
   if (!process.argv[3]) return null;
