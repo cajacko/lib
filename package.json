@@ -11,8 +11,12 @@
     "watch:lib": "gulp watch",
     "build:lib": "gulp build",
     "precommit": "lint-staged",
-    "deploy": "yarn publish --access public"
+    "deploy": "yarn publish --access public",
+    "prepare": "yarn build:lib"
   },
+  "files": [
+    "**/*"
+  ],
   "lint-staged": {
     "*.js": [
       "prettier-eslint --write",
