@@ -1,24 +1,26 @@
 // @flow
 
-const graphqlClient = (config) => {
+import { request } from 'graphql-request';
+
+const graphqlClient = (methods, endpoint) => {
   const client = {};
 
-  Object.keys(config).forEach((configKey) => {
-    const wrappedMethods = {};
+  Object.keys(methods).forEach((methodKey) => {
+    const method = methods[methodKey];
 
-    const methods = config[configKey];
+    client[methodKey] = (...args) => {
+      const { mutation, query, vars } = method(...args);
 
-    Object.keys(methods).forEach((methodKey) => {
-      const method = methods[methodKey];
+      const queryReq = query || mutation;
 
-      wrappedMethods[methodKey] = (...args) => {
-        const { mutation, query, vars } = method(...args);
+      return request(endpoint, queryReq, vars).then((data) => {
+        const keys = Object.keys(data);
 
-        // TODO: Let's wrap the mutation or query in apollo
-      };
-    });
+        if (keys.length === 1) return data[keys[0]];
 
-    client[configKey] = wrappedMethods;
+        return data;
+      });
+    };
   });
 
   return client;
