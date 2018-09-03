@@ -10,21 +10,22 @@ const setNewOrUpdateMap = (
   data,
   Record
 ) => {
-  const props = {
-    ...data,
-    dateCreated,
-    dateLastModified,
-  };
+  let item;
+  const existingItem = state.get(id);
 
-  const newItem = Record ? new Record(props) : Map(props);
-
-  let item = state.get(id) || newItem;
-
-  if (!dateCreated) {
-    item = item.merge({
+  if (existingItem) {
+    item = existingItem.merge({
       ...data,
       dateLastModified,
     });
+  } else {
+    const props = {
+      ...data,
+      dateCreated: dateCreated || dateLastModified,
+      dateLastModified,
+    };
+
+    item = Record ? new Record(props) : Map(props);
   }
 
   return state.set(id, item);
