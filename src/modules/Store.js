@@ -65,6 +65,10 @@ class Store {
     return this.store.getState(...args);
   }
 
+  dispatch(...args) {
+    return this.store.dispatch(...args);
+  }
+
   get() {
     return this.store;
   }
