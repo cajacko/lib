@@ -16,6 +16,11 @@ const db = {
       .ref(getRef(location))
       .once('value')
       .then(snapshot => snapshot.val()),
+  delete: location =>
+    admin
+      .database()
+      .ref(getRef(location))
+      .remove(),
 };
 
 module.exports = db;
