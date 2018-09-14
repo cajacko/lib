@@ -1,0 +1,17 @@
+{
+  "title": "Charlie Jackson Lib",
+  "slug": "@cajacko/lib",
+  "version": "0.1.0",
+  "description": "Personal library for projects by Charlie Jackson.",
+  "authorName": "Charlie Jackson",
+  "authorUrl": "https://charliejackson.com",
+  "authorEmail": "contact@charliejackson.com",
+  "license": "MIT",
+  "ignorePackageJSON": true,
+  "templates": {
+    "main-package": {
+      "type": "npm-module"
+    }
+  },
+  "templateInitVersion": "0.9.0"
+}

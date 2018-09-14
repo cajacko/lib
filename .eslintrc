@@ -1,9 +1,14 @@
 {
-  "extends": ["airbnb"],
+  "extends": [
+    "airbnb"
+  ],
   "rules": {
     "flowtype/define-flow-type": 1,
     "flowtype/use-flow-type": 1,
-    "flowtype/require-valid-file-annotation": [2, "always"],
+    "flowtype/require-valid-file-annotation": [
+      2,
+      "always"
+    ],
     "func-names": "off",
     "no-warning-comments": [
       "error",
@@ -23,7 +28,14 @@
       }
     ],
     "import/prefer-default-export": "off",
-    "valid-jsdoc": "error",
+    "valid-jsdoc": [
+      "error",
+      {
+        "matchDescription": ".+",
+        "requireParamDescription": true,
+        "requireReturnDescription": true
+      }
+    ],
     "require-jsdoc": [
       "warn",
       {
@@ -64,19 +76,27 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".js", ".jsx"]
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
       }
     ],
     "class-methods-use-this": "off"
   },
   "parser": "babel-eslint",
-  "overrides": [
-    {
-      "files": "lib/**/*",
-      "rules": {
-        "import/no-unresolved": "off",
-        "import/extensions": "off"
-      }
-    }
-  ]
+  "plugins": [
+    "jest",
+    "flowtype"
+  ],
+  "env": {
+    "jest/globals": true
+  },
+  "globals": {
+    "fetch": false,
+    "document": false,
+    "window": false,
+    "Image": false,
+    "logger": false
+  }
 }
