@@ -188,47 +188,6 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@cajacko/lib@https://github.com/cajacko/lib.git#v3.2.0":
-  version "3.2.0"
-  resolved "https://github.com/cajacko/lib.git#62de16eb7392212c6877a822c740a318e0a3f57a"
-  dependencies:
-    apollo-server-express "^2.0.4"
-    babel-cli "^6.26.0"
-    babel-eslint "^8.2.3"
-    babel-plugin-styled-components "^1.5.1"
-    babel-plugin-transform-object-rest-spread "^6.26.0"
-    babel-plugin-transform-react-jsx-source "^6.22.0"
-    babel-preset-env "^1.6.1"
-    babel-preset-flow "^6.23.0"
-    babel-preset-react "^6.24.1"
-    color "^3.0.0"
-    eslint "^4.19.1"
-    eslint-config-airbnb "^16.1.0"
-    eslint-plugin-import "^2.12.0"
-    eslint-plugin-jsx-a11y "^6.0.3"
-    eslint-plugin-react "^7.9.1"
-    express "^4.16.3"
-    firebase-admin "~6.0.0"
-    firebase-functions "^2.0.3"
-    graphql "^0.13.2"
-    graphql-request "^1.8.2"
-    gulp "^3.9.1"
-    gulp-babel "^7.0.1"
-    immutable "^3.8.2"
-    lodash "^4.17.10"
-    moment "^2.22.2"
-    native-base "^2.7.2"
-    react "16.3.1"
-    react-redux "^5.0.7"
-    react-router-native "^4.3.0"
-    redux "^4.0.0"
-    redux-immutable "^4.0.0"
-    redux-persist "4.8.2"
-    redux-persist-transform-immutable "^5.0.0"
-    redux-thunk "^2.3.0"
-    reselect "^3.0.1"
-    styled-components "^3.3.3"
-
 "@cajacko/template-utils@https://github.com/cajacko/template-utils.git#v0.5.0":
   version "0.5.0"
   resolved "https://github.com/cajacko/template-utils.git#1e3053f28342892d848265fff81272594004eb40"
@@ -276,11 +235,11 @@
   resolved "https://registry.npmjs.org/@firebase/app-types/-/app-types-0.3.2.tgz#a92dc544290e2893bd8c02a81e684dae3d8e7c85"
 
 "@firebase/app@^0.3.1":
-  version "0.3.3"
-  resolved "https://registry.npmjs.org/@firebase/app/-/app-0.3.3.tgz#cb8df89495e4409e92ab30c0068b9e0641a6db81"
+  version "0.3.4"
+  resolved "https://registry.npmjs.org/@firebase/app/-/app-0.3.4.tgz#610c931bac191598b383812b36c1d2cc52316d31"
   dependencies:
     "@firebase/app-types" "0.3.2"
-    "@firebase/util" "0.2.1"
+    "@firebase/util" "0.2.2"
     dom-storage "2.1.0"
     tslib "1.9.0"
     xmlhttprequest "1.8.0"
@@ -290,12 +249,12 @@
   resolved "https://registry.npmjs.org/@firebase/database-types/-/database-types-0.3.2.tgz#70611a64dd460e0e253c7427f860d56a1afd86fe"
 
 "@firebase/database@^0.3.1":
-  version "0.3.4"
-  resolved "https://registry.npmjs.org/@firebase/database/-/database-0.3.4.tgz#67fd48ed6d8fffc81c6c6f8e68bde70b99ba8ca9"
+  version "0.3.5"
+  resolved "https://registry.npmjs.org/@firebase/database/-/database-0.3.5.tgz#9a92808862ee03b131be55e2f7f97d8f996ea905"
   dependencies:
     "@firebase/database-types" "0.3.2"
     "@firebase/logger" "0.1.1"
-    "@firebase/util" "0.2.1"
+    "@firebase/util" "0.2.2"
     faye-websocket "0.11.1"
     tslib "1.9.0"
 
@@ -303,15 +262,15 @@
   version "0.1.1"
   resolved "https://registry.npmjs.org/@firebase/logger/-/logger-0.1.1.tgz#af5df54253286993f4b367c3dabe569c848860d3"
 
-"@firebase/util@0.2.1":
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/@firebase/util/-/util-0.2.1.tgz#b59a2fbf14fce21401cbebf776a3e0260b591380"
+"@firebase/util@0.2.2":
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/@firebase/util/-/util-0.2.2.tgz#fdd57ca21b587564c0a3a032f55092633f390a30"
   dependencies:
     tslib "1.9.0"
 
 "@google-cloud/common@^0.17.0":
   version "0.17.0"
-  resolved "https://registry.npmjs.org/@google-cloud/common/-/common-0.17.0.tgz#8ef558750db481fc10a13757a49479ab9a1c8c07"
+  resolved "http://registry.npmjs.org/@google-cloud/common/-/common-0.17.0.tgz#8ef558750db481fc10a13757a49479ab9a1c8c07"
   dependencies:
     array-uniq "^1.0.3"
     arrify "^1.0.1"
@@ -395,8 +354,8 @@
     glob-to-regexp "^0.3.0"
 
 "@nodelib/fs.stat@^1.0.1":
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/@nodelib/fs.stat/-/fs.stat-1.1.1.tgz#53f349bb986ab273d601175aa1b25a655ab90ee3"
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/@nodelib/fs.stat/-/fs.stat-1.1.2.tgz#54c5a964462be3d4d78af631363c18d6fa91ac26"
 
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
@@ -511,7 +470,7 @@
 
 "@types/graphql@0.12.6":
   version "0.12.6"
-  resolved "https://registry.npmjs.org/@types/graphql/-/graphql-0.12.6.tgz#3d619198585fcabe5f4e1adfb5cf5f3388c66c13"
+  resolved "http://registry.npmjs.org/@types/graphql/-/graphql-0.12.6.tgz#3d619198585fcabe5f4e1adfb5cf5f3388c66c13"
 
 "@types/jsonwebtoken@^7.2.6":
   version "7.2.8"
@@ -600,8 +559,8 @@ acorn@^3.0.4:
   resolved "https://registry.node-modules.io/tarballs/acorn/3.3.0.tgz#45e37fb39e8da3f25baee3ff5369e2bb5f22017a"
 
 acorn@^5.0.0, acorn@^5.5.0:
-  version "5.7.2"
-  resolved "https://registry.node-modules.io/tarballs/acorn/5.7.2.tgz#91fa871883485d06708800318404e72bfb26dcc5"
+  version "5.7.3"
+  resolved "https://registry.node-modules.io/tarballs/acorn/5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
 
 address@1.0.3, address@^1.0.1:
   version "1.0.3"
@@ -686,19 +645,19 @@ anymatch@^1.3.0:
     micromatch "^2.1.5"
     normalize-path "^2.0.0"
 
-apollo-cache-control@0.2.2:
-  version "0.2.2"
-  resolved "https://registry.node-modules.io/tarballs/apollo-cache-control/0.2.2.tgz#2b361a89434bf4ace5981140512a857b8ae09ddd"
+apollo-cache-control@0.2.3:
+  version "0.2.3"
+  resolved "https://registry.node-modules.io/tarballs/apollo-cache-control/0.2.3.tgz#4f08a1390e4cadcfc43b1f1cb697b37983c6851c"
   dependencies:
-    apollo-server-env "2.0.2"
-    graphql-extensions "0.1.2"
+    apollo-server-env "2.0.3"
+    graphql-extensions "0.1.3"
 
-apollo-datasource@0.1.2:
-  version "0.1.2"
-  resolved "https://registry.node-modules.io/tarballs/apollo-datasource/0.1.2.tgz#535e4a1ae9a50faaaf38d188c85e6d6eae4562e6"
+apollo-datasource@0.1.3:
+  version "0.1.3"
+  resolved "https://registry.node-modules.io/tarballs/apollo-datasource/0.1.3.tgz#e7ae9d20f29a8a35f239b02f0c47169cfd78d70b"
   dependencies:
     apollo-server-caching "0.1.2"
-    apollo-server-env "2.0.2"
+    apollo-server-env "2.0.3"
 
 apollo-engine-reporting-protobuf@0.0.1:
   version "0.0.1"
@@ -706,14 +665,14 @@ apollo-engine-reporting-protobuf@0.0.1:
   dependencies:
     protobufjs "^6.8.6"
 
-apollo-engine-reporting@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.node-modules.io/tarballs/apollo-engine-reporting/0.0.2.tgz#645a1133467e5b9f700ac278e89332703ddb4173"
+apollo-engine-reporting@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.node-modules.io/tarballs/apollo-engine-reporting/0.0.4.tgz#b2d6318febde9a1a64b518736d4695e81f069ba1"
   dependencies:
     apollo-engine-reporting-protobuf "0.0.1"
-    apollo-server-env "2.0.2"
+    apollo-server-env "2.0.3"
     async-retry "^1.2.1"
-    graphql-extensions "0.1.2"
+    graphql-extensions "0.1.3"
     lodash "^4.17.10"
 
 apollo-link@^1.2.2:
@@ -730,20 +689,20 @@ apollo-server-caching@0.1.2:
   dependencies:
     lru-cache "^4.1.3"
 
-apollo-server-core@2.0.4:
-  version "2.0.4"
-  resolved "https://registry.node-modules.io/tarballs/apollo-server-core/2.0.4.tgz#388116bf75c0f01a5348c05ec4f11451c28febe6"
+apollo-server-core@2.0.6:
+  version "2.0.6"
+  resolved "https://registry.node-modules.io/tarballs/apollo-server-core/2.0.6.tgz#ce49d9616729c482a7d10a9285af3db564ae2c5a"
   dependencies:
     "@apollographql/apollo-upload-server" "^5.0.3"
     "@types/ws" "^5.1.2"
-    apollo-cache-control "0.2.2"
-    apollo-datasource "0.1.2"
-    apollo-engine-reporting "0.0.2"
+    apollo-cache-control "0.2.3"
+    apollo-datasource "0.1.3"
+    apollo-engine-reporting "0.0.4"
     apollo-server-caching "0.1.2"
-    apollo-server-env "2.0.2"
+    apollo-server-env "2.0.3"
     apollo-server-errors "2.0.2"
-    apollo-tracing "0.2.2"
-    graphql-extensions "0.1.2"
+    apollo-tracing "0.2.3"
+    graphql-extensions "0.1.3"
     graphql-subscriptions "^0.5.8"
     graphql-tag "^2.9.2"
     graphql-tools "^3.0.4"
@@ -752,9 +711,9 @@ apollo-server-core@2.0.4:
     subscriptions-transport-ws "^0.9.11"
     ws "^5.2.0"
 
-apollo-server-env@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.node-modules.io/tarballs/apollo-server-env/2.0.2.tgz#cb136698d896435bc0ef9e8e0aad8e49ae94db32"
+apollo-server-env@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.node-modules.io/tarballs/apollo-server-env/2.0.3.tgz#3c13552cd33f400160076cf8e1c9b24be4d27e13"
   dependencies:
     node-fetch "^2.1.2"
     util.promisify "^1.0.0"
@@ -764,8 +723,8 @@ apollo-server-errors@2.0.2:
   resolved "https://registry.node-modules.io/tarballs/apollo-server-errors/2.0.2.tgz#e9cbb1b74d2cd78aed23cd886ca2d0c186323b2b"
 
 apollo-server-express@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.node-modules.io/tarballs/apollo-server-express/2.0.4.tgz#04fe852b532402b1ebac68f2a847120abebc376d"
+  version "2.0.6"
+  resolved "https://registry.node-modules.io/tarballs/apollo-server-express/2.0.6.tgz#31288f47479e4f18828823f46e059218e5e12203"
   dependencies:
     "@apollographql/apollo-upload-server" "^5.0.3"
     "@apollographql/graphql-playground-html" "^1.6.0"
@@ -774,25 +733,26 @@ apollo-server-express@^2.0.4:
     "@types/cors" "^2.8.4"
     "@types/express" "4.16.0"
     accepts "^1.3.5"
-    apollo-server-core "2.0.4"
+    apollo-server-core "2.0.6"
     body-parser "^1.18.3"
     cors "^2.8.4"
     graphql-subscriptions "^0.5.8"
     graphql-tools "^3.0.4"
     type-is "^1.6.16"
 
-apollo-tracing@0.2.2:
-  version "0.2.2"
-  resolved "https://registry.node-modules.io/tarballs/apollo-tracing/0.2.2.tgz#f69f13366a643ab75f2eb145ec49a57e4e43181a"
+apollo-tracing@0.2.3:
+  version "0.2.3"
+  resolved "https://registry.node-modules.io/tarballs/apollo-tracing/0.2.3.tgz#25092fc88456614f81a41f4e5a1f7e4586a8a9b8"
   dependencies:
-    apollo-server-env "2.0.2"
-    graphql-extensions "0.1.2"
+    apollo-server-env "2.0.3"
+    graphql-extensions "0.1.3"
 
 apollo-utilities@^1.0.0, apollo-utilities@^1.0.1:
-  version "1.0.20"
-  resolved "https://registry.node-modules.io/tarballs/apollo-utilities/1.0.20.tgz#b14318686cb67838279fb5f009cca0ec97a4d140"
+  version "1.0.21"
+  resolved "https://registry.node-modules.io/tarballs/apollo-utilities/1.0.21.tgz#cb8b5779fe275850b16046ff8373f4af2de90765"
   dependencies:
     fast-json-stable-stringify "^2.0.0"
+    fclone "^1.0.11"
 
 aproba@^1.0.3:
   version "1.2.0"
@@ -818,13 +778,6 @@ argparse@^1.0.7:
 aria-query@^0.7.0:
   version "0.7.1"
   resolved "https://registry.node-modules.io/tarballs/aria-query/0.7.1.tgz#26cbb5aff64144b0a825be1846e0b16cfa00b11e"
-  dependencies:
-    ast-types-flow "0.0.7"
-    commander "^2.11.0"
-
-aria-query@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.node-modules.io/tarballs/aria-query/3.0.0.tgz#65b3fcc1ca1155a8c9ae64d6eee297f15d5133cc"
   dependencies:
     ast-types-flow "0.0.7"
     commander "^2.11.0"
@@ -933,7 +886,7 @@ assign-symbols@^1.0.0:
   version "1.0.0"
   resolved "https://registry.node-modules.io/tarballs/assign-symbols/1.0.0.tgz#59667f41fadd4f20ccbc2bb96b8d4f7f78ec0367"
 
-ast-types-flow@0.0.7, ast-types-flow@^0.0.7:
+ast-types-flow@0.0.7:
   version "0.0.7"
   resolved "https://registry.node-modules.io/tarballs/ast-types-flow/0.0.7.tgz#f70b735c6bca1a5c9c22d982c3e39e7feba3bdad"
 
@@ -946,10 +899,10 @@ async-limiter@~1.0.0:
   resolved "https://registry.node-modules.io/tarballs/async-limiter/1.0.0.tgz#78faed8c3d074ab81f22b4e985d79e8738f720f8"
 
 async-retry@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.node-modules.io/tarballs/async-retry/1.2.1.tgz#308c6c4e1d91e63397a4676290334ae9bda7bcb1"
+  version "1.2.3"
+  resolved "https://registry.node-modules.io/tarballs/async-retry/1.2.3.tgz#a6521f338358d322b1a0012b79030c6f411d1ce0"
   dependencies:
-    retry "0.10.1"
+    retry "0.12.0"
 
 async@^2.0.1, async@^2.3.0, async@^2.4.0:
   version "2.6.1"
@@ -983,12 +936,6 @@ axios@^0.18.0:
 axobject-query@^0.1.0:
   version "0.1.0"
   resolved "https://registry.node-modules.io/tarballs/axobject-query/0.1.0.tgz#62f59dbc59c9f9242759ca349960e7a2fe3c36c0"
-  dependencies:
-    ast-types-flow "0.0.7"
-
-axobject-query@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.node-modules.io/tarballs/axobject-query/2.0.1.tgz#05dfa705ada8ad9db993fa6896f22d395b0b0a07"
   dependencies:
     ast-types-flow "0.0.7"
 
@@ -1208,7 +1155,7 @@ babel-plugin-styled-components@1.6.0:
     lodash "^4.17.10"
     semver "^5.5.1"
 
-babel-plugin-styled-components@^1.5.1, babel-plugin-styled-components@^1.6.0:
+babel-plugin-styled-components@^1.6.0:
   version "1.7.1"
   resolved "https://registry.node-modules.io/tarballs/babel-plugin-styled-components/1.7.1.tgz#c291d2a48ec77bb0828275b87696b6594a2f80f9"
   dependencies:
@@ -1940,9 +1887,9 @@ chownr@^1.0.1:
   version "1.0.1"
   resolved "https://registry.node-modules.io/tarballs/chownr/1.0.1.tgz#e2a75042a9551908bebd25b8523d5f9769d79181"
 
-ci-info@^1.3.0:
-  version "1.4.0"
-  resolved "https://registry.node-modules.io/tarballs/ci-info/1.4.0.tgz#4841d53cad49f11b827b648ebde27a6e189b412f"
+ci-info@^1.5.0:
+  version "1.5.1"
+  resolved "https://registry.node-modules.io/tarballs/ci-info/1.5.1.tgz#17e8eb5de6f8b2b6038f0cbb714d410bfa9f3030"
 
 circular-json@^0.3.1:
   version "0.3.3"
@@ -2064,11 +2011,7 @@ combined-stream@1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@^2.11.0, commander@^2.14.1, commander@^2.9.0:
-  version "2.17.1"
-  resolved "https://registry.node-modules.io/tarballs/commander/2.17.1.tgz#bd77ab7de6de94205ceacc72f1716d29f20a77bf"
-
-commander@^2.16.0, commander@^2.17.1:
+commander@^2.11.0, commander@^2.14.1, commander@^2.16.0, commander@^2.17.1, commander@^2.9.0:
   version "2.18.0"
   resolved "https://registry.node-modules.io/tarballs/commander/2.18.0.tgz#2bf063ddee7c7891176981a2cc798e5754bc6970"
 
@@ -2131,8 +2074,10 @@ content-type@~1.0.4:
   resolved "https://registry.node-modules.io/tarballs/content-type/1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
 
 convert-source-map@^1.5.0, convert-source-map@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.node-modules.io/tarballs/convert-source-map/1.5.1.tgz#b8278097b9bc229365de5c62cf5fcaed8b5599e5"
+  version "1.6.0"
+  resolved "https://registry.node-modules.io/tarballs/convert-source-map/1.6.0.tgz#51b537a8c43e0f04dec1993bffcdd504e758ac20"
+  dependencies:
+    safe-buffer "~5.1.1"
 
 cookie-signature@1.0.6:
   version "1.0.6"
@@ -2210,7 +2155,7 @@ css-to-react-native@^2.0.3:
     fbjs "^0.8.5"
     postcss-value-parser "^3.3.0"
 
-damerau-levenshtein@^1.0.0, damerau-levenshtein@^1.0.4:
+damerau-levenshtein@^1.0.0:
   version "1.0.4"
   resolved "https://registry.node-modules.io/tarballs/damerau-levenshtein/1.0.4.tgz#03191c432cb6eea168bb77f3a55ffdccb8978514"
 
@@ -2234,11 +2179,17 @@ debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.
   dependencies:
     ms "2.0.0"
 
-debug@^3.1.0:
+debug@=3.1.0:
   version "3.1.0"
   resolved "https://registry.node-modules.io/tarballs/debug/3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
     ms "2.0.0"
+
+debug@^3.1.0:
+  version "3.2.5"
+  resolved "https://registry.node-modules.io/tarballs/debug/3.2.5.tgz#c2418fbfd7a29f4d4f70ff4cea604d4b64c46407"
+  dependencies:
+    ms "^2.1.1"
 
 decamelize@^1.1.1:
   version "1.2.0"
@@ -2364,8 +2315,8 @@ dicer@0.2.5:
     streamsearch "0.1.2"
 
 diff-match-patch@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.node-modules.io/tarballs/diff-match-patch/1.0.1.tgz#d5f880213d82fbc124d2b95111fb3c033dbad7fa"
+  version "1.0.4"
+  resolved "https://registry.node-modules.io/tarballs/diff-match-patch/1.0.4.tgz#6ac4b55237463761c4daf0dc603eb869124744b1"
 
 dir-glob@^2.0.0:
   version "2.0.0"
@@ -2453,7 +2404,7 @@ elegant-spinner@^1.0.1:
   version "1.0.1"
   resolved "https://registry.node-modules.io/tarballs/elegant-spinner/1.0.1.tgz#db043521c95d7e303fd8f345bedc3349cfb0729e"
 
-emoji-regex@^6.1.0, emoji-regex@^6.5.1:
+emoji-regex@^6.1.0:
   version "6.5.1"
   resolved "https://registry.node-modules.io/tarballs/emoji-regex/6.5.1.tgz#9baea929b155565c11ea41c6626eaa65cef992c2"
 
@@ -2468,9 +2419,9 @@ empower-core@^1.2.0:
     call-signature "0.0.2"
     core-js "^2.0.0"
 
-empower@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.node-modules.io/tarballs/empower/1.3.0.tgz#6b05e77625e77dc44945c4328562c3020b01fa4b"
+empower@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.node-modules.io/tarballs/empower/1.3.1.tgz#768979cbbb36d71d8f5edaab663deacb9dab916c"
   dependencies:
     core-js "^2.0.0"
     empower-core "^1.2.0"
@@ -2539,7 +2490,7 @@ eslint-config-airbnb-base@^12.1.0:
   dependencies:
     eslint-restricted-globals "^0.1.1"
 
-eslint-config-airbnb@16.1.0, eslint-config-airbnb@^16.1.0:
+eslint-config-airbnb@16.1.0:
   version "16.1.0"
   resolved "https://registry.node-modules.io/tarballs/eslint-config-airbnb/16.1.0.tgz#2546bfb02cc9fe92284bf1723ccf2e87bc45ca46"
   dependencies:
@@ -2573,7 +2524,7 @@ eslint-loader@1.9.0:
     object-hash "^1.1.4"
     rimraf "^2.6.1"
 
-eslint-module-utils@^2.1.1, eslint-module-utils@^2.2.0:
+eslint-module-utils@^2.1.1:
   version "2.2.0"
   resolved "https://registry.node-modules.io/tarballs/eslint-module-utils/2.2.0.tgz#b270362cd88b1a48ad308976ce7fa54e98411746"
   dependencies:
@@ -2601,21 +2552,6 @@ eslint-plugin-import@2.9.0:
     minimatch "^3.0.3"
     read-pkg-up "^2.0.0"
 
-eslint-plugin-import@^2.12.0:
-  version "2.14.0"
-  resolved "https://registry.node-modules.io/tarballs/eslint-plugin-import/2.14.0.tgz#6b17626d2e3e6ad52cfce8807a845d15e22111a8"
-  dependencies:
-    contains-path "^0.1.0"
-    debug "^2.6.8"
-    doctrine "1.5.0"
-    eslint-import-resolver-node "^0.3.1"
-    eslint-module-utils "^2.2.0"
-    has "^1.0.1"
-    lodash "^4.17.4"
-    minimatch "^3.0.3"
-    read-pkg-up "^2.0.0"
-    resolve "^1.6.0"
-
 eslint-plugin-jest@21.12.2:
   version "21.12.2"
   resolved "https://registry.node-modules.io/tarballs/eslint-plugin-jest/21.12.2.tgz#325f7c6a5078aed51ea087c33c26792337b5ba37"
@@ -2632,19 +2568,6 @@ eslint-plugin-jsx-a11y@6.0.3:
     emoji-regex "^6.1.0"
     jsx-ast-utils "^2.0.0"
 
-eslint-plugin-jsx-a11y@^6.0.3:
-  version "6.1.1"
-  resolved "https://registry.node-modules.io/tarballs/eslint-plugin-jsx-a11y/6.1.1.tgz#7bf56dbe7d47d811d14dbb3ddff644aa656ce8e1"
-  dependencies:
-    aria-query "^3.0.0"
-    array-includes "^3.0.3"
-    ast-types-flow "^0.0.7"
-    axobject-query "^2.0.1"
-    damerau-levenshtein "^1.0.4"
-    emoji-regex "^6.5.1"
-    has "^1.0.3"
-    jsx-ast-utils "^2.0.1"
-
 eslint-plugin-react@7.7.0:
   version "7.7.0"
   resolved "https://registry.node-modules.io/tarballs/eslint-plugin-react/7.7.0.tgz#f606c719dbd8a1a2b3d25c16299813878cca0160"
@@ -2653,16 +2576,6 @@ eslint-plugin-react@7.7.0:
     has "^1.0.1"
     jsx-ast-utils "^2.0.1"
     prop-types "^15.6.0"
-
-eslint-plugin-react@^7.9.1:
-  version "7.11.1"
-  resolved "https://registry.node-modules.io/tarballs/eslint-plugin-react/7.11.1.tgz#c01a7af6f17519457d6116aa94fc6d2ccad5443c"
-  dependencies:
-    array-includes "^3.0.3"
-    doctrine "^2.1.0"
-    has "^1.0.3"
-    jsx-ast-utils "^2.0.1"
-    prop-types "^15.6.2"
 
 eslint-restricted-globals@^0.1.1:
   version "0.1.1"
@@ -2728,7 +2641,7 @@ eslint@4.18.1:
     table "^4.0.1"
     text-table "~0.2.0"
 
-eslint@^4.0.0, eslint@^4.19.1, eslint@^4.5.0:
+eslint@^4.0.0, eslint@^4.5.0:
   version "4.19.1"
   resolved "https://registry.node-modules.io/tarballs/eslint/4.19.1.tgz#32d1d653e1d90408854bfb296f076ec7e186a300"
   dependencies:
@@ -3046,6 +2959,10 @@ fbjs@^0.8.16, fbjs@^0.8.5:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
+fclone@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.node-modules.io/tarballs/fclone/1.0.11.tgz#10e85da38bfea7fc599341c296ee1d77266ee640"
+
 figures@^1.7.0:
   version "1.7.0"
   resolved "https://registry.node-modules.io/tarballs/figures/1.7.0.tgz#cbe1e3affcf1cd44b80cadfed28dc793a9701d2e"
@@ -3198,10 +3115,10 @@ flat-cache@^1.2.1:
     write "^0.2.1"
 
 follow-redirects@^1.3.0:
-  version "1.5.7"
-  resolved "https://registry.node-modules.io/tarballs/follow-redirects/1.5.7.tgz#a39e4804dacb90202bca76a9e2ac10433ca6a69a"
+  version "1.5.8"
+  resolved "https://registry.node-modules.io/tarballs/follow-redirects/1.5.8.tgz#1dbfe13e45ad969f813e86c00e5296f525c885a1"
   dependencies:
-    debug "^3.1.0"
+    debug "=3.1.0"
 
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"
@@ -3576,11 +3493,11 @@ graceful-fs@~1.2.0:
   version "1.2.3"
   resolved "https://registry.node-modules.io/tarballs/graceful-fs/1.2.3.tgz#15a4806a57547cb2d2dbf27f42e89a8c3451b364"
 
-graphql-extensions@0.1.2:
-  version "0.1.2"
-  resolved "https://registry.node-modules.io/tarballs/graphql-extensions/0.1.2.tgz#d289cbddcf52364c066d8241a78d359c93c79c30"
+graphql-extensions@0.1.3:
+  version "0.1.3"
+  resolved "https://registry.node-modules.io/tarballs/graphql-extensions/0.1.3.tgz#f8cabaf543619e7dec1db5e274981d2a44c13ab6"
   dependencies:
-    apollo-server-env "2.0.2"
+    apollo-server-env "2.0.3"
 
 graphql-request@^1.8.2:
   version "1.8.2"
@@ -3615,8 +3532,8 @@ graphql@^0.13.2:
     iterall "^1.2.1"
 
 grpc@^1.12.2:
-  version "1.14.1"
-  resolved "https://registry.node-modules.io/tarballs/grpc/1.14.1.tgz#42d5900fd13a0daca1a58155cd4ab4d0c2f9c716"
+  version "1.15.0"
+  resolved "https://registry.node-modules.io/tarballs/grpc/1.15.0.tgz#0faf0c6bf8fd319da510dc2f661b2855876aa150"
   dependencies:
     lodash "^4.17.5"
     nan "^2.0.0"
@@ -3761,7 +3678,7 @@ has-values@^1.0.0:
     is-number "^3.0.0"
     kind-of "^4.0.0"
 
-has@^1.0.1, has@^1.0.3:
+has@^1.0.1:
   version "1.0.3"
   resolved "https://registry.node-modules.io/tarballs/has/1.0.3.tgz#722d7cbfc1f6aa8241f16dd814e011e1f41e8796"
   dependencies:
@@ -4021,10 +3938,10 @@ is-callable@^1.1.1, is-callable@^1.1.3:
   resolved "https://registry.node-modules.io/tarballs/is-callable/1.1.4.tgz#1e1adf219e1eeb684d691f9d6a05ff0d30a24d75"
 
 is-ci@^1.0.10:
-  version "1.2.0"
-  resolved "https://registry.node-modules.io/tarballs/is-ci/1.2.0.tgz#3f4a08d6303a09882cef3f0fb97439c5f5ce2d53"
+  version "1.2.1"
+  resolved "https://registry.node-modules.io/tarballs/is-ci/1.2.1.tgz#e3779c8ee17fccf428488f6e281187f2e632841c"
   dependencies:
-    ci-info "^1.3.0"
+    ci-info "^1.5.0"
 
 is-data-descriptor@^0.1.4:
   version "0.1.4"
@@ -4303,13 +4220,13 @@ jest-react-native@^18.0.0:
   resolved "https://registry.node-modules.io/tarballs/jest-react-native/18.0.0.tgz#77dd909f069324599f227c58c61c2e62168726ba"
 
 jest-validate@^23.5.0:
-  version "23.5.0"
-  resolved "https://registry.node-modules.io/tarballs/jest-validate/23.5.0.tgz#f5df8f761cf43155e1b2e21d6e9de8a2852d0231"
+  version "23.6.0"
+  resolved "https://registry.node-modules.io/tarballs/jest-validate/23.6.0.tgz#36761f99d1ed33fcd425b4e4c5595d62b6597474"
   dependencies:
     chalk "^2.0.1"
     jest-get-type "^22.1.0"
     leven "^2.1.0"
-    pretty-format "^23.5.0"
+    pretty-format "^23.6.0"
 
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
@@ -4631,8 +4548,8 @@ locate-path@^2.0.0:
     path-exists "^3.0.0"
 
 lodash-es@^4.17.4, lodash-es@^4.17.5:
-  version "4.17.10"
-  resolved "https://registry.node-modules.io/tarballs/lodash-es/4.17.10.tgz#62cd7104cdf5dd87f235a837f0ede0e8e5117e05"
+  version "4.17.11"
+  resolved "https://registry.node-modules.io/tarballs/lodash-es/4.17.11.tgz#145ab4a7ac5c5e52a3531fb4f310255a152b4be0"
 
 lodash._basecopy@^3.0.0:
   version "3.0.1"
@@ -4757,11 +4674,11 @@ lodash.unescape@4.0.1:
   version "4.0.1"
   resolved "https://registry.node-modules.io/tarballs/lodash.unescape/4.0.1.tgz#bf2249886ce514cda112fae9218cdc065211fc9c"
 
-lodash@4.17.10, lodash@^4.0.0, lodash@^4.10.1, lodash@^4.11.1, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
+lodash@4.17.10:
   version "4.17.10"
   resolved "https://registry.node-modules.io/tarballs/lodash/4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
-lodash@^4.15.0, lodash@^4.2.0:
+lodash@^4.0.0, lodash@^4.10.1, lodash@^4.11.1, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.11"
   resolved "https://registry.node-modules.io/tarballs/lodash/4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
 
@@ -5108,16 +5025,16 @@ native-base@^2.7.2:
     tween-functions "^1.0.1"
 
 natives@^1.1.0:
-  version "1.1.4"
-  resolved "https://registry.node-modules.io/tarballs/natives/1.1.4.tgz#2f0f224fc9a7dd53407c7667c84cf8dbe773de58"
+  version "1.1.5"
+  resolved "https://registry.node-modules.io/tarballs/natives/1.1.5.tgz#3bdbdb4104023e5dd239b56fc7ef3d9a17acc6aa"
 
 natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.node-modules.io/tarballs/natural-compare/1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
 
 needle@^2.2.1:
-  version "2.2.2"
-  resolved "https://registry.node-modules.io/tarballs/needle/2.2.2.tgz#1120ca4c41f2fcc6976fd28a8968afe239929418"
+  version "2.2.3"
+  resolved "https://registry.node-modules.io/tarballs/needle/2.2.3.tgz#c1b04da378cd634d8befe2de965dc2cfb0fd65ca"
   dependencies:
     debug "^2.1.2"
     iconv-lite "^0.4.4"
@@ -5687,11 +5604,11 @@ power-assert-util-string-width@^1.2.0:
     eastasianwidth "^0.2.0"
 
 power-assert@^1.4.4:
-  version "1.6.0"
-  resolved "https://registry.node-modules.io/tarballs/power-assert/1.6.0.tgz#3a9d2b943cf0d6fc6a623766869c4460838c05fb"
+  version "1.6.1"
+  resolved "https://registry.node-modules.io/tarballs/power-assert/1.6.1.tgz#b28cbc02ae808afd1431d0cd5093a39ac5a5b1fe"
   dependencies:
     define-properties "^1.1.2"
-    empower "^1.3.0"
+    empower "^1.3.1"
     power-assert-formatter "^1.4.1"
     universal-deep-strict-equal "^1.2.1"
     xtend "^4.0.0"
@@ -5749,9 +5666,9 @@ prettier@^1.7.0:
   version "1.14.2"
   resolved "https://registry.node-modules.io/tarballs/prettier/1.14.2.tgz#0ac1c6e1a90baa22a62925f41963c841983282f9"
 
-pretty-format@^23.0.1, pretty-format@^23.5.0:
-  version "23.5.0"
-  resolved "https://registry.node-modules.io/tarballs/pretty-format/23.5.0.tgz#0f9601ad9da70fe690a269cd3efca732c210687c"
+pretty-format@^23.0.1, pretty-format@^23.6.0:
+  version "23.6.0"
+  resolved "https://registry.node-modules.io/tarballs/pretty-format/23.6.0.tgz#5eaac8eeb6b33b987b7fe6097ea6a8a146ab5760"
   dependencies:
     ansi-regex "^3.0.0"
     ansi-styles "^3.2.0"
@@ -5784,7 +5701,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
   version "15.6.2"
   resolved "https://registry.node-modules.io/tarballs/prop-types/15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -5945,8 +5862,8 @@ react-error-overlay@^4.0.1:
   resolved "https://registry.node-modules.io/tarballs/react-error-overlay/4.0.1.tgz#417addb0814a90f3a7082eacba7cee588d00da89"
 
 react-is@^16.3.1:
-  version "16.4.2"
-  resolved "https://registry.node-modules.io/tarballs/react-is/16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
+  version "16.5.1"
+  resolved "https://registry.node-modules.io/tarballs/react-is/16.5.1.tgz#c6e8734fd548a22e1cef4fd0833afbeb433b85ee"
 
 react-native-drawer@2.5.0:
   version "2.5.0"
@@ -5962,8 +5879,8 @@ react-native-easy-grid@0.2.0:
     lodash "^4.11.1"
 
 react-native-iphone-x-helper@^1.0.1:
-  version "1.0.3"
-  resolved "https://registry.node-modules.io/tarballs/react-native-iphone-x-helper/1.0.3.tgz#7a2f1e0574e899a0f1d426e6167fd98990083214"
+  version "1.1.0"
+  resolved "https://registry.node-modules.io/tarballs/react-native-iphone-x-helper/1.1.0.tgz#3a881720900bd8d1c67de2c465ea9aa9296180a7"
 
 react-native-keyboard-aware-scroll-view@0.5.0:
   version "0.5.0"
@@ -6072,13 +5989,12 @@ readable-stream@^2.0.0, readable-stream@^2.0.2, readable-stream@^2.0.6, readable
     util-deprecate "~1.0.1"
 
 readdirp@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.node-modules.io/tarballs/readdirp/2.1.0.tgz#4ed0ad060df3073300c48440373f72d1cc642d78"
+  version "2.2.1"
+  resolved "https://registry.node-modules.io/tarballs/readdirp/2.2.1.tgz#0e87622a3325aa33e892285caf8b4e846529a525"
   dependencies:
-    graceful-fs "^4.1.2"
-    minimatch "^3.0.2"
+    graceful-fs "^4.1.11"
+    micromatch "^3.1.10"
     readable-stream "^2.0.2"
-    set-immediate-shim "^1.0.1"
 
 rechoir@^0.6.2:
   version "0.6.2"
@@ -6289,7 +6205,7 @@ resolve-url@^0.2.1:
   version "0.2.1"
   resolved "https://registry.node-modules.io/tarballs/resolve-url/0.2.1.tgz#2c637fe77c893afd2a663fe21aa9080068e2052a"
 
-resolve@^1.1.6, resolve@^1.1.7, resolve@^1.4.0, resolve@^1.5.0, resolve@^1.6.0:
+resolve@^1.1.6, resolve@^1.1.7, resolve@^1.4.0, resolve@^1.5.0:
   version "1.8.1"
   resolved "https://registry.node-modules.io/tarballs/resolve/1.8.1.tgz#82f1ec19a423ac1fbd080b0bab06ba36e84a7a26"
   dependencies:
@@ -6330,9 +6246,9 @@ retry-request@^4.0.0:
   dependencies:
     through2 "^2.0.0"
 
-retry@0.10.1:
-  version "0.10.1"
-  resolved "https://registry.node-modules.io/tarballs/retry/0.10.1.tgz#e76388d217992c252750241d3d3956fed98d8ff4"
+retry@0.12.0:
+  version "0.12.0"
+  resolved "https://registry.node-modules.io/tarballs/retry/0.12.0.tgz#1b42a6266a21f07421d1b0b54b7dc167b01c013b"
 
 rimraf@^2.2.8, rimraf@^2.6.1:
   version "2.6.2"
@@ -6363,8 +6279,8 @@ rxjs@^5.3.0:
     symbol-observable "1.0.1"
 
 rxjs@^6.1.0:
-  version "6.3.1"
-  resolved "https://registry.node-modules.io/tarballs/rxjs/6.3.1.tgz#878a1a8c64b8a5da11dcf74b5033fe944cdafb84"
+  version "6.3.2"
+  resolved "https://registry.node-modules.io/tarballs/rxjs/6.3.2.tgz#6a688b16c4e6e980e62ea805ec30648e1c60907f"
   dependencies:
     tslib "^1.9.0"
 
@@ -6440,10 +6356,6 @@ serve-static@1.13.2:
 set-blocking@^2.0.0, set-blocking@~2.0.0:
   version "2.0.0"
   resolved "https://registry.node-modules.io/tarballs/set-blocking/2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
-
-set-immediate-shim@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.node-modules.io/tarballs/set-immediate-shim/1.0.1.tgz#4b2b1b27eb808a9f8dcc481a58e5e56f599f3f61"
 
 set-value@^0.4.3:
   version "0.4.3"
@@ -6617,8 +6529,8 @@ spdx-expression-parse@^3.0.0:
     spdx-license-ids "^3.0.0"
 
 spdx-license-ids@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.node-modules.io/tarballs/spdx-license-ids/3.0.0.tgz#7a7cd28470cc6d3a1cfe6d66886f6bc430d3ac87"
+  version "3.0.1"
+  resolved "https://registry.node-modules.io/tarballs/spdx-license-ids/3.0.1.tgz#e2a303236cac54b04031fa7a5a79c7e701df852f"
 
 split-array-stream@^1.0.0:
   version "1.0.3"
@@ -6777,21 +6689,7 @@ stubs@^3.0.0:
   version "3.0.0"
   resolved "https://registry.node-modules.io/tarballs/stubs/3.0.0.tgz#e8d2ba1fa9c90570303c030b6900f7d5f89abe5b"
 
-styled-components@^3.3.3:
-  version "3.4.5"
-  resolved "https://registry.node-modules.io/tarballs/styled-components/3.4.5.tgz#6cbfde7c9189c868b9fd01fee40f5330dbd0cc8d"
-  dependencies:
-    buffer "^5.0.3"
-    css-to-react-native "^2.0.3"
-    fbjs "^0.8.16"
-    hoist-non-react-statics "^2.5.0"
-    prop-types "^15.5.4"
-    react-is "^16.3.1"
-    stylis "^3.5.0"
-    stylis-rule-sheet "^0.0.10"
-    supports-color "^3.2.3"
-
-styled-components@^3.4.5:
+styled-components@^3.3.3, styled-components@^3.4.5:
   version "3.4.6"
   resolved "https://registry.node-modules.io/tarballs/styled-components/3.4.6.tgz#134f1ab89ed732686bf7de3ff8fca557283cbd60"
   dependencies:
@@ -7240,9 +7138,13 @@ websocket-extensions@>=0.1.1:
   version "0.1.3"
   resolved "https://registry.node-modules.io/tarballs/websocket-extensions/0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
 
-whatwg-fetch@2.0.4, whatwg-fetch@>=0.10.0:
+whatwg-fetch@2.0.4:
   version "2.0.4"
   resolved "https://registry.node-modules.io/tarballs/whatwg-fetch/2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
+
+whatwg-fetch@>=0.10.0:
+  version "3.0.0"
+  resolved "https://registry.node-modules.io/tarballs/whatwg-fetch/3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
 
 which-module@^2.0.0:
   version "2.0.0"

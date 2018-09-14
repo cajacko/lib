@@ -8,6 +8,7 @@
   "authorEmail": "contact@charliejackson.com",
   "license": "MIT",
   "ignorePackageJSON": true,
+  "ignoreTemplates": true,
   "templates": {
     "main-package": {
       "type": "npm-module"
