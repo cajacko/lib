@@ -8,10 +8,9 @@ type Props = {
 };
 
 const withErrorBoundaryIfDataNotFound = (
-  CustomComponent,
   error,
   errorMessage
-) => (props: Props) => (
+) => CustomComponent => (props: Props) => (
   <GenericErrorBoundary
     error={props.dataNotFound && error}
     childProps={props}
