@@ -32,7 +32,6 @@ const Button = ({
   baseWidth,
   noButton,
   noContent,
-  ...props
 }) => {
   /**
    * Render the button component with children

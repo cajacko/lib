@@ -12,23 +12,13 @@
     "build": "",
     "watch:lib": "gulp watch",
     "build:lib": "gulp build",
-    "precommit": "lint-staged",
+    "precommit": "template precommit",
     "deploy": "yarn publish --access public",
     "prepare": "yarn build:lib"
   },
   "files": [
     "**/*"
   ],
-  "lint-staged": {
-    "*.js": [
-      "prettier-eslint --write",
-      "git add"
-    ],
-    "*.md": [
-      "prettier-eslint --write",
-      "git add"
-    ]
-  },
   "dependencies": {
     "apollo-server-express": "^2.0.4",
     "babel-cli": "^6.26.0",

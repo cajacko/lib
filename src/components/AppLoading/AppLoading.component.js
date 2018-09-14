@@ -1,17 +1,20 @@
 // @flow
 
-import React, { Component } from 'react';
+import * as React from 'react';
 import SplashScreen from '../../modules/SplashScreen';
 import appLoading from '../../utils/appLoading';
 import GenericErrorBoundary from '../GenericErrorBoundary';
 
-type Props = {};
+type Props = {
+  children: React.Node,
+};
+
 type State = {};
 
 /**
  * Handle whether to keep the splash screen/loading screen going on launch
  */
-class AppLoadingComponent extends Component<Props, State> {
+class AppLoadingComponent extends React.Component<Props, State> {
   /**
    * Initialise the class, set the initial state and bind the methods
    *

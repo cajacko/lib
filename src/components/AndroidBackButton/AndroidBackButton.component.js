@@ -16,6 +16,13 @@ type Props = {
  * Handle the Android back button
  */
 class AndroidBackButton extends React.Component<Props> {
+  /**
+   * Initialise the class and bind the methods
+   *
+   * @param {Object} props The props passed to the component
+   *
+   * @return {Void} No return value
+   */
   constructor(props) {
     super(props);
 
@@ -41,7 +48,8 @@ class AndroidBackButton extends React.Component<Props> {
   }
 
   /**
-   * When the Android back button is pressed, go back in the history, or return the the home screen
+   * When the Android back button is pressed, go back in the history, or return
+   * the the home screen
    *
    * @return {Boolean} Whether we are using the back button or not
    */
