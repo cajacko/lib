@@ -235,9 +235,9 @@
     simple-git "^1.96.0"
     watch "^1.0.2"
 
-"@cajacko/template@git+https://github.com/cajacko/template.git#v0.13.0":
+"@cajacko/template@https://github.com/cajacko/template.git#v0.13.0":
   version "0.13.0"
-  resolved "git+https://github.com/cajacko/template.git#869fe7e08dd54fa310d9e490192cb72aa4969472"
+  resolved "https://github.com/cajacko/template.git#869fe7e08dd54fa310d9e490192cb72aa4969472"
   dependencies:
     "@babel/polyfill" "^7.0.0"
     "@cajacko/template-utils" "https://github.com/cajacko/template-utils.git#v0.8.0"
@@ -6975,6 +6975,10 @@ react-native-keyboard-aware-scroll-view@0.5.0:
   dependencies:
     prop-types "^15.6.0"
     react-native-iphone-x-helper "^1.0.1"
+
+react-native-splash-screen@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.node-modules.io/tarballs/react-native-splash-screen/3.1.1.tgz#1a4e46c9fdce53ff52af2a2cb4181788c4e30b30"
 
 react-native-vector-icons@4.6.0:
   version "4.6.0"

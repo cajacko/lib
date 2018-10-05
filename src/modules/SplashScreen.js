@@ -1,12 +1,10 @@
 // @flow
 
+import RNSplashScreen from 'react-native-splash-screen';
+
 const SplashScreen = {
-  hide: () => {
-    console.log('SplashScreen - hide');
-  },
-  preventAutoHide: () => {
-    console.log('SplashScreen - preventAutoHide');
-  },
+  hide: () => RNSplashScreen.hide(),
+  show: () => RNSplashScreen.show(),
 };
 
 export default SplashScreen;
