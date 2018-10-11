@@ -9,7 +9,7 @@
   "scripts": {
     "init": "template init",
     "test": "template test",
-    "build": "",
+    "build": "echo \"\"",
     "watch:lib": "gulp watch",
     "build:lib": "gulp build",
     "precommit": "template precommit",
