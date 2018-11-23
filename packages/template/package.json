@@ -1,0 +1,76 @@
+{
+  "name": "@cajacko/template",
+  "version": "0.26.0",
+  "description": "Templating engine for projects by Charlie Jackson",
+  "bin": {
+    "template": "dist/bin.js"
+  },
+  "scripts": {
+    "init": "node dist/bin.js init",
+    "build": "babel src --out-dir dist -s --copy-files",
+    "watch": "yarn build --watch",
+    "prepare": "yarn build",
+    "babel": "babel"
+  },
+  "files": [
+    "dist/**/*",
+    "files/**/*",
+    "project.json"
+  ],
+  "main": "dist/main.js",
+  "repository": "git@github.com:cajacko/template.git",
+  "author": "Charlie Jackson <contact@charliejackson.com>",
+  "license": "MIT",
+  "lint-staged": {
+    "*.js": [
+      "prettier-eslint --write",
+      "git add"
+    ],
+    "*.md": [
+      "prettier-eslint --write",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "4.18.1",
+    "eslint-config-airbnb": "16.1.0",
+    "eslint-config-react-app": "2.1.0",
+    "eslint-import-resolver-babel-module": "4.0.0",
+    "eslint-loader": "1.9.0",
+    "eslint-plugin-flowtype": "2.46.1",
+    "eslint-plugin-import": "2.9.0",
+    "eslint-plugin-jest": "21.12.2",
+    "eslint-plugin-jsx-a11y": "6.0.3",
+    "eslint-plugin-react": "7.7.0",
+    "flow-bin": "0.81.0",
+    "husky": "0.14.3",
+    "jest": "23.6.0",
+    "jsdoc": "3.5.5",
+    "lint-staged": "^7.2.0",
+    "prettier-eslint-cli": "^4.7.1"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0",
+    "@cajacko/template-utils": "0.13.0",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "8.2.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "babel-register": "^6.26.0",
+    "color": "^3.0.0",
+    "commander": "^2.16.0",
+    "ejs": "^2.6.1",
+    "form-data": "^2.3.2",
+    "fs-extra": "^6.0.1",
+    "globby": "^8.0.1",
+    "inquirer": "^6.0.0",
+    "is-git-repository": "^1.1.1",
+    "is-symlink": "^1.0.0",
+    "lodash": "^4.17.10",
+    "node-fetch": "^2.2.0",
+    "react-dev-utils": "^5.0.1",
+    "replace": "^1.0.0",
+    "watch": "^1.0.2"
+  }
+}

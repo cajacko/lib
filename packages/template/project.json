@@ -1,0 +1,17 @@
+{
+  "title": "Charlie's Templates",
+  "slug": "@cajacko/template",
+  "version": "0.9.0",
+  "description": "Templating engine for projects by Charlie Jackson.",
+  "authorName": "Charlie Jackson",
+  "authorUrl": "https://charliejackson.com",
+  "authorEmail": "contact@charliejackson.com",
+  "license": "MIT",
+  "ignorePackageJSON": true,
+  "templates": {
+    "main-package": {
+      "type": "npm-module"
+    }
+  },
+  "templateInitVersion": "0.15.0"
+}
