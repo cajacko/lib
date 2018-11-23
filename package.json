@@ -7,6 +7,9 @@
   "author": "Charlie Jackson <contact@charliejackson.com>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap"
+  },
   "workspaces": [
     "packages/*"
   ],
