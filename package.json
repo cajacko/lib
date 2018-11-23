@@ -1,0 +1,16 @@
+{
+  "name": "lib-monorepo",
+  "version": "0.1.0",
+  "description": "Templates and libs used for projects by Charlie Jackson",
+  "main": "index.js",
+  "repository": "https://github.com/cajacko/lib.git",
+  "author": "Charlie Jackson <contact@charliejackson.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^3.4.3"
+  }
+}
