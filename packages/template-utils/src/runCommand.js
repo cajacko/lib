@@ -1,6 +1,11 @@
+// @flow
+/* eslint require-jsdoc: 0 */
+
 import spawn from 'react-dev-utils/crossSpawn';
 import { join } from 'path';
 import logger from './logger';
+
+const { exec } = require('child_process');
 
 let id = 0;
 
@@ -50,8 +55,22 @@ const runCommand = (command, ...args) =>
         getKill,
         vars,
         withNVM,
+        withExec,
         ...opts
       } = optsArg;
+
+      if (withExec) {
+        exec(command, { cwd }, (err, stdout, stderr) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+
+          resolve({ stdout, stderr });
+        });
+
+        return;
+      }
 
       const commands = command
         .split(' ')
