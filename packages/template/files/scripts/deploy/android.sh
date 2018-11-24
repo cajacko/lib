@@ -17,7 +17,7 @@ do
   command="${command} -e ${ary2[0]}"
 done
 
-command="${command} -it --name=rw cajacko/remember-when:0.1.0 yarn docker:deploy"
+command="${command} -it --name=rw cajacko/remember-when:0.1.0 ./scripts/deploy/runAndroid.sh"
 
 # Execute the docker run command with all the env set
 eval $command

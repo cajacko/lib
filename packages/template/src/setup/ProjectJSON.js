@@ -6,6 +6,10 @@ import SetupTemplate from '../modules/SetupTemplate';
 import { version } from '../../package.json';
 
 class ProjectJSON extends SetupTemplate {
+  setupFiles() {
+    return this.fs.copy('scripts/template.js');
+  }
+
   postSetupFiles() {
     const projectJSONPath = join(this.projectDir, 'project.json');
 

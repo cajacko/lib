@@ -11,15 +11,14 @@ const projectJSON = {
   description: 'Example project',
   license: 'MIT',
   scripts: {
-    start: 'template start',
-    init: 'template init',
-    test: 'template test',
-    build: 'template build',
-    deploy: 'template deploy',
-    upgrade: 'template upgrade',
-    postinstall: 'template postinstall',
-    precommit: 'template precommit',
-    commitmsg: 'commit --validate-commit -u',
+    start: 'node scripts/template.js start',
+    init: 'node scripts/template.js init',
+    test: 'node scripts/template.js test',
+    build: 'node scripts/template.js build',
+    deploy: 'node scripts/template.js deploy',
+    upgrade: 'node scripts/template.js upgrade',
+    postinstall: 'node scripts/template.js postinstall',
+    precommit: 'node scripts/template.js precommit',
   },
 };
 
@@ -77,6 +76,8 @@ class PackageJSON extends SetupTemplate {
        * @return {Void} No return value
        */
       const addPackages = (packages) => {
+        if (!packages || typeof packages !== 'object') return;
+
         Object.keys(packages).forEach((key) => {
           const version = packages[key];
 
@@ -116,11 +117,6 @@ class PackageJSON extends SetupTemplate {
    */
   postSetupFiles() {
     if (this.projectConfig.ignorePackageJSON) return Promise.resolve();
-
-    if (this.templatesUsed.includes('mobile-app')) {
-      this.packageJSON.scripts['docker:deploy'] =
-        'yarn install && yarn deploy -t main-app --deploy-env alpha-deploygate --android';
-    }
 
     if (this.projectConfig) {
       const {
