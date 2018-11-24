@@ -2,7 +2,8 @@
 
 import { remove } from 'fs-extra';
 import { join } from 'path';
-import { getSettings, runCommand, logger } from '@cajacko/template-utils';
+import { runCommand, logger } from '@cajacko/template-utils';
+import { LOCAL_LIB_PATH } from '../config/paths';
 
 let resolvePromise;
 
@@ -22,51 +23,46 @@ const watchLib = () => {
 
   watchLibHasRun = true;
 
-  return getSettings('localNPMPackagePaths')
-    .then((localNPMPackagePaths) => {
-      const libPath = localNPMPackagePaths['@cajacko/lib'];
+  /**
+   * Get the options string to pass to the gulp task, from the object of
+   * dirs to build to
+   *
+   * @param {Object} obj Object of each dir to copy to
+   *
+   * @return {String} The options to pass to the build/watch tasks
+   */
+  const getDirOptions = obj =>
+    Object.keys(obj).reduce((acc, val) => `${acc} --${val}`, '');
 
-      /**
-       * Get the options string to pass to the gulp task, from the object of
-       * dirs to build to
-       *
-       * @param {Object} obj Object of each dir to copy to
-       *
-       * @return {String} The options to pass to the build/watch tasks
-       */
-      const getDirOptions = obj =>
-        Object.keys(obj).reduce((acc, val) => `${acc} --${val}`, '');
+  const outDirOptions = getDirOptions(libOutDirs);
+  const watchDirs = getDirOptions(libDirsToWatch);
 
-      const outDirOptions = getDirOptions(libOutDirs);
-      const watchDirs = getDirOptions(libDirsToWatch);
+  /**
+   * Build and then watch the lib
+   *
+   * @return {Promise} Resolves when the first build has finished
+   */
+  const buildAndWatchLib = () =>
+    runCommand(`yarn build:lib ${outDirOptions}`, LOCAL_LIB_PATH).then(() => {
+      if (watchDirs !== '') {
+        runCommand(`yarn watch:lib ${watchDirs}`, LOCAL_LIB_PATH);
+      }
+    });
 
-      /**
-       * Build and then watch the lib
-       *
-       * @return {Promise} Resolves when the first build has finished
-       */
-      const buildAndWatchLib = () =>
-        runCommand(`yarn build:lib ${outDirOptions}`, libPath).then(() => {
-          if (watchDirs !== '') {
-            runCommand(`yarn watch:lib ${watchDirs}`, libPath);
-          }
-        });
+  /**
+   * Remove then reinstall the node modules
+   *
+   * @return {Promise} Resolves when the install finishes
+   */
+  const reinstallLibNodeModules = () =>
+    remove(join(LOCAL_LIB_PATH, 'node_modules')).then(() =>
+      runCommand('yarn install', LOCAL_LIB_PATH, { noLog: true }));
 
-      /**
-       * Remove then reinstall the node modules
-       *
-       * @return {Promise} Resolves when the install finishes
-       */
-      const reinstallLibNodeModules = () =>
-        remove(join(libPath, 'node_modules')).then(() =>
-          runCommand('yarn install', libPath, { noLog: true }));
-
-      return buildAndWatchLib()
-        .catch(() => reinstallLibNodeModules().then(buildAndWatchLib))
-        .catch((e) => {
-          logger.error(`Failed to compile the lib module at "${libPath}". Sometimes if you remove node_modules and run yarn again inside this dir. It will work.`);
-          throw e;
-        });
+  return buildAndWatchLib()
+    .catch(() => reinstallLibNodeModules().then(buildAndWatchLib))
+    .catch((e) => {
+      logger.error(`Failed to compile the lib module at "${LOCAL_LIB_PATH}". Sometimes if you remove node_modules and run yarn again inside this dir. It will work.`);
+      throw e;
     })
     .then(resolvePromise);
 };

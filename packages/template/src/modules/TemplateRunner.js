@@ -152,6 +152,16 @@ class TemplateRunner {
     templateKeys.forEach((templateKey) => {
       const templateConfig = this.projectConfig.templates[templateKey];
 
+      if (!templateConfig) {
+        let message = `No template config found at "templates.${templateKey}" in project.json\nAvailable keys:\n`;
+
+        Object.keys(this.projectConfig.templates).forEach((key) => {
+          message = `${message}- ${key}\n`;
+        });
+
+        throw new Error(message);
+      }
+
       templateConfig.key = templateKey;
 
       const Template = templates[templateConfig.type];

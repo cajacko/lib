@@ -1,14 +1,10 @@
 // @flow
 
 import { join } from 'path';
-import {
-  runCommand,
-  getSettings,
-  logger,
-  CertStorage,
-} from '@cajacko/template-utils';
+import { runCommand, logger, CertStorage } from '@cajacko/template-utils';
 import type { Commander, Env } from '@cajacko/template-utils/lib/types';
 import type { TemplateConfig, Command, ProjectConfig } from '../types';
+import { LOCAL_LIB_PATH } from '../config/paths';
 
 let installID = 0;
 
@@ -96,7 +92,6 @@ class Template {
    * away if we don't run it
    */
   runIfUseLocal(cb: () => Promise<any>) {
-    // TODO: if command is deploy and on CI, never use local lib
     if (!this.env.USE_LOCAL_LIBS) return Promise.resolve();
 
     return cb();
@@ -110,7 +105,7 @@ class Template {
   getActiveLibDir() {
     if (!this.env.USE_LOCAL_LIBS) return Promise.resolve(this.libDir);
 
-    return getSettings('localNPMPackagePaths').then(localNPMPackagePaths => localNPMPackagePaths['@cajacko/lib']);
+    return Promise.resolve(LOCAL_LIB_PATH);
   }
 }
 
