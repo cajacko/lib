@@ -436,11 +436,16 @@ class MobileApp extends Template {
         if (this.ios) {
           logger.debug('ios build started');
 
+          const clearUpdate = logger.update('debug', () => 'ios is building');
+
           promises.push(runCommand('npx react-native run-ios', this.tmpDir, {
             noLog: true,
-          }).then(() => {
-            logger.debug('ios build finished');
-          }));
+          })
+            .then(() => {
+              clearUpdate();
+              logger.debug('ios build finished');
+            })
+            .catch(clearUpdate));
         }
 
         if (this.android) {
