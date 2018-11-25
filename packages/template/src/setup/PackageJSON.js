@@ -1,7 +1,7 @@
 // @flow
 
 import { orderObj } from '@cajacko/template-utils';
-import { readJSON } from 'fs-extra';
+import { readJSON, writeJSON } from 'fs-extra';
 import { join } from 'path';
 import SetupTemplate from '../modules/SetupTemplate';
 
@@ -93,12 +93,12 @@ class PackageJSON extends SetupTemplate {
   }
 
   /**
-   * On setup, add the lib deps
+   * Just before installing the dependencies, add the lib deps
    *
    * @return {Promise} Promise that resolves when we've queued up the
    * dependencies
    */
-  setupFiles() {
+  preInstallDependencies() {
     if (
       this.templatesUsed.includes('mobile-app') ||
       this.templatesUsed.includes('graphql')
@@ -167,6 +167,23 @@ class PackageJSON extends SetupTemplate {
       orderObj(this.packageJSON, packageJSONOrder, endPriority),
       'package.json'
     );
+  }
+
+  /**
+   * During the post install step, reorder the package.json file. As it
+   * get's modified during the install step, and may go out of order.
+   *
+   * @return {Promise} Resolves when the file has been written
+   */
+  postInstallDependencies() {
+    const packageJSONPath = join(this.projectDir, 'package.json');
+
+    return readJSON(packageJSONPath).then(packageJSON =>
+      writeJSON(
+        packageJSONPath,
+        orderObj(packageJSON, packageJSONOrder, endPriority),
+        { spaces: 2 }
+      ));
   }
 }
 

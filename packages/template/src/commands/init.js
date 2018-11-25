@@ -3,7 +3,6 @@
 import {
   getProjectDir,
   getProjectConfig,
-  getLastLocalModuleVersion,
   logger,
   ask,
 } from '@cajacko/template-utils';
@@ -36,17 +35,14 @@ const init = () =>
         });
       }
 
-      return getLastLocalModuleVersion('@cajacko/template').then(lastTemplateVersion =>
-        getLastLocalModuleVersion('@cajacko/lib').then((lastLibVersion) => {
-          const setupRunner = new SetupRunner(
-            projectDir,
-            projectConfig,
-            lastTemplateVersion,
-            lastLibVersion
-          );
+      const setupRunner = new SetupRunner(
+        projectDir,
+        projectConfig,
+        'latest',
+        'latest'
+      );
 
-          return setupRunner.runSteps();
-        }));
+      return setupRunner.runSteps();
     })
     .then(() =>
       ask(qs.map((message, i) => ({
