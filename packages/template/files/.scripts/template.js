@@ -5,6 +5,8 @@ const { spawn } = require('child_process');
 const fs = require('fs');
 const { join } = require('path');
 
+const packagesToLink = ['@cajacko/lib'];
+
 const promisify = callback => arg =>
   new Promise((resolve, reject) => {
     try {
@@ -158,9 +160,70 @@ const getCommandToRun = (useLocalLibs) => {
   return useLocalLibs ? ['template', args] : ['npx', ['template'].concat(args)];
 };
 
+const loopPromise = (promiseFuncs) => {
+  const vals = [];
+
+  const loop = (i = 0) => {
+    const promiseFunc = promiseFuncs[i];
+
+    if (!promiseFunc) return Promise.resolve(vals);
+
+    return promiseFunc().then((val) => {
+      vals.push(val);
+      return loop(i + 1);
+    });
+  };
+
+  return loop();
+};
+
+const getIsLinked = () =>
+  loopPromise(packagesToLink.map(npmPackage => () => {
+    const dir = join(__dirname, '../node_modules/', npmPackage);
+
+    return promisify(fs.lstat)(dir)
+      .then(stats => ({ npmPackage, isLinked: stats.isSymbolicLink() }))
+      .catch(() => ({ npmPackage, isLinked: false }));
+  }));
+
+const unlink = () =>
+  runCommand('rm', ['-rf', 'node_modules']).then(() => runCommand('yarn'));
+
+const link = () =>
+  loopPromise(packagesToLink.map(npmPackage => () =>
+    runCommand('yarn', ['link', npmPackage])));
+
+const linkUnlink = (useLocalLibs, npmPackages) => {
+  let areAllLinked = true;
+  let areAllUnlinked = true;
+
+  npmPackages.forEach(({ isLinked }) => {
+    if (isLinked) {
+      areAllUnlinked = false;
+    } else {
+      areAllLinked = false;
+    }
+  });
+
+  if (!areAllUnlinked && !useLocalLibs) {
+    return unlink();
+  }
+
+  if (!areAllLinked && useLocalLibs) {
+    return link();
+  }
+
+  return Promise.resolve();
+};
+
 const init = () =>
   getUseLocalLibs()
-    .then(getCommandToRun)
-    .then(command => runCommand(...command));
+    .then(useLocalLibs =>
+      getIsLinked().then(isLinked =>
+        Promise.all([
+          getCommandToRun(useLocalLibs),
+          linkUnlink(useLocalLibs, isLinked),
+        ])))
+    .then(([command]) => runCommand(...command));
 
 init();

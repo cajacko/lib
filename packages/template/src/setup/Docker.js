@@ -15,8 +15,8 @@ class Docker extends SetupTemplate {
     if (this.templatesUsed.includes('mobile-app')) {
       return Promise.all([
         this.fs.copy('.dockerignore'),
-        this.fs.copy('scripts/deploy/android.sh'),
-        this.fs.copy('scripts/deploy/runAndroid.sh'),
+        this.fs.copy('.scripts/deploy/android.sh'),
+        this.fs.copy('.scripts/deploy/runAndroid.sh'),
       ]);
     }
 

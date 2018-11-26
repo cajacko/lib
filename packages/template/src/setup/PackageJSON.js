@@ -11,14 +11,14 @@ const projectJSON = {
   description: 'Example project',
   license: 'MIT',
   scripts: {
-    start: 'node scripts/template.js start',
-    init: 'node scripts/template.js init',
-    test: 'node scripts/template.js test',
-    build: 'node scripts/template.js build',
-    deploy: 'node scripts/template.js deploy',
-    upgrade: 'node scripts/template.js upgrade',
-    postinstall: 'node scripts/template.js postinstall',
-    precommit: 'node scripts/template.js precommit',
+    start: 'node .scripts/template.js start',
+    init: 'node .scripts/template.js init',
+    test: 'node .scripts/template.js test',
+    build: 'node .scripts/template.js build',
+    deploy: 'node .scripts/template.js deploy',
+    upgrade: 'node .scripts/template.js upgrade',
+    postinstall: 'node .scripts/template.js postinstall',
+    precommit: 'node .scripts/template.js precommit',
   },
 };
 

@@ -7,7 +7,7 @@ import { version } from '../../package.json';
 
 class ProjectJSON extends SetupTemplate {
   setupFiles() {
-    return this.fs.copy('scripts/template.js');
+    return this.fs.copy('.scripts/template.js');
   }
 
   postSetupFiles() {
