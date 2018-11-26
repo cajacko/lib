@@ -8,6 +8,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "start": "concurrently \"yarn watch:template\" \"yarn watch:template-utils\"",
+    "watch:template": "cd packages/template && yarn watch",
+    "watch:template-utils": "cd packages/template-utils && yarn watch",
     "test:lint": "eslint packages/*/src features",
     "test:func": "cucumber-js",
     "postinstall": "lerna bootstrap"
