@@ -4,13 +4,13 @@ import {
   getShouldUpdatePackage,
   askForNewPackageVersion,
   setPackageVersion,
-  getSettings,
   git,
   runCommand,
   getProjectDir,
 } from '@cajacko/template-utils';
 import { readJSON } from 'fs-extra';
 import { join } from 'path';
+import settings from '../config/settings';
 
 const updatePackage = (
   packageDir,
@@ -46,12 +46,15 @@ const updatePackage = (
   });
 
 const upgrade = () =>
-  Promise.all([getSettings(['localNPMPackagePaths']), getProjectDir()]).then(([localNPMPackagePaths, projectDir]) =>
+  Promise.all([settings.get('LOCAL_LIB_PATH'), getProjectDir()]).then(([localLibPath, projectDir]) =>
     readJSON(join(projectDir, 'package.json')).then(({ dependencies }) => {
-      const templateUtilsDir =
-          localNPMPackagePaths['@cajacko/template-utils'];
-      const templateDir = localNPMPackagePaths['@cajacko/template'];
-      const libDir = localNPMPackagePaths['@cajacko/lib'];
+      if (!localLibPath) {
+        throw new Error('Could not find LOCAL_LIB_PATH in the user settings. This get\'s set when you install the cajacko/lib monorepo somewhere on your machine. Check you have it cloned and run "yarn install"');
+      }
+
+      const templateUtilsDir = join(localLibPath, 'packages/template-utils');
+      const templateDir = join(localLibPath, 'packages/template');
+      const libDir = join(localLibPath, 'packages/lib');
 
       return updatePackage(
         templateUtilsDir,

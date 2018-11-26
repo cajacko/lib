@@ -1,9 +1,6 @@
-import linkAllNameSpacedDependencies from './linking/linkAllNameSpacedDependencies';
-import unlinkAllNameSpacedDependencies from './linking/unlinkAllNameSpacedDependencies';
-import getLastLocalModuleVersion from './linking/getLastLocalModuleVersion';
-import runCommandInLocalNameSpacedModules from './runCommandInLocalNameSpacedModules';
+// @flow
+
 import runCommand, { killAll as killAllCommands } from './runCommand';
-import { set as setSettings, get as getSettings } from './settings';
 import getShouldUpdatePackage from './getShouldUpdatePackage';
 import * as git from './git';
 import logger from './logger';
@@ -19,6 +16,7 @@ import isSymLink from './conditionals/isSymLink';
 import replaceInFile from './replaceInFile';
 import resizeImageAndCopyTo from './resizeImageAndCopyTo';
 import CertStorage from './modules/CertStorage';
+import Settings from './modules/Settings';
 
 export { parseEnvFromJSON } from './env';
 export { setPackageVersion, askForNewPackageVersion } from './packageVersion';
@@ -26,6 +24,7 @@ export { registerCommand, processCommands } from './commands';
 export { getProjectDir, getProjectConfig, getProjectEnv } from './project';
 
 export {
+  Settings,
   CertStorage,
   resizeImageAndCopyTo,
   replaceInFile,
@@ -35,18 +34,12 @@ export {
   copyAndWatch,
   copyDependencies,
   copyTmpl,
-  getLastLocalModuleVersion,
-  getSettings,
   getShouldUpdatePackage,
   git,
-  linkAllNameSpacedDependencies,
   logger,
   orderObj,
   QueuedFileManagement,
   QueuedNPMManager,
   runCommand,
-  runCommandInLocalNameSpacedModules,
-  setSettings,
   StepRunner,
-  unlinkAllNameSpacedDependencies,
 };

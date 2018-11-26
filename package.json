@@ -13,7 +13,7 @@
     "watch:template-utils": "cd packages/template-utils && yarn watch",
     "test:lint": "eslint packages/*/src features",
     "test:func": "cucumber-js",
-    "postinstall": "lerna bootstrap"
+    "postinstall": "lerna bootstrap && node scripts/postinstall.js"
   },
   "jest": {
     "verbose": true,
