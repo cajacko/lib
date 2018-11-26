@@ -8,7 +8,6 @@ import logger from './logger';
 const { exec } = require('child_process');
 
 let id = 0;
-
 const all = {};
 
 export const killAll = (shouldResolve) => {
@@ -34,13 +33,26 @@ const runCommand = (command, ...args) =>
       }
     }
 
+    const {
+      noLog,
+      logError,
+      onData,
+      getKill,
+      vars,
+      withNVM,
+      withExec,
+      ...opts
+    } = optsArg;
+
     const logs = [];
 
     const logLogs = () => {
       logs.forEach(({ type, message }) => {
         const log = type === 'error' ? logger.error : logger.debug;
 
-        log(`child log: ${message}`, undefined, { stdout: true });
+        if (noLog) {
+          log(`child log: ${message}`, undefined, { stdout: true });
+        }
       });
     };
 
@@ -48,17 +60,6 @@ const runCommand = (command, ...args) =>
     id += 1;
 
     try {
-      const {
-        noLog,
-        logError,
-        onData,
-        getKill,
-        vars,
-        withNVM,
-        withExec,
-        ...opts
-      } = optsArg;
-
       if (withExec) {
         exec(command, { cwd }, (err, stdout, stderr) => {
           if (err) {
@@ -130,11 +131,15 @@ const runCommand = (command, ...args) =>
       if (stdio === undefined) {
         ls.stdout.on('data', (string) => {
           logs.push({ type: 'log', message: String(string) });
+
+          if (!noLog) process.stdout.write(string);
           if (onData) onData(string);
         });
 
         ls.stderr.on('data', (string) => {
           logs.push({ type: 'error', message: String(string) });
+
+          if (!noLog) process.stderr.write(string);
           if (onData) onData(string);
         });
       }
