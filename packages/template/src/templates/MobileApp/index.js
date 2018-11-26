@@ -33,8 +33,8 @@ class MobileApp extends Template {
   constructor(...args: *) {
     super(...args);
 
-    this.ios = !!this.commander.ios;
     this.android = !!this.commander.android;
+    this.ios = !!this.commander.ios || !this.android;
 
     this.tmplDir = join(this.filesDir, 'mobile');
     this.tmplSrcDir = join(this.tmplDir, 'src');
