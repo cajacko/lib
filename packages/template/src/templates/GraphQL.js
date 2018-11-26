@@ -72,10 +72,30 @@ class GraphQL extends Template {
             this.templateConfig
           ),
         ]))
-      .then(() =>
-        runCommand('yarn start', this.tmpDir, {
-          withNVM: this.nvmVersion,
-        }));
+      .then(() => {
+        let needToAuthenticate = false;
+
+        const start = (opts = {}) =>
+          runCommand('yarn start', this.tmpDir, {
+            withNVM: this.nvmVersion,
+            ...opts,
+          });
+
+        return start({
+          onData: (message) => {
+            if (needToAuthenticate) return;
+
+            needToAuthenticate = String(message).includes('Command requires authentication');
+          },
+        }).catch((e) => {
+          if (!needToAuthenticate) throw e;
+
+          logger.log('You need to login to firebase. Follow the prompts to login.');
+          return runCommand('npx firebase login', this.tmpDir, {
+            withNVM: this.nvmVersion,
+          }).then(() => start());
+        });
+      });
   }
 
   /**
