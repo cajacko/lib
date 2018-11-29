@@ -4,15 +4,33 @@ import simpleGit from 'simple-git/promise';
 import getIsGit from 'is-git-repository';
 import { ensureDir, exists } from 'fs-extra';
 
-export const isGitRepo = dir =>
+/**
+ * Figure out if there is a git repo at the given directory
+ *
+ * @param {String} dir The directory to check
+ * @param {Object} opts Additional options to pass to the func
+ *
+ * @return {Promise} Resolves if the dir is a git repo
+ */
+export const isGitRepo = (dir, opts) =>
   exists(dir).then((doesExist) => {
-    if (!doesExist) throw new Error(`Dir does not exist: ${dir}`);
+    const { throwOnFalse } = opts || { throwOnFalse: true };
 
-    const isGit = getIsGit(dir);
+    let error = null;
 
-    if (isGit) return Promise.resolve();
+    if (doesExist) {
+      const isGit = getIsGit(dir);
 
-    throw new Error(`Supplied directory is not a git repo: ${dir}`);
+      if (!isGit) {
+        error = `Supplied directory is not a git repo: ${dir}`;
+      }
+    } else {
+      error = `Dir does not exist: ${dir}`;
+    }
+
+    if (throwOnFalse) throw new Error(error);
+
+    return !error;
   });
 
 export const getLastVersionTag = dir =>

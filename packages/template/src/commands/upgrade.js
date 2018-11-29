@@ -1,83 +1,164 @@
 // @flow
 
-import {
-  getShouldUpdatePackage,
-  askForNewPackageVersion,
-  setPackageVersion,
-  git,
-  runCommand,
-  getProjectDir,
-} from '@cajacko/template-utils';
-import { readJSON } from 'fs-extra';
+import { git, runCommand, getProjectDir, ask } from '@cajacko/template-utils';
+import { readJSON, writeJSON, readdir, lstat } from 'fs-extra';
 import { join } from 'path';
-import settings from '../config/settings';
 
-const updatePackage = (
-  packageDir,
-  githubUrl,
-  packageName,
-  updatePackageWithNewVersionDir,
-  dontAdd
-) =>
-  getShouldUpdatePackage(packageDir).then((shouldUpdatePackage) => {
-    if (!shouldUpdatePackage) return Promise.resolve();
+/**
+ * Figure out if a path is a directory or not
+ *
+ * @param {String} dir The path to check
+ *
+ * @return {Promise} Resolves with whether the path is a dir
+ */
+const getIsDir = dir => lstat(dir).then(stats => stats && stats.isDirectory());
 
-    return askForNewPackageVersion(packageDir).then(version =>
-      setPackageVersion(packageDir, version)
-        .then(() => git.commit(packageDir, `v${version}`, true, true))
-        .then(() =>
-          // Does this need to do a github one as well
-          git.tag(packageDir, `v${version}`, `Published version ${version}`))
-        .then(() => git.push(packageDir))
-        .then(() => {
-          if (dontAdd) return Promise.resolve();
+/**
+ * Get all the packages in the monorepo
+ *
+ * @return {Promise} Resolves with an array of paths to each package
+ */
+const getAllPackageDirs = () => {
+  const packagesDir = join(__dirname, '../../../');
 
-          return runCommand(
-            `yarn add ${githubUrl}#v${version}`,
-            updatePackageWithNewVersionDir
-          ).then(() =>
-            git.commit(
-              updatePackageWithNewVersionDir,
-              `Upgraded ${packageName} lib to v${version}`,
-              true,
-              true
-            ));
-        }));
+  return readdir(packagesDir).then((files) => {
+    const promises = [];
+    const dirs = [];
+
+    files.forEach((file) => {
+      const dir = join(packagesDir, file);
+
+      promises.push(getIsDir(dir).then((isDir) => {
+        if (isDir) {
+          dirs.push(dir);
+        }
+      }));
+    });
+
+    return Promise.all(promises).then(() => dirs);
+  });
+};
+
+/**
+ * Get all the public monorepo package.json files
+ *
+ * @return {Promise} Resolves with an array of each package.json files
+ */
+const getPackages = () =>
+  getAllPackageDirs().then((dirs) => {
+    const promises = [];
+
+    const packages = [];
+
+    dirs.forEach((dir) => {
+      promises.push(readJSON(join(dir, 'package.json')).then((packageJSON) => {
+        if (packageJSON.private) return;
+
+        packages.push(packageJSON);
+      }));
+    });
+
+    return Promise.all(promises).then(() => packages);
   });
 
-const upgrade = () =>
-  Promise.all([settings.get('LOCAL_LIB_PATH'), getProjectDir()]).then(([localLibPath, projectDir]) =>
-    readJSON(join(projectDir, 'package.json')).then(({ dependencies }) => {
-      if (!localLibPath) {
-        throw new Error('Could not find LOCAL_LIB_PATH in the user settings. This get\'s set when you install the cajacko/lib monorepo somewhere on your machine. Check you have it cloned and run "yarn install"');
-      }
+/**
+ * Throw an error if 1 item in an array is not true
+ *
+ * @param {Array} errorMessages An array of error messages, mapped to
+ * each condition
+ * @param {Object} [options] Options
+ *
+ * @return {Function} Func that gets passed in an array of conditions
+ */
+const checkAllConditions = (
+  errorMessages = [],
+  { inverse } = {}
+) => (conditions) => {
+  conditions.forEach((condition, i) => {
+    if ((inverse && condition) || (!inverse && !condition)) {
+      throw new Error(errorMessages[i] || 'checkAllConditions encountered a false condition');
+    }
+  });
+};
 
-      const templateUtilsDir = join(localLibPath, 'packages/template-utils');
-      const templateDir = join(localLibPath, 'packages/template');
-      const libDir = join(localLibPath, 'packages/lib');
+/**
+ * Publish changes to the template packages, and use the new
+ * version in the current project
+ *
+ * @return {Promise} Resolves when finished
+ */
+const upgrade = () => {
+  const templateDir = join(__dirname, '../../../../');
 
-      return updatePackage(
-        templateUtilsDir,
-        'https://github.com/cajacko/template-utils.git',
-        'template-utils',
-        templateDir
-      )
-        .then(() =>
-          updatePackage(
-            libDir,
-            'https://github.com/cajacko/lib.git',
-            'lib',
-            projectDir,
-            !dependencies['@cajacko/lib']
-          ))
-        .then(() =>
-          updatePackage(
-            templateDir,
-            'https://github.com/cajacko/template.git',
-            'template',
-            projectDir,
-            !dependencies['@cajacko/template']
-          ));
-    }));
+  return getProjectDir().then((projectDir) => {
+    const projectPackageJSONPath = join(projectDir, 'package.json');
+
+    return Promise.all([
+      git.isGitRepo(projectDir, { throwOnFalse: false }),
+      git.isGitRepo(templateDir, { throwOnFalse: false }),
+    ])
+      .then(checkAllConditions([
+        'Project dir is not a git repo',
+        'Template dir is not a git repo, ensure you have USE_LOCAL_LIBS set to true',
+      ]))
+      .then(() =>
+        Promise.all([
+          git.hasUncommitedChanges(projectDir),
+          git.hasUncommitedChanges(templateDir),
+        ]))
+      .then(checkAllConditions(
+        [
+          'The project repo has uncommited changes, please commit or stash these to continue',
+          'The template repo has uncommited changes, please commit or stash these to continue',
+        ],
+        { inverse: true }
+      ))
+      .then(() =>
+        ask({
+          type: 'list',
+          choices: ['major', 'minor', 'patch'],
+        }))
+      .then(release =>
+        runCommand(`npx lerna publish ${release} --yes`, templateDir))
+      .then(() =>
+        Promise.all([getPackages(), readJSON(projectPackageJSONPath)])
+          .then(([packages, packageJSON]) => {
+            const newPackageJSON = Object.assign({}, packageJSON);
+
+            /**
+             * Go through all the packages and update any that have changed
+             *
+             * @param {String} type The type of dependency
+             *
+             * @return {Void} No return value
+             */
+            const processPackages = (type) => {
+              const dependencies = newPackageJSON[type];
+
+              if (!dependencies) return;
+
+              packages.forEach(({ name, version }) => {
+                if (dependencies[name]) {
+                  newPackageJSON[type][name] = version;
+                }
+              });
+            };
+
+            [
+              'dependencies',
+              'devDependencies',
+              'peerDependencies',
+              'optionalDependencies',
+            ].forEach(processPackages);
+
+            return writeJSON(projectPackageJSONPath, newPackageJSON, {
+              spaces: 2,
+            });
+          })
+          .then(() => runCommand('yarn install', projectDir))
+          .then(() => git.hasUncommitedChanges(projectDir))
+          .then(() => git.commit(projectDir, 'Updated @cajacko/~ packages')));
+  });
+};
 
 export default upgrade;
