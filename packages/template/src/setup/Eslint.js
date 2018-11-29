@@ -115,6 +115,11 @@ class Eslint extends SetupTemplate {
     promises.push(this.fs.writeJSON(eslintConfig, '.eslintrc'));
 
     promises.push(this.npm.add({
+      'eslint-plugin-cajacko': {
+        version: 'latest',
+        type: 'dev',
+        exact: true,
+      },
       'babel-eslint': { type: 'dev', version: '8.2.2' },
       eslint: { type: 'dev', version: '4.18.1' },
       'eslint-config-airbnb': { type: 'dev', version: '16.1.0' },

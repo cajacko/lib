@@ -50,10 +50,6 @@ class SetupRunner extends StepRunner {
       this.npm.add({
         '@cajacko/template': { version: 'latest', exact: true },
       });
-
-      this.npm.add({
-        'eslint-plugin-cajacko': { version: 'latest', exact: true },
-      });
     }
 
     this.fs = new QueuedFileManagement(
