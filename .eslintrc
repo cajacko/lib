@@ -24,14 +24,6 @@
       }
     ],
     "import/prefer-default-export": "off",
-    "valid-jsdoc": [
-      "error",
-      {
-        "matchDescription": ".+",
-        "requireParamDescription": true,
-        "requireReturnDescription": true
-      }
-    ],
     "require-jsdoc": [
       "warn",
       {
