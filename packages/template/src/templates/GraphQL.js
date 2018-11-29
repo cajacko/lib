@@ -48,6 +48,17 @@ class GraphQL extends Template {
   }
 
   /**
+   * Install the dependencies and then indicate the out dir is ready for
+   * watching
+   */
+  installAndSetOutDir() {
+    const opts = { withNVM: this.nvmVersion };
+
+    return this.installDependencies(null, opts).then(() =>
+      this.runIfUseLocal(() => setOutDirIsReady(this.libOutDir)));
+  }
+
+  /**
    * Start the graphQL template
    *
    * @return {Promise} Promise that resolves when the template has been built
@@ -63,7 +74,7 @@ class GraphQL extends Template {
         }))
       .then(() =>
         Promise.all([
-          this.installDependencies(null, { withNVM: this.nvmVersion }).then(() => this.runIfUseLocal(() => setOutDirIsReady(this.libOutDir))),
+          this.installAndSetOutDir(),
           copyAndWatch(this.projectSrcDir, join(this.tmpFuncDir, 'src'), {
             transpile: true,
           }),

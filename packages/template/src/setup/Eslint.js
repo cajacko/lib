@@ -6,6 +6,14 @@ import { MAX_LINE_LENGTH } from '../config/general';
 const eslintConfig = {
   extends: ['airbnb'],
   rules: {
+    'id-length': [
+      'error',
+      {
+        min: 3,
+        max: 24,
+        exceptions: ['x', 'y', 'i', 'e', 'cb', 'fs'],
+      },
+    ],
     'flowtype/define-flow-type': 1,
     'flowtype/use-flow-type': 1,
     'flowtype/require-valid-file-annotation': [2, 'always'],
