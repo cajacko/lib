@@ -157,7 +157,8 @@ const upgrade = () => {
           })
           .then(() => runCommand('yarn install', projectDir))
           .then(() => git.hasUncommitedChanges(projectDir))
-          .then(() => git.commit(projectDir, 'Updated @cajacko/~ packages')));
+          .then(() =>
+            git.commit(projectDir, 'Updated @cajacko/~ packages', true, true)));
   });
 };
 
