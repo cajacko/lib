@@ -1,12 +1,16 @@
-# -- THIS FILE IS AUTO GENERATED. YOU CAN ADD CUSTOM ENTRIES AT THE BOTTOM --
-
 # npm stuff
 node_modules
 
 # Build dirs
-/build
-/dist
-/lib
+/packages/lib/build
+/packages/lib/dist
+/packages/lib/lib
+/packages/template/build
+/packages/template/dist
+/packages/template/lib
+/packages/template-utils/build
+/packages/template-utils/dist
+/packages/template-utils/lib
 
 # Temp dirs
 tmp
@@ -30,11 +34,10 @@ src/constants/**/*.css
 /docs
 *.log
 
-# -- ADD CUSTOM ENTRIES BELOW THIS HEADER
 # Project Specific
-/components
-/config
-/entry
-/graphql
-/modules
-/utils
+/packages/lib/components
+/packages/lib/config
+/packages/lib/entry
+/packages/lib/graphql
+/packages/lib/modules
+/packages/lib/utils
