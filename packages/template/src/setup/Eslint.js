@@ -23,14 +23,7 @@ const eslintConfig = {
       },
     ],
     'import/prefer-default-export': 'off',
-    'valid-jsdoc': [
-      'error',
-      {
-        matchDescription: '.+',
-        requireParamDescription: true,
-        requireReturnDescription: true,
-      },
-    ],
+    'cajacko/valid-jsdoc': 'error',
     'require-jsdoc': [
       'warn',
       {
@@ -93,7 +86,7 @@ const eslintConfig = {
     },
   },
   parser: 'babel-eslint',
-  plugins: ['jest', 'flowtype'],
+  plugins: ['jest', 'flowtype', 'cajacko'],
   env: {
     'jest/globals': true,
   },

@@ -16,16 +16,8 @@ import selfConfig from '../../project.json';
 class SetupRunner extends StepRunner {
   /**
    * Initialise the class, define the initial props and set the steps to run
-   *
-   * @param {String} projectDir The project dir
-   * @param {Object} projectConfig The project config
-   * @param {String} lastTemplateVersion The version of the template lib to
-   * install
-   * @param {String} lastLibVersion The version of the lib to install
-   *
-   * @return {Void} No return value
    */
-  constructor(projectDir, projectConfig, lastTemplateVersion, lastLibVersion) {
+  constructor(projectDir: string, projectConfig) {
     const steps = [
       'preRun',
       'preSetupFiles',
@@ -52,11 +44,15 @@ class SetupRunner extends StepRunner {
     if (!this.isSelf && !this.projectConfig.ignoreTemplates) {
       this.addToStep('postWriteFiles', () =>
         this.npm.install({
-          '@cajacko/lib': { version: lastLibVersion, exact: true },
+          '@cajacko/lib': { version: 'latest', exact: true },
         }));
 
       this.npm.add({
-        '@cajacko/template': { version: lastTemplateVersion, exact: true },
+        '@cajacko/template': { version: 'latest', exact: true },
+      });
+
+      this.npm.add({
+        'eslint-plugin-cajacko': { version: 'latest', exact: true },
       });
     }
 
