@@ -8,7 +8,7 @@
   "scripts": {
     "init": "node dist/bin.js init",
     "test:lint": "cd ../../ && npx eslint packages/template/src",
-    "build": "babel src --out-dir dist -s --copy-files",
+    "build": "babel src --out-dir dist -s --copy-files -q",
     "watch": "yarn build --watch",
     "prepare": "yarn build",
     "babel": "babel"

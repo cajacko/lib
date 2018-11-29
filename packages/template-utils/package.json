@@ -5,7 +5,7 @@
   "main": "lib/main.js",
   "scripts": {
     "test:lint": "cd ../../ && npx eslint packages/template-utils/src",
-    "build": "babel src --out-dir lib -s --copy-files",
+    "build": "babel src --out-dir lib -s --copy-files -q",
     "watch": "yarn build --watch",
     "prepare": "yarn build"
   },
