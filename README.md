@@ -1,4 +1,4 @@
-# @cajacko/lib
+# Charlie Jackson Lib
 
 Personal library for projects by Charlie Jackson.
 

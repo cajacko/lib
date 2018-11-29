@@ -1,7 +1,6 @@
 // @flow
 
 import runCommand, { killAll as killAllCommands } from './runCommand';
-import getShouldUpdatePackage from './getShouldUpdatePackage';
 import * as git from './git';
 import logger from './logger';
 import StepRunner from './modules/StepRunner';
@@ -19,7 +18,6 @@ import CertStorage from './modules/CertStorage';
 import Settings from './modules/Settings';
 
 export { parseEnvFromJSON } from './env';
-export { setPackageVersion, askForNewPackageVersion } from './packageVersion';
 export { registerCommand, processCommands } from './commands';
 export { getProjectDir, getProjectConfig, getProjectEnv } from './project';
 
@@ -34,7 +32,6 @@ export {
   copyAndWatch,
   copyDependencies,
   copyTmpl,
-  getShouldUpdatePackage,
   git,
   logger,
   orderObj,

@@ -1,5 +1,5 @@
-# @cajacko/lib
+# @cajacko/template-utils
 
-Personal library for projects by Charlie Jackson.
+Template utilities for projects by Charlie Jackson.
 
 Created by [Charlie Jackson](https://charliejackson.com) ([contact@charliejackson.com](mailto:contact@charliejackson.com))
