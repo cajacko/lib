@@ -46,9 +46,6 @@ registerCommand('deploy', runBasicCommand('deploy'), {
 
 registerCommand('upgrade', upgrade);
 
-registerCommand('postinstall', () => {}, { ignoreUnlink: true });
-
-registerCommand('precommit', () => {});
 registerCommand('prepare', runBasicCommand('prepare'));
 
 processCommands(process.argv);

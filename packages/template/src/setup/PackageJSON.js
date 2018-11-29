@@ -17,8 +17,6 @@ const projectJSON = {
     build: 'node .scripts/template.js build',
     deploy: 'node .scripts/template.js deploy',
     upgrade: 'node .scripts/template.js upgrade',
-    postinstall: 'node .scripts/template.js postinstall',
-    precommit: 'node .scripts/template.js precommit',
   },
 };
 
