@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-cajacko",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Personal eslint rules for Charlie Jackson",
   "keywords": [
     "eslint",

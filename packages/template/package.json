@@ -1,6 +1,6 @@
 {
   "name": "@cajacko/template",
-  "version": "0.28.1",
+  "version": "0.29.0",
   "description": "Templating engine for projects by Charlie Jackson",
   "bin": {
     "template": "dist/bin.js"
@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
-    "@cajacko/template-utils": "^0.14.2",
+    "@cajacko/template-utils": "^0.15.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "8.2.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
