@@ -100,7 +100,7 @@
     }
   },
   "parser": "babel-eslint",
-  "plugins": ["jest", "flowtype"],
+  "plugins": ["jest", "flowtype", "cajacko"],
   "env": {
     "jest/globals": true
   },
