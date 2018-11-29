@@ -30,7 +30,7 @@
     ]
   },
   "devDependencies": {
-    "@cajacko/eslint-plugin-cajacko": "file:packages/eslint-plugin-cajacko",
+    "eslint-plugin-cajacko": "file:packages/eslint-plugin-cajacko",
     "babel-cli": "^6.26.0",
     "babel-eslint": "8.2.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",

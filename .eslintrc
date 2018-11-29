@@ -75,7 +75,8 @@
         "extensions": [".js", ".native.js", ".web.js", ".ios.js", ".android.js"]
       }
     ],
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "cajacko/valid-jsdoc": "error"
   },
   "overrides": [
     {

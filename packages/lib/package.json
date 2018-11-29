@@ -9,6 +9,7 @@
   "scripts": {
     "init": "template init",
     "test": "template test",
+    "test:lint": "cd ../../ && npx eslint packages/lib/src",
     "build": "echo \"\"",
     "watch:lib": "gulp watch",
     "build:lib": "gulp build",

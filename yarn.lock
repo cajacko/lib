@@ -90,11 +90,6 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@cajacko/eslint-plugin-cajacko@file:packages/eslint-plugin-cajacko":
-  version "0.0.0"
-  dependencies:
-    requireindex "~1.1.0"
-
 "@lerna/add@^3.4.1":
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.4.1.tgz#d41068317e30f530df48220d256b5e79690b1877"
@@ -2877,6 +2872,11 @@ eslint-module-utils@^2.1.1:
   dependencies:
     debug "^2.6.8"
     pkg-dir "^1.0.0"
+
+"eslint-plugin-cajacko@file:packages/eslint-plugin-cajacko":
+  version "0.0.0"
+  dependencies:
+    requireindex "~1.1.0"
 
 eslint-plugin-flowtype@2.46.1:
   version "2.46.1"
