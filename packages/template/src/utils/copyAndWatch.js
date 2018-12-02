@@ -7,6 +7,10 @@ import {
 } from '@cajacko/template-utils';
 import { join } from 'path';
 
+/**
+ * Copy a src directory to a destination, passing it through the babel
+ * transpiler. And then watch for changes.
+ */
 const copyAndWatch = (src, dest, optionsArg = {}) => {
   const { transpile, ...options } = optionsArg;
 

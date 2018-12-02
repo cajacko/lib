@@ -2,6 +2,9 @@
   "name": "eslint-plugin-cajacko",
   "version": "0.1.0",
   "description": "Personal eslint rules for Charlie Jackson",
+  "scripts": {
+    "test:lint": "cd ../../ && npx eslint packages/eslint-plugin-cajacko/src"
+  },
   "keywords": [
     "eslint",
     "eslintplugin",
@@ -10,10 +13,11 @@
   "author": "Charlie Jackson",
   "main": "src/index.js",
   "dependencies": {
+    "doctrine": "^3.0.0",
     "requireindex": "~1.1.0"
   },
   "devDependencies": {
-    "eslint": "~3.9.1"
+    "eslint": "4.18.1"
   },
   "engines": {
     "node": ">=0.10.0"

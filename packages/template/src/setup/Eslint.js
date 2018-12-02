@@ -11,7 +11,7 @@ const eslintConfig = {
       {
         min: 3,
         max: 24,
-        exceptions: ['x', 'y', 'i', 'e', 'cb', 'fs'],
+        exceptions: ['x', 'y', 'i', 'e', 'cb', 'fs', 'id', 'db', 'is'],
       },
     ],
     'flowtype/define-flow-type': 1,

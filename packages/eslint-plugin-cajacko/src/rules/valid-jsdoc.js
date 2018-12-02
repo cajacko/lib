@@ -1,84 +1,72 @@
-/**
- * @fileoverview Validates JSDoc comments are syntactically correct
- * @author Nicholas C. Zakas
- */
-"use strict";
-
-//------------------------------------------------------------------------------
-// Requirements
-//------------------------------------------------------------------------------
-
-const doctrine = require("doctrine");
-
-//------------------------------------------------------------------------------
-// Rule Definition
-//------------------------------------------------------------------------------
+/* eslint max-lines: 0 */
+const doctrine = require('doctrine');
 
 module.exports = {
   meta: {
     docs: {
-      description: "enforce valid JSDoc comments",
-      category: "Possible Errors",
+      description: 'enforce valid JSDoc comments',
+      category: 'Possible Errors',
       recommended: false,
-      url: "https://eslint.org/docs/rules/valid-jsdoc"
+      url: 'https://eslint.org/docs/rules/valid-jsdoc',
     },
 
     schema: [
       {
-        type: "object",
+        type: 'object',
         properties: {
           prefer: {
-            type: "object",
+            type: 'object',
             additionalProperties: {
-              type: "string"
-            }
+              type: 'string',
+            },
           },
           preferType: {
-            type: "object",
+            type: 'object',
             additionalProperties: {
-              type: "string"
-            }
+              type: 'string',
+            },
           },
           requireReturn: {
-            type: "boolean"
+            type: 'boolean',
           },
           requireParamDescription: {
-            type: "boolean"
+            type: 'boolean',
           },
           requireReturnDescription: {
-            type: "boolean"
+            type: 'boolean',
           },
           matchDescription: {
-            type: "string"
+            type: 'string',
           },
           requireReturnType: {
-            type: "boolean"
-          }
+            type: 'boolean',
+          },
         },
-        additionalProperties: false
-      }
+        additionalProperties: false,
+      },
     ],
 
-    fixable: "code"
+    fixable: 'code',
   },
 
   create(context) {
-    const options = context.options[0] || {},
-      prefer = options.prefer || {},
-      sourceCode = context.getSourceCode(),
-      // these both default to true, so you have to explicitly make them false
-      requireReturn = options.requireReturn !== false,
-      requireParamDescription = options.requireParamDescription !== false,
-      requireReturnDescription = options.requireReturnDescription !== false,
-      requireReturnType = options.requireReturnType !== false,
-      preferType = options.preferType || {},
-      checkPreferType = Object.keys(preferType).length !== 0;
+    const options = context.options[0] || {};
+    const prefer = options.prefer || {};
+    const sourceCode = context.getSourceCode();
+    // these both default to true, so you have to explicitly make them false
+    const requireReturn = options.requireReturn !== false;
+    const requireParamDescription = options.requireParamDescription !== false;
+    const requireReturnDescription = options.requireReturnDescription !== false;
+    const requireReturnType = options.requireReturnType !== false;
+    const preferType = options.preferType || {};
+    const checkPreferType = Object.keys(preferType).length !== 0;
 
     //--------------------------------------------------------------------------
     // Helpers
     //--------------------------------------------------------------------------
 
-    // Using a stack to store if a function returns or not (handling nested functions)
+    // Using a stack to store if a function returns or not (handling nested
+    // functions)
     const fns = [];
 
     /**
@@ -89,7 +77,7 @@ module.exports = {
      */
     function isTypeClass(node) {
       return (
-        node.type === "ClassExpression" || node.type === "ClassDeclaration"
+        node.type === 'ClassExpression' || node.type === 'ClassDeclaration'
       );
     }
 
@@ -102,9 +90,9 @@ module.exports = {
     function startFunction(node) {
       fns.push({
         returnPresent:
-          (node.type === "ArrowFunctionExpression" &&
-            node.body.type !== "BlockStatement") ||
-          isTypeClass(node)
+          (node.type === 'ArrowFunctionExpression' &&
+            node.body.type !== 'BlockStatement') ||
+          isTypeClass(node),
       });
     }
 
@@ -131,8 +119,8 @@ module.exports = {
     function isValidReturnType(tag) {
       return (
         tag.type === null ||
-        tag.type.name === "void" ||
-        tag.type.type === "UndefinedLiteral"
+        tag.type.name === 'void' ||
+        tag.type.type === 'UndefinedLiteral'
       );
     }
 
@@ -144,18 +132,20 @@ module.exports = {
      */
     function canTypeBeValidated(type) {
       return (
-        type !== "UndefinedLiteral" && // {undefined} as there is no name property available.
-        type !== "NullLiteral" && // {null}
-        type !== "NullableLiteral" && // {?}
-        type !== "FunctionType" && // {function(a)}
-        type !== "AllLiteral"
+        type !== 'UndefinedLiteral' && // {undefined} as there is no name
+        // property available.
+        type !== 'NullLiteral' && // {null}
+        type !== 'NullableLiteral' && // {?}
+        type !== 'FunctionType' && // {function(a)}
+        type !== 'AllLiteral'
       ); // {*}
     }
 
     /**
      * Extract the current and expected type based on the input type object
      * @param {Object} type JSDoc tag
-     * @returns {{currentType: Doctrine.Type, expectedTypeName: string}} The current type annotation and
+     * @returns {{currentType: Doctrine.Type, expectedTypeName: string}} The
+     * current type annotation and
      * the expected name of the annotation
      * @private
      */
@@ -170,24 +160,25 @@ module.exports = {
 
       return {
         currentType,
-        expectedTypeName: currentType && preferType[currentType.name]
+        expectedTypeName: currentType && preferType[currentType.name],
       };
     }
 
     /**
      * Gets the location of a JSDoc node in a file
      * @param {Token} jsdocComment The comment that this node is parsed from
-     * @param {{range: number[]}} parsedJsdocNode A tag or other node which was parsed from this comment
-     * @returns {{start: SourceLocation, end: SourceLocation}} The 0-based source location for the tag
+     * @param {{range: number[]}} parsedJsdocNode A tag or other node which was
+     * parsed from this comment
+     * @returns {{start: SourceLocation, end: SourceLocation}} The 0-based
+     * source location for the tag
      */
     function getAbsoluteRange(jsdocComment, parsedJsdocNode) {
+      const startIndex = jsdocComment.range[0] + 2 + parsedJsdocNode.range[0];
+      const endIndex = jsdocComment.range[0] + 2 + parsedJsdocNode.range[1];
+
       return {
-        start: sourceCode.getLocFromIndex(
-          jsdocComment.range[0] + 2 + parsedJsdocNode.range[0]
-        ),
-        end: sourceCode.getLocFromIndex(
-          jsdocComment.range[0] + 2 + parsedJsdocNode.range[1]
-        )
+        start: sourceCode.getLocFromIndex(startIndex),
+        end: sourceCode.getLocFromIndex(endIndex),
       };
     }
 
@@ -207,21 +198,21 @@ module.exports = {
       let elements = [];
 
       switch (type.type) {
-        case "TypeApplication": // {Array.<String>}
+        case 'TypeApplication': // {Array.<String>}
           elements =
-            type.applications[0].type === "UnionType"
+            type.applications[0].type === 'UnionType'
               ? type.applications[0].elements
               : type.applications;
           typesToCheck.push(getCurrentExpectedTypes(type));
           break;
-        case "RecordType": // {{20:String}}
+        case 'RecordType': // {{20:String}}
           elements = type.fields;
           break;
-        case "UnionType": // {String|number|Test}
-        case "ArrayType": // {[String, number, Test]}
-          elements = type.elements;
+        case 'UnionType': // {String|number|Test}
+        case 'ArrayType': // {[String, number, Test]}
+          ({ elements } = type);
           break;
-        case "FieldType": // Array.<{count: number, votes: number}>
+        case 'FieldType': // Array.<{count: number, votes: number}>
           if (type.value) {
             typesToCheck.push(getCurrentExpectedTypes(type.value));
           }
@@ -232,7 +223,7 @@ module.exports = {
 
       elements.forEach(validateType.bind(null, jsdocNode));
 
-      typesToCheck.forEach(typeToCheck => {
+      typesToCheck.forEach((typeToCheck) => {
         if (
           typeToCheck.expectedTypeName &&
           typeToCheck.expectedTypeName !== typeToCheck.currentType.name
@@ -244,16 +235,20 @@ module.exports = {
             loc: getAbsoluteRange(jsdocNode, typeToCheck.currentType),
             data: {
               currentTypeName: typeToCheck.currentType.name,
-              expectedTypeName: typeToCheck.expectedTypeName
+              expectedTypeName: typeToCheck.expectedTypeName,
             },
             fix(fixer) {
+              /**
+               * Process the index
+               */
+              const process = indexInComment =>
+                jsdocNode.range[0] + 2 + indexInComment;
+
               return fixer.replaceTextRange(
-                typeToCheck.currentType.range.map(
-                  indexInComment => jsdocNode.range[0] + 2 + indexInComment
-                ),
+                typeToCheck.currentType.range.map(process),
                 typeToCheck.expectedTypeName
               );
-            }
+            },
           });
         }
       });
@@ -266,16 +261,16 @@ module.exports = {
      * @private
      */
     function checkJSDoc(node) {
-      const jsdocNode = sourceCode.getJSDocComment(node),
-        functionData = fns.pop(),
-        paramTagsByName = Object.create(null),
-        paramTags = [];
-      let hasReturns = false,
-        returnsTag,
-        hasConstructor = false,
-        isInterface = false,
-        isOverride = false,
-        isAbstract = false;
+      const jsdocNode = sourceCode.getJSDocComment(node);
+      const functionData = fns.pop();
+      const paramTagsByName = Object.create(null);
+      const paramTags = [];
+      let hasReturns = false;
+      let returnsTag;
+      let hasConstructor = false;
+      let isInterface = false;
+      let isOverride = false;
+      let isAbstract = false;
 
       // make sure only to validate JSDoc comments
       if (jsdocNode) {
@@ -286,51 +281,51 @@ module.exports = {
             strict: true,
             unwrap: true,
             sloppy: true,
-            range: true
+            range: true,
           });
-        } catch (ex) {
-          if (/braces/i.test(ex.message)) {
+        } catch (e) {
+          if (/braces/i.test(e.message)) {
             context.report({
               node: jsdocNode,
-              message: "JSDoc type missing brace."
+              message: 'JSDoc type missing brace.',
             });
           } else {
-            context.report({ node: jsdocNode, message: "JSDoc syntax error." });
+            context.report({ node: jsdocNode, message: 'JSDoc syntax error.' });
           }
 
           return;
         }
 
-        jsdoc.tags.forEach(tag => {
+        jsdoc.tags.forEach((tag) => {
           switch (tag.title.toLowerCase()) {
-            case "param":
-            case "arg":
-            case "argument":
+            case 'param':
+            case 'arg':
+            case 'argument':
               paramTags.push(tag);
               break;
 
-            case "return":
-            case "returns":
+            case 'return':
+            case 'returns':
               hasReturns = true;
               returnsTag = tag;
               break;
 
-            case "constructor":
-            case "class":
+            case 'constructor':
+            case 'class':
               hasConstructor = true;
               break;
 
-            case "override":
-            case "inheritdoc":
+            case 'override':
+            case 'inheritdoc':
               isOverride = true;
               break;
 
-            case "abstract":
-            case "virtual":
+            case 'abstract':
+            case 'virtual':
               isAbstract = true;
               break;
 
-            case "interface":
+            case 'interface':
               isInterface = true;
               break;
 
@@ -339,31 +334,31 @@ module.exports = {
 
           // check tag preferences
           if (
-            prefer.hasOwnProperty(tag.title) &&
+            Object.prototype.hasOwnProperty.call(prefer, tag.title) &&
             tag.title !== prefer[tag.title]
           ) {
             const entireTagRange = getAbsoluteRange(jsdocNode, tag);
 
             context.report({
               node: jsdocNode,
-              message: "Use @{{name}} instead.",
+              message: 'Use @{{name}} instead.',
               loc: {
                 start: entireTagRange.start,
                 end: {
                   line: entireTagRange.start.line,
-                  column: entireTagRange.start.column + `@${tag.title}`.length
-                }
+                  column: entireTagRange.start.column + `@${tag.title}`.length,
+                },
               },
               data: { name: prefer[tag.title] },
               fix(fixer) {
                 return fixer.replaceTextRange(
                   [
                     jsdocNode.range[0] + tag.range[0] + 3,
-                    jsdocNode.range[0] + tag.range[0] + tag.title.length + 3
+                    jsdocNode.range[0] + tag.range[0] + tag.title.length + 3,
                   ],
                   prefer[tag.title]
                 );
-              }
+              },
             });
           }
 
@@ -373,7 +368,7 @@ module.exports = {
           }
         });
 
-        paramTags.forEach(param => {
+        paramTags.forEach((param) => {
           if (!param.type) {
             // context.report({
             //   node: jsdocNode,
@@ -387,7 +382,7 @@ module.exports = {
               node: jsdocNode,
               message: "Missing JSDoc parameter description for '{{name}}'.",
               loc: getAbsoluteRange(jsdocNode, param),
-              data: { name: param.name }
+              data: { name: param.name },
             });
           }
           if (paramTagsByName[param.name]) {
@@ -395,9 +390,9 @@ module.exports = {
               node: jsdocNode,
               message: "Duplicate JSDoc parameter '{{name}}'.",
               loc: getAbsoluteRange(jsdocNode, param),
-              data: { name: param.name }
+              data: { name: param.name },
             });
-          } else if (param.name.indexOf(".") === -1) {
+          } else if (param.name.indexOf('.') === -1) {
             paramTagsByName[param.name] = param;
           }
         });
@@ -412,7 +407,7 @@ module.exports = {
             // context.report({
             //   node: jsdocNode,
             //   message:
-            //     "Unexpected @{{title}} tag; function has no return statement.",
+            //   "Unexpected @{{title}} tag; function has no return statement.",
             //   loc: getAbsoluteRange(jsdocNode, returnsTag),
             //   data: {
             //     title: returnsTag.title
@@ -422,7 +417,7 @@ module.exports = {
             if (requireReturnType && !returnsTag.type) {
               context.report({
                 node: jsdocNode,
-                message: "Missing JSDoc return type."
+                message: 'Missing JSDoc return type.',
               });
             }
             if (
@@ -432,7 +427,7 @@ module.exports = {
             ) {
               context.report({
                 node: jsdocNode,
-                message: "Missing JSDoc return description."
+                message: 'Missing JSDoc return description.',
               });
             }
           }
@@ -444,9 +439,9 @@ module.exports = {
           !hasReturns &&
           !hasConstructor &&
           !isInterface &&
-          node.parent.kind !== "get" &&
-          node.parent.kind !== "constructor" &&
-          node.parent.kind !== "set" &&
+          node.parent.kind !== 'get' &&
+          node.parent.kind !== 'constructor' &&
+          node.parent.kind !== 'set' &&
           !isTypeClass(node)
         ) {
           // if (requireReturn || functionData.returnPresent) {
@@ -464,15 +459,16 @@ module.exports = {
         const jsdocParamNames = Object.keys(paramTagsByName);
 
         if (node.params) {
-          node.params.forEach((param, paramsIndex) => {
-            if (param.type === "AssignmentPattern") {
+          node.params.forEach((paramVal, paramsIndex) => {
+            let param = Object.assign({}, paramVal);
+
+            if (param.type === 'AssignmentPattern') {
               param = param.left;
             }
 
-            const name = param.name;
+            const { name } = param;
 
-            // TODO(nzakas): Figure out logical things to do with destructured, default, rest params
-            if (param.type === "Identifier") {
+            if (param.type === 'Identifier') {
               if (
                 jsdocParamNames[paramsIndex] &&
                 name !== jsdocParamNames[paramsIndex]
@@ -480,7 +476,7 @@ module.exports = {
                 // context.report({
                 //   node: jsdocNode,
                 //   message:
-                //     "Expected JSDoc for '{{name}}' but found '{{jsdocName}}'.",
+                //   "Expected JSDoc for '{{name}}' but found '{{jsdocName}}'.",
                 //   loc: getAbsoluteRange(
                 //     jsdocNode,
                 //     paramTagsByName[jsdocParamNames[paramsIndex]]
@@ -503,12 +499,12 @@ module.exports = {
           });
         }
 
-        const regex = new RegExp(".+");
+        const regex = new RegExp('.+');
 
         if (!regex.test(jsdoc.description)) {
           context.report({
             node: jsdocNode,
-            message: "JSDoc does not contain a description"
+            message: 'JSDoc does not contain a description',
           });
         }
       }
@@ -524,12 +520,12 @@ module.exports = {
       FunctionDeclaration: startFunction,
       ClassExpression: startFunction,
       ClassDeclaration: startFunction,
-      "ArrowFunctionExpression:exit": checkJSDoc,
-      "FunctionExpression:exit": checkJSDoc,
-      "FunctionDeclaration:exit": checkJSDoc,
-      "ClassExpression:exit": checkJSDoc,
-      "ClassDeclaration:exit": checkJSDoc,
-      ReturnStatement: addReturn
+      'ArrowFunctionExpression:exit': checkJSDoc,
+      'FunctionExpression:exit': checkJSDoc,
+      'FunctionDeclaration:exit': checkJSDoc,
+      'ClassExpression:exit': checkJSDoc,
+      'ClassDeclaration:exit': checkJSDoc,
+      ReturnStatement: addReturn,
     };
-  }
+  },
 };
