@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-cajacko",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Personal eslint rules for Charlie Jackson",
   "scripts": {
     "test:lint": "cd ../../ && npx eslint packages/eslint-plugin-cajacko/src"
