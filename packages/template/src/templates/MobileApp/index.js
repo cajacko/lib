@@ -1,4 +1,5 @@
 // @flow
+/* eslint max-lines: 0 */
 
 import { join } from 'path';
 import { ensureDir, copy, readJSON, writeJSON } from 'fs-extra';

@@ -1,10 +1,11 @@
 {
   "name": "@cajacko/template-utils",
-  "version": "0.14.2",
+  "version": "0.16.0",
   "private": false,
   "main": "lib/main.js",
   "scripts": {
-    "build": "babel src --out-dir lib -s --copy-files",
+    "test:lint": "cd ../../ && npx eslint packages/template-utils/src",
+    "build": "babel src --out-dir lib -s --copy-files -q",
     "watch": "yarn build --watch",
     "prepare": "yarn build"
   },

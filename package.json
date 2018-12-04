@@ -9,6 +9,9 @@
   "private": true,
   "scripts": {
     "start": "concurrently \"yarn watch:template\" \"yarn watch:template-utils\"",
+    "build": "concurrently \"yarn build:template\" \"yarn build:template-utils\"",
+    "build:template": "cd packages/template && yarn build",
+    "build:template-utils": "cd packages/template-utils && yarn build",
     "watch:template": "cd packages/template && yarn watch",
     "watch:template-utils": "cd packages/template-utils && yarn watch",
     "test:lint": "eslint packages/*/src features",
@@ -30,6 +33,7 @@
     ]
   },
   "devDependencies": {
+    "eslint-plugin-cajacko": "file:packages/eslint-plugin-cajacko",
     "babel-cli": "^6.26.0",
     "babel-eslint": "8.2.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",

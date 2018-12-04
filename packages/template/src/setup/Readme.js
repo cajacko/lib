@@ -1,3 +1,5 @@
+// @flow
+
 import SetupTemplate from '../modules/SetupTemplate';
 
 class Readme extends SetupTemplate {
@@ -5,7 +7,7 @@ class Readme extends SetupTemplate {
     return this.fs.copyTmpl(
       'readme/header.md',
       'README.md',
-      this.projectConfig,
+      this.projectConfig
     );
   }
 }

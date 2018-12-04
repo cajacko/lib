@@ -1,3 +1,5 @@
+// @flow
+
 import SetupTemplate from '../modules/SetupTemplate';
 
 class NPMIgnore extends SetupTemplate {

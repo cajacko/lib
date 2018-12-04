@@ -1,8 +1,11 @@
-const { StartTemplate, logger } = require('@cajacko/template');
+// @flow
+
+import Template from '../modules/Template';
+
 const { copy, ensureDir, remove } = require('fs-extra');
 const { join } = require('path');
 
-class Website extends StartTemplate {
+class Website extends Template {
   constructor(...args) {
     super(...args);
 

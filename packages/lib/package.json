@@ -1,6 +1,6 @@
 {
   "name": "@cajacko/lib",
-  "version": "3.9.1",
+  "version": "3.10.0",
   "description": "Personal library for projects by Charlie Jackson",
   "main": "index.js",
   "repository": "git@github.com:cajacko/lib.git",
@@ -9,6 +9,7 @@
   "scripts": {
     "init": "template init",
     "test": "template test",
+    "test:lint": "cd ../../ && npx eslint packages/lib/src",
     "build": "echo \"\"",
     "watch:lib": "gulp watch",
     "build:lib": "gulp build",

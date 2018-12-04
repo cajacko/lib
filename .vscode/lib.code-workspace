@@ -1,0 +1,32 @@
+{
+  "folders": [
+    {
+      "name": "lib-monorepo",
+      "path": "../"
+    },
+    {
+      "path": "../packages/lib"
+    },
+    {
+      "path": "../packages/template"
+    },
+    {
+      "path": "../packages/template-utils"
+    },
+    {
+      "path": "../packages/eslint-plugin-cajacko"
+    }
+  ],
+  "settings": {
+    "editor.rulers": [80],
+    "editor.tabSize": 2,
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "prettier.eslintIntegration": true,
+    "prettier.printWidth": 80,
+    "prettier.singleQuote": true,
+    "eslint.packageManager": "yarn",
+    "npm.packageManager": "yarn"
+  }
+}

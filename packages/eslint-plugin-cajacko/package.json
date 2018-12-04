@@ -1,0 +1,26 @@
+{
+  "name": "eslint-plugin-cajacko",
+  "version": "0.2.0",
+  "description": "Personal eslint rules for Charlie Jackson",
+  "scripts": {
+    "test:lint": "cd ../../ && npx eslint packages/eslint-plugin-cajacko/src"
+  },
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin"
+  ],
+  "author": "Charlie Jackson",
+  "main": "src/index.js",
+  "dependencies": {
+    "doctrine": "^3.0.0",
+    "requireindex": "~1.1.0"
+  },
+  "devDependencies": {
+    "eslint": "4.18.1"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "license": "ISC"
+}

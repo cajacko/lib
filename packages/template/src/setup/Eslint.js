@@ -6,6 +6,14 @@ import { MAX_LINE_LENGTH } from '../config/general';
 const eslintConfig = {
   extends: ['airbnb'],
   rules: {
+    'id-length': [
+      'error',
+      {
+        min: 3,
+        max: 24,
+        exceptions: ['x', 'y', 'i', 'e', 'cb', 'fs', 'id', 'db', 'is'],
+      },
+    ],
     'flowtype/define-flow-type': 1,
     'flowtype/use-flow-type': 1,
     'flowtype/require-valid-file-annotation': [2, 'always'],
@@ -23,14 +31,7 @@ const eslintConfig = {
       },
     ],
     'import/prefer-default-export': 'off',
-    'valid-jsdoc': [
-      'error',
-      {
-        matchDescription: '.+',
-        requireParamDescription: true,
-        requireReturnDescription: true,
-      },
-    ],
+    'cajacko/valid-jsdoc': 'error',
     'require-jsdoc': [
       'warn',
       {
@@ -93,7 +94,7 @@ const eslintConfig = {
     },
   },
   parser: 'babel-eslint',
-  plugins: ['jest', 'flowtype'],
+  plugins: ['jest', 'flowtype', 'cajacko'],
   env: {
     'jest/globals': true,
   },
@@ -122,6 +123,11 @@ class Eslint extends SetupTemplate {
     promises.push(this.fs.writeJSON(eslintConfig, '.eslintrc'));
 
     promises.push(this.npm.add({
+      'eslint-plugin-cajacko': {
+        version: 'latest',
+        type: 'dev',
+        exact: true,
+      },
       'babel-eslint': { type: 'dev', version: '8.2.2' },
       eslint: { type: 'dev', version: '4.18.1' },
       'eslint-config-airbnb': { type: 'dev', version: '16.1.0' },

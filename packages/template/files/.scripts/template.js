@@ -28,14 +28,14 @@ const readFile = (...args) =>
 
 const parseEnvFileToJSON = path =>
   readFile(path)
-    .then((contents) => {
+    .then(contents => {
       try {
         const envObj = {};
         const envContents = contents.toString();
 
         const lines = envContents.split('\n');
 
-        lines.forEach((line) => {
+        lines.forEach(line => {
           const match = line.match(/(.*?)=(.*)/);
 
           if (!match) return;
@@ -65,10 +65,10 @@ const parseEnvFileToJSON = path =>
 const getEnv = () => {
   const env = {};
 
-  const addContentsToEnv = (contents) => {
+  const addContentsToEnv = contents => {
     if (!contents || typeof contents !== 'object') return;
 
-    Object.keys(contents).forEach((key) => {
+    Object.keys(contents).forEach(key => {
       const val = contents[key];
 
       if (env[key] === undefined) {
@@ -86,26 +86,26 @@ const getEnv = () => {
 };
 
 const getUseLocalLibs = () =>
-  getEnv().then((env) => {
+  getEnv().then(env => {
     if (!env) return false;
 
     return !!env.USE_LOCAL_LIBS;
   });
 
-const compose = (...filters) => (value) => {
+const compose = (...filters) => value => {
   let newValue = value;
 
-  filters.forEach((filter) => {
+  filters.forEach(filter => {
     newValue = filter(newValue);
   });
 
   return newValue;
 };
 
-const removeNPMEnv = (env) => {
+const removeNPMEnv = env => {
   const newEnv = {};
 
-  Object.keys(env).forEach((key) => {
+  Object.keys(env).forEach(key => {
     if (!key.includes('npm_')) {
       newEnv[key] = env[key];
     }
@@ -114,7 +114,7 @@ const removeNPMEnv = (env) => {
   return newEnv;
 };
 
-const filterEnvPath = (env) => {
+const filterEnvPath = env => {
   const removeString = join(__dirname, '../node_modules/.bin');
 
   const newEnv = Object.assign({}, env);
@@ -130,7 +130,7 @@ const filterEnvPath = (env) => {
 };
 
 const runCommand = (command, args) =>
-  new Promise((resolve) => {
+  new Promise(resolve => {
     const env = compose(
       removeNPMEnv,
       filterEnvPath
@@ -141,7 +141,7 @@ const runCommand = (command, args) =>
       env,
     });
 
-    ps.on('close', (code) => {
+    ps.on('close', code => {
       if (code) {
         process.exit(code);
       }
@@ -150,7 +150,7 @@ const runCommand = (command, args) =>
     });
   });
 
-const getCommandToRun = (useLocalLibs) => {
+const getCommandToRun = useLocalLibs => {
   const index = process.argv
     .map((arg, i) => ({ arg, i }))
     .find(({ arg }) => arg.includes('scripts/template.js')).i;
@@ -160,7 +160,7 @@ const getCommandToRun = (useLocalLibs) => {
   return useLocalLibs ? ['template', args] : ['npx', ['template'].concat(args)];
 };
 
-const loopPromise = (promiseFuncs) => {
+const loopPromise = promiseFuncs => {
   const vals = [];
 
   const loop = (i = 0) => {
@@ -168,7 +168,7 @@ const loopPromise = (promiseFuncs) => {
 
     if (!promiseFunc) return Promise.resolve(vals);
 
-    return promiseFunc().then((val) => {
+    return promiseFunc().then(val => {
       vals.push(val);
       return loop(i + 1);
     });
@@ -178,20 +178,25 @@ const loopPromise = (promiseFuncs) => {
 };
 
 const getIsLinked = () =>
-  loopPromise(packagesToLink.map(npmPackage => () => {
-    const dir = join(__dirname, '../node_modules/', npmPackage);
+  loopPromise(
+    packagesToLink.map(npmPackage => () => {
+      const dir = join(__dirname, '../node_modules/', npmPackage);
 
-    return promisify(fs.lstat)(dir)
-      .then(stats => ({ npmPackage, isLinked: stats.isSymbolicLink() }))
-      .catch(() => ({ npmPackage, isLinked: false }));
-  }));
+      return promisify(fs.lstat)(dir)
+        .then(stats => ({ npmPackage, isLinked: stats.isSymbolicLink() }))
+        .catch(() => ({ npmPackage, isLinked: false }));
+    })
+  );
 
 const unlink = () =>
   runCommand('rm', ['-rf', 'node_modules']).then(() => runCommand('yarn'));
 
 const link = () =>
-  loopPromise(packagesToLink.map(npmPackage => () =>
-    runCommand('yarn', ['link', npmPackage])));
+  loopPromise(
+    packagesToLink.map(npmPackage => () =>
+      runCommand('yarn', ['link', npmPackage])
+    )
+  );
 
 const linkUnlink = (useLocalLibs, npmPackages) => {
   let areAllLinked = true;
@@ -216,6 +221,8 @@ const linkUnlink = (useLocalLibs, npmPackages) => {
   return Promise.resolve();
 };
 
+const buildLibs = () => runCommand('template', ['build:lib']);
+
 const init = () =>
   getUseLocalLibs()
     .then(useLocalLibs =>
@@ -223,7 +230,10 @@ const init = () =>
         Promise.all([
           getCommandToRun(useLocalLibs),
           linkUnlink(useLocalLibs, isLinked),
-        ])))
+          useLocalLibs ? buildLibs() : Promise.resolve(),
+        ])
+      )
+    )
     .then(([command]) => runCommand(...command));
 
 init();

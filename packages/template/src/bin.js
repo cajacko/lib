@@ -13,6 +13,7 @@ import upgrade from './commands/upgrade';
 import init from './commands/init';
 import test from './commands/test';
 import runBasicCommand from './utils/runBasicCommand';
+import buildLib from './commands/buildLib';
 
 const runOptions = [
   ['-i, --interactive'],
@@ -35,6 +36,8 @@ registerCommand('test', test, {
 });
 
 registerCommand('build', runBasicCommand('build'));
+
+registerCommand('build:lib', buildLib);
 
 registerCommand('deploy', runBasicCommand('deploy'), {
   options: runOptions.concat([
