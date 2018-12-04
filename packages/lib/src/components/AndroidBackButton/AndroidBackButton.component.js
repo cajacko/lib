@@ -26,7 +26,7 @@ class AndroidBackButton extends React.Component<Props> {
   constructor(props) {
     super(props);
 
-    this.handleBack = this.handleBack.bind(this);
+    (this: any).handleBack = this.handleBack.bind(this);
   }
 
   /**

@@ -2,7 +2,23 @@
 
 import uuid from '../utils/uuid';
 
+type CustomErrorClass = {};
+
+/**
+ * Wait for many callbacks to have run before resolving a promise
+ */
 class WaitForMany {
+  registeredIDs: {};
+  ErrorClass: CustomErrorClass;
+  resolved: boolean;
+  rejected: ?CustomErrorClass;
+  promise: Promise<any>;
+  check: () => void;
+  rejectMainPromise: (?CustomErrorClass) => void;
+
+  /**
+   * Initialise the class, that the initial promise to return
+   */
   constructor() {
     this.registeredIDs = {};
 
@@ -11,10 +27,16 @@ class WaitForMany {
     this.ErrorClass = Error;
   }
 
-  setErrorClass(CustomError) {
+  /**
+   * Set the error class to use
+   */
+  setErrorClass(CustomError: CustomErrorClass) {
     this.ErrorClass = CustomError;
   }
 
+  /**
+   * Reset the promise
+   */
   setPromise() {
     this.resolved = false;
     this.rejected = null;
