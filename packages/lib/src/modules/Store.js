@@ -9,12 +9,21 @@ import logger from '../utils/logger';
 
 type ActionType = { type: string };
 
+/**
+ * Manage the redux store in 1 location
+ */
 class Store {
+  /**
+   * Initialise the class, setting up promises to check if we've finished setting up the store
+   */
   constructor(reducers, existingState) {
     this.onFinishedStoreSetup = this.setupStore(reducers, existingState);
     this.onFinishedPersist = Promise.resolve();
   }
 
+  /**
+   * Initialise the store
+   */
   setupStore(reducers, existingState = {}) {
     const middleware = isDev()
       ? applyMiddleware(this.loggerMiddleware, thunk)
@@ -32,6 +41,9 @@ class Store {
     return Promise.resolve();
   }
 
+  /**
+   * Persist the store, and set the promise for when it finishes
+   */
   persistStore(Storage, blacklist = []) {
     this.onFinishedPersist = new Promise((resolve) => {
       const persistor = persistStore(
@@ -48,10 +60,16 @@ class Store {
     return this.onFinishedPersist;
   }
 
+  /**
+   * Returns a promise that resolves when all the store setup has been completed
+   */
   onFinishedSetup() {
     return Promise.all([this.onFinishedStoreSetup, this.onFinishedPersist]);
   }
 
+  /**
+   * Log in dev mode
+   */
   loggerMiddleware() {
     return (next: (action: ActionType) => void) => (action: ActionType) => {
       // We can allow this log in dev mode
@@ -61,14 +79,23 @@ class Store {
     };
   }
 
+  /**
+   * Get the state
+   */
   getState(...args) {
     return this.store.getState(...args);
   }
 
+  /**
+   * Dispatch an action
+   */
   dispatch(...args) {
     return this.store.dispatch(...args);
   }
 
+  /**
+   * Get the entire store object
+   */
   get() {
     return this.store;
   }

@@ -11,6 +11,7 @@ type Props = {
   renderSectionHeader?: RenderSectionHeader,
   renderItem?: () => React.Component<*, *>,
   renderBottomItem?: () => React.Component<*, *>,
+  keyExtractor?: Card => string,
 };
 
 const defaultProps = {
@@ -18,10 +19,12 @@ const defaultProps = {
   renderSectionHeader: null,
   renderItem: null,
   renderBottomItem: null,
+  keyExtractor: null,
 };
 
 type RenderItemProps = {
   item: Card & {
+    key: string,
     _renderCustom?: Card => React.Component<*, *>,
   },
 };
@@ -30,10 +33,33 @@ type RenderItemProps = {
  * The default render item func, just passes all info through to the card list
  * item
  */
-const RenderItem = ({
-  item: { _renderCustom, ...itemProps },
-}: RenderItemProps) =>
-  (_renderCustom ? _renderCustom(itemProps) : <CardsListItem {...itemProps} />);
+const withRenderItem = renderItem => (props: RenderItemProps) => {
+  const { item } = props;
+
+  if (props.item._renderCustom) return props.item._renderCustom(props);
+
+  if (item.key === '_customBottomRender') {
+    return <CardsListItem {...item} />;
+  }
+
+  if (typeof renderItem === 'function') {
+    return renderItem(props);
+  }
+
+  return <CardsListItem {...item} />;
+};
+
+/**
+ * Wrap around the key extractor if one is provided. As we don't want it to
+ * run for custom items we add in here
+ */
+const customKeyExtractor = keyExtractor => (item) => {
+  // Don't want to run a custom key extractor for the bottom render, as we
+  // pass they key in ourselves
+  if (item.key === '_customBottomRender') return item.key;
+
+  return keyExtractor(item);
+};
 
 /**
  * Display a list of cards
@@ -44,10 +70,11 @@ const CardsList = ({
   renderItem,
   renderBottomItem,
   bottomItem,
+  keyExtractor,
   ...props
 }: Props) => {
-  const finalRenderItem = renderItem || RenderItem;
   const finalCards = cards.slice();
+  const finalKeyExtractor = keyExtractor && customKeyExtractor(keyExtractor);
 
   if (renderBottomItem) {
     finalCards.push({
@@ -65,11 +92,17 @@ const CardsList = ({
     <SectionList
       renderSectionHeader={renderSectionHeader}
       sections={finalCards}
-      renderItem={finalRenderItem}
+      renderItem={withRenderItem(renderItem)}
+      keyExtractor={finalKeyExtractor}
       {...props}
     />
   ) : (
-    <FlatList data={finalCards} renderItem={finalRenderItem} {...props} />
+    <FlatList
+      data={finalCards}
+      renderItem={withRenderItem(renderItem)}
+      keyExtractor={finalKeyExtractor}
+      {...props}
+    />
   );
 };
 

@@ -4,5 +4,7 @@
 
 import marketingCopy from '../marketingCopy';
 import AppError from '../../modules/AppError';
+import logger from '../../utils/logger';
 
+global.logger = logger;
 marketingCopy.setErrorClass(AppError);

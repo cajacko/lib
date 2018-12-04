@@ -2,16 +2,17 @@
 
 import Logger from '../../modules/Logger';
 
+/**
+ * Do something with the log
+ */
 function logToServer(level, message, data) {
   let newLevel = level;
 
   if (level === 'error') newLevel = 'warn';
 
-  console[newLevel]({
-    level,
-    message,
-    data,
-  });
+  // This is the only time it's ok to console
+  // eslint-disable-next-line no-console
+  console[newLevel](message, data);
 }
 
 const logLevels = {

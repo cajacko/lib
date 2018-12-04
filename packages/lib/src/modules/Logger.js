@@ -18,12 +18,7 @@ export type LoggerInstance = {
  */
 class Logger {
   /**
-   *
-   * @param {Function} onLog The log function that will call your server
-   * @param {Object} logLevels Object mapping the name of the func, we will use,
-   *  with the log level
-   * @param {Boolean} [shouldWrapConsole] Should we wrap the global console
-   *  object to call our onLog func when it gets called
+   * Initialise the logger
    */
   constructor(
     onLog?: ?OnLogType,
