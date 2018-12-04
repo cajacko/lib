@@ -20,6 +20,7 @@ import Babel from './Babel';
 import NPMIgnore from './NPMIgnore';
 import Docker from './Docker';
 import ProjectJSON from './ProjectJSON';
+import Src from './Src';
 
 const setupTemplates = {
   packagejson: PackageJSON,
@@ -42,6 +43,7 @@ const setupTemplates = {
   npmignore: NPMIgnore,
   projectjson: ProjectJSON,
   docker: Docker,
+  src: Src,
 };
 
 export default setupTemplates;
