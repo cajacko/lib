@@ -5,9 +5,15 @@ import { Span } from '../UI';
 import { TYPES } from '../../config/styles/text';
 import textIconColor from '../../utils/textIconColor';
 
-const getStyle = type => TYPES[type] || TYPES.body1;
+/**
+ * Get the text style, default to body1
+ */
+const getStyle = type => (type && TYPES[type]) || TYPES.body1;
 
-export const transformText = (text, { type }) => {
+/**
+ * Transform the actual text, uppercase etc
+ */
+export const transformText = (text: string, { type }: { type?: string }) => {
   const { uppercase } = getStyle(type);
 
   let transformedText = text;
@@ -17,6 +23,9 @@ export const transformText = (text, { type }) => {
   return transformedText;
 };
 
+/**
+ * Get the style to use for the text
+ */
 const getTextStyle = ({ type }) => {
   const { size, weight, letterSpacing } = getStyle(type);
 
@@ -38,10 +47,13 @@ const getTextStyle = ({ type }) => {
     font-size: ${size};
     font-weight: ${fontWeight};
     letter-spacing: ${letterSpacing};
-    
+
   `;
 };
 
+/**
+ * Figure out the text alignment
+ */
 const textAlign = ({ center }) => {
   if (!center) return '';
 
