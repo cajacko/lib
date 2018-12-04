@@ -7,8 +7,6 @@
   "author": "Charlie Jackson <contact@charliejackson.com>",
   "license": "MIT",
   "scripts": {
-    "init": "template init",
-    "test": "template test",
     "test:lint": "cd ../../ && npx eslint packages/lib/src",
     "build": "echo \"\"",
     "watch:lib": "gulp watch",
@@ -59,7 +57,6 @@
     "styled-components": "3.3.3"
   },
   "devDependencies": {
-    "@cajacko/template": "0.23.0",
     "eslint-config-react-app": "2.1.0",
     "eslint-import-resolver-babel-module": "4.0.0",
     "eslint-loader": "1.9.0",
