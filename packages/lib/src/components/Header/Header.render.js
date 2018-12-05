@@ -6,7 +6,7 @@ import { Header as UIHeader, Left, Body, Right } from './Header.style';
 import { BACK } from '../../config/icons';
 import buttons from '../../config/styles/buttons';
 
-type Props = {
+export type Props = {
   title?: string,
   rightText?: string,
   rightAction?: string,
