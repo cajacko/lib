@@ -8,15 +8,26 @@ import isDev from '../utils/conditionals/isDev';
 import logger from '../utils/logger';
 
 type ActionType = { type: string };
+type Reducers = {};
+type ExistingState = {};
+type StoreType = {
+  getState: () => { [string]: any },
+  dispatch: () => void,
+};
 
 /**
  * Manage the redux store in 1 location
  */
 class Store {
+  onFinishedStoreSetup: Promise<any>;
+  onFinishedPersist: Promise<any>;
+  store: ?StoreType;
+
   /**
-   * Initialise the class, setting up promises to check if we've finished setting up the store
+   * Initialise the class, setting up promises to check if we've
+   * finished setting up the store
    */
-  constructor(reducers, existingState) {
+  constructor(reducers: Reducers, existingState: ExistingState) {
     this.onFinishedStoreSetup = this.setupStore(reducers, existingState);
     this.onFinishedPersist = Promise.resolve();
   }
@@ -24,7 +35,7 @@ class Store {
   /**
    * Initialise the store
    */
-  setupStore(reducers, existingState = {}) {
+  setupStore(reducers: Reducers, existingState: ExistingState = {}) {
     const middleware = isDev()
       ? applyMiddleware(this.loggerMiddleware, thunk)
       : applyMiddleware(thunk);
@@ -44,7 +55,9 @@ class Store {
   /**
    * Persist the store, and set the promise for when it finishes
    */
-  persistStore(Storage, blacklist = []) {
+  persistStore(Storage, blacklist: Array<string> = []) {
+    if (!this.store) throw new Error('Store is not setup');
+
     this.onFinishedPersist = new Promise((resolve) => {
       const persistor = persistStore(
         this.store,
@@ -55,6 +68,9 @@ class Store {
         },
         resolve
       );
+
+      // Uncomment if you want to test with no cache
+      // persistor.purge();
     });
 
     return this.onFinishedPersist;
@@ -82,14 +98,18 @@ class Store {
   /**
    * Get the state
    */
-  getState(...args) {
+  getState(...args: *) {
+    if (!this.store) throw new Error('Store is not setup');
+
     return this.store.getState(...args);
   }
 
   /**
    * Dispatch an action
    */
-  dispatch(...args) {
+  dispatch(...args: *) {
+    if (!this.store) throw new Error('Store is not setup');
+
     return this.store.dispatch(...args);
   }
 
