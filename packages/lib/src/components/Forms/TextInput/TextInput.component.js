@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import withText from '../../HOCs/withText';
+import withTextInput from '../../HOCs/withTextInput';
 import { TextInput } from './TextInput.style';
 
 type Props = {
@@ -63,4 +63,4 @@ class TextInputComponent extends Component<Props, State> {
 
 TextInputComponent.defaultProps = defaultProps;
 
-export default withText('placeholder')(TextInputComponent);
+export default withTextInput(TextInputComponent);

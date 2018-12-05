@@ -4,8 +4,11 @@
 
 import React, { Component } from 'react';
 import ExpandingTextInput from './ExpandingTextInput.render';
+import { LINE_BREAKS } from '../../config/regex';
 
-type Ref = {};
+type Ref = {
+  focus: () => void,
+};
 
 type LayoutEvent = {
   nativeEvent: {
@@ -23,6 +26,8 @@ type Props = {
   onChange?: string => void,
   onLayout?: (...LayoutArgs) => void,
   innerRef?: (?Ref) => void,
+  disableNewLines?: boolean,
+  onReturnKey?: string => void,
 };
 
 type State = {
@@ -71,11 +76,23 @@ class ExpandingTextInputC extends Component<Props, State> {
    * When the text changes, update the hidden text and pass the text upwards
    */
   onChange(event: { nativeEvent: { text: string } }) {
-    const { text } = event.nativeEvent;
+    let { text } = event.nativeEvent;
+
+    if (this.props.disableNewLines) {
+      text = text.replace(LINE_BREAKS, '');
+    }
+
+    if (!!text.match(LINE_BREAKS) && this.props.onReturnKey) {
+      this.props.onReturnKey(text);
+    }
+
+    if (text === this.state.hiddenText) return;
 
     this.setState({ hiddenText: text });
 
-    if (this.props.onChange) this.props.onChange(text);
+    if (this.props.onChange) {
+      this.props.onChange(text);
+    }
   }
 
   /**
@@ -160,6 +177,7 @@ class ExpandingTextInputC extends Component<Props, State> {
     delete props.onChange;
     delete props.onLayout;
     delete props.backgroundColor;
+    delete props.onReturnKey;
 
     return (
       <ExpandingTextInput

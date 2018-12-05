@@ -3,10 +3,11 @@
 import React, { Component } from 'react';
 import ExpandingTextInput from '../../ExpandingTextInput';
 import { BACKGROUND_COLORS } from '../../../config/styles/textIconColors';
-import withText from '../../HOCs/withText';
+import withTextInput from '../../HOCs/withTextInput';
 
 type Props = {
   autoFocus?: boolean,
+  value: string,
 };
 
 type Ref = {
@@ -65,4 +66,4 @@ class TextAreaComponent extends Component<Props> {
   }
 }
 
-export default withText('placeholder')(TextAreaComponent);
+export default withTextInput(TextAreaComponent);
