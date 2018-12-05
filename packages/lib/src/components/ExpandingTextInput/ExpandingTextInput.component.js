@@ -5,11 +5,37 @@
 import React, { Component } from 'react';
 import ExpandingTextInput from './ExpandingTextInput.render';
 
+type Ref = {};
+
+type LayoutEvent = {
+  nativeEvent: {
+    layout: {
+      width: number,
+      height: number,
+    },
+  },
+};
+
+type LayoutArgs = Array<LayoutEvent>;
+
+type Props = {
+  value: string,
+  onChange?: string => void,
+  onLayout?: (...LayoutArgs) => void,
+  innerRef?: (?Ref) => void,
+};
+
+type State = {
+  hiddenText: string,
+  hiddenWidth: number,
+  inputHeight: number,
+};
+
 /**
  * Business logic for the expanding text input, syncs the text input with a text
  * component to get it's height and set that back to the input
  */
-class ExpandingTextInputComponent extends Component {
+class ExpandingTextInputC extends Component<Props, State> {
   /**
    * Initialise the class, set the initial state and bind the methods
    *
@@ -18,7 +44,7 @@ class ExpandingTextInputComponent extends Component {
    *
    * @return {Void} No return value
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -27,18 +53,24 @@ class ExpandingTextInputComponent extends Component {
       hiddenText: props.value,
     };
 
-    this.onChange = this.onChange.bind(this);
-    this.setRef = this.setRef.bind(this);
-    this.onLayout = this.onLayout.bind(this);
+    (this: any).onChange = this.onChange.bind(this);
+    (this: any).setRef = this.setRef.bind(this);
+    (this: any).onLayout = this.onLayout.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  /**
+   * When we get the next props update the hidden text if it has changed
+   */
+  componentWillReceiveProps(nextProps: Props) {
     if (nextProps.value !== this.props.value) {
       this.setState({ hiddenText: nextProps.value });
     }
   }
 
-  onChange(event) {
+  /**
+   * When the text changes, update the hidden text and pass the text upwards
+   */
+  onChange(event: { nativeEvent: { text: string } }) {
     const { text } = event.nativeEvent;
 
     this.setState({ hiddenText: text });
@@ -46,8 +78,12 @@ class ExpandingTextInputComponent extends Component {
     if (this.props.onChange) this.props.onChange(text);
   }
 
-  onLayout(type) {
-    return (...args) => {
+  /**
+   * When the component does it's layout, process the input and hidden
+   * input layout
+   */
+  onLayout(type: string) {
+    return (...args: LayoutArgs) => {
       switch (type) {
         case 'input':
           if (this.props.onLayout) this.props.onLayout(...args);
@@ -60,7 +96,12 @@ class ExpandingTextInputComponent extends Component {
     };
   }
 
-  onInputLayout(event) {
+  /**
+   * When the input is laid out, grab the width and set it for the hidden
+   * width, we'll keep this matched and use the hidden input to figure
+   * out the height
+   */
+  onInputLayout(event: LayoutEvent) {
     const hiddenWidth = event.nativeEvent.layout.width;
 
     if (this.state.hiddenWidth !== hiddenWidth) {
@@ -68,7 +109,12 @@ class ExpandingTextInputComponent extends Component {
     }
   }
 
-  onHiddenLayout(event) {
+  /**
+   * When the hidden input is laid out, grab the height of it. We'll use this
+   * to set the main input height. As it's the same width, this should be
+   * accurate. We also set a minimum height on it.
+   */
+  onHiddenLayout(event: LayoutEvent) {
     let inputHeight = event.nativeEvent.layout.height;
 
     if (inputHeight < 50) {
@@ -80,8 +126,11 @@ class ExpandingTextInputComponent extends Component {
     }
   }
 
-  setRef(type) {
-    return (ref) => {
+  /**
+   * Get the input and hidden input refs for later, and pass up if necessary
+   */
+  setRef(type: string) {
+    return (ref: ?Ref) => {
       switch (type) {
         case 'input':
           this.input = ref;
@@ -95,6 +144,9 @@ class ExpandingTextInputComponent extends Component {
       }
     };
   }
+
+  input: ?Ref;
+  hidden: ?Ref;
 
   /**
    * Render the component
@@ -124,4 +176,4 @@ class ExpandingTextInputComponent extends Component {
   }
 }
 
-export default ExpandingTextInputComponent;
+export default ExpandingTextInputC;

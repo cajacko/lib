@@ -3,11 +3,20 @@
 import React, { Component } from 'react';
 import ExpandingTextInput from '../../ExpandingTextInput';
 import { BACKGROUND_COLORS } from '../../../config/styles/textIconColors';
+import withText from '../../HOCs/withText';
+
+type Props = {
+  autoFocus?: boolean,
+};
+
+type Ref = {
+  focus: () => void,
+};
 
 /**
  * Business logic for the TextArea component.
  */
-class TextAreaComponent extends Component {
+class TextAreaComponent extends Component<Props> {
   /**
    * Initialise the class, set the initial state and bind the methods
    *
@@ -16,21 +25,29 @@ class TextAreaComponent extends Component {
    *
    * @return {Void} No return value
    */
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
-    this.setRef = this.setRef.bind(this);
+    (this: any).setRef = this.setRef.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
+  /**
+   * When the component updates, see if we should focus
+   */
+  componentDidUpdate(prevProps: Props) {
     if (this.props.autoFocus && !prevProps.autoFocus && this.input) {
       this.input.focus();
     }
   }
 
-  setRef(ref) {
+  /**
+   * Grab the ref to focus on later
+   */
+  setRef(ref: ?Ref) {
     this.input = ref;
   }
+
+  input: ?Ref;
 
   /**
    * Render the component
@@ -48,4 +65,4 @@ class TextAreaComponent extends Component {
   }
 }
 
-export default TextAreaComponent;
+export default withText('placeholder')(TextAreaComponent);

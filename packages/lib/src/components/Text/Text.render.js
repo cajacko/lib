@@ -1,13 +1,15 @@
 // @flow
 
 import React from 'react';
-import marketingCopy from '../../utils/marketingCopy';
 import { Text as StyledText, transformText } from './Text.style';
+import withText from '../HOCs/withText';
 
-export type TextValue = string | { _textFromConst: string };
+// Legacy export, a bunch of places used to look here for this
+// Use the one in the util instead
+export type { TextValue } from '../../utils/getText';
 
 type Props = {
-  text: TextValue,
+  text: string,
   type?: string,
 };
 
@@ -17,26 +19,12 @@ const defaultProps = {
 };
 
 /**
- * Get the text value to use. We only allow text that's in the marketing copy,
- * unless you pass in an object with the val at _textFromConst. This should
- * encourage you to only use text if it is specified in the marketing copy.
- * Anything from the server should use _textFromConst.
- */
-const getText = (text: TextValue): string => {
-  if (typeof text !== 'string' && typeof text._textFromConst === 'string') {
-    return text._textFromConst;
-  }
-
-  return marketingCopy.get(text);
-};
-
-/**
  * Display some text, whilst doing any transformations as necessary
  */
 const Text = ({ text, ...props }: Props) => (
-  <StyledText {...props}>{transformText(getText(text), props)}</StyledText>
+  <StyledText {...props}>{transformText(text, props)}</StyledText>
 );
 
 Text.defaultProps = defaultProps;
 
-export default Text;
+export default withText('text')(Text);
