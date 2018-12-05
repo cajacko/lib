@@ -37,6 +37,7 @@ const Side = styled(Div)`
   top: 0;
   bottom: 0;
   z-index: ${sideZIndex};
+  flex-direction: row;
 `;
 
 export const Left = styled(Side)`
@@ -45,4 +46,9 @@ export const Left = styled(Side)`
 
 export const Right = styled(Side)`
   right: 0;
+`;
+
+export const MultipleRight = styled(Div)`
+  ${applyWidth};
+  margin-left: 10;
 `;

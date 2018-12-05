@@ -2,79 +2,34 @@
 
 import React from 'react';
 import Button from '../Button';
-import { Header as UIHeader, Left, Body, Right } from './Header.style';
-import { BACK } from '../../config/icons';
-import buttons from '../../config/styles/buttons';
+import {
+  Header as UIHeader,
+  Left,
+  Body,
+  Right,
+  MultipleRight,
+} from './Header.style';
+import getHeaderLayout from './getHeaderLayout';
+import type { TextValue } from '../../utils/getText';
+import type { Icon } from '../types';
 
 export type Props = {
-  title?: string,
-  rightText?: string,
-  rightAction?: string,
-  titleAction?: string,
+  back?: () => void,
+  title?: TextValue,
+  rightText?: TextValue,
+  rightAction?: () => void,
+  titleAction?: () => void,
   noButton?: boolean,
-  leftText?: string,
-  leftAction?: string,
+  leftText?: TextValue,
+  leftAction?: () => void,
+  rightButtons?: Array<{
+    text?: TextValue,
+    action: () => void,
+    icon?: Icon,
+  }>,
 };
 
-/**
- * Generic header component that can have icon or text buttons on either side
- */
-const Header = ({
-  back,
-  title,
-  rightText,
-  rightAction,
-  titleAction,
-  noButton,
-  leftText,
-  leftAction,
-  rightButtonStyle,
-  leftButtonStyle,
-}: Props) => (
-  <UIHeader>
-    {!!back && (
-      <Left hasFixedWidth>
-        <Button action={back} icon={BACK} type={buttons.ICON} fullHeight />
-      </Left>
-    )}
-    {!!leftText && !!leftAction && (
-      <Left>
-        <Button
-          baseWidth
-          action={leftAction}
-          text={leftText}
-          type={leftButtonStyle || buttons.TRANSPARENT.GREY_DARK}
-          fullHeight
-        />
-      </Left>
-    )}
-    {title && (
-      <Body hasSides={!!back}>
-        <Button
-          text={title}
-          action={titleAction}
-          type={buttons.TRANSPARENT.BLACK}
-          fullHeight
-          baseWidth
-          noButton={!titleAction || noButton}
-        />
-      </Body>
-    )}
-    {!!rightText && !!rightAction && (
-      <Right>
-        <Button
-          baseWidth
-          action={rightAction}
-          text={rightText}
-          type={rightButtonStyle || buttons.TRANSPARENT}
-          fullHeight
-        />
-      </Right>
-    )}
-  </UIHeader>
-);
-
-Header.defaultProps = {
+const defaultProps = {
   title: null,
   rightText: null,
   rightAction: null,
@@ -82,6 +37,44 @@ Header.defaultProps = {
   noButton: null,
   leftText: null,
   leftAction: null,
+  rightButtons: null,
 };
+
+/**
+ * Generic header component that can have icon or text buttons on either side
+ */
+const Header = (props: Props) => {
+  const { left, right, title } = getHeaderLayout(props);
+
+  return (
+    <UIHeader>
+      {!!left && (
+        <Left {...left.container}>
+          <Button {...left.button} />
+        </Left>
+      )}
+      {!!title && (
+        <Body {...title.container}>
+          <Button {...title.button} />
+        </Body>
+      )}
+      {!!right && (
+        <Right>
+          {Array.isArray(right) ? (
+            right.map(({ container, button }) => (
+              <MultipleRight {...container}>
+                <Button {...button} />
+              </MultipleRight>
+            ))
+          ) : (
+            <Button {...right.button} />
+          )}
+        </Right>
+      )}
+    </UIHeader>
+  );
+};
+
+Header.defaultProps = defaultProps;
 
 export default Header;
