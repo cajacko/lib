@@ -80,7 +80,11 @@
   },
   "overrides": [
     {
-      "files": ["features/**/*", "packages/eslint-plugin-cajacko/**/*"],
+      "files": [
+        "features/**/*",
+        "packages/eslint-plugin-cajacko/**/*",
+        "**/Gulpfile.js"
+      ],
       "rules": {
         "flowtype/require-valid-file-annotation": "off"
       }
