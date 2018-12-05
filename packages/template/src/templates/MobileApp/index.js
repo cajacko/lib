@@ -400,7 +400,7 @@ class MobileApp extends Template {
    * @return {Promise} Resolves when the process has been reset
    */
   resetPackager() {
-    execSync('lsof -ti:8081 | xargs kill');
+    execSync('lsof -ti:8081 -c ^Google -a | xargs kill');
 
     return Promise.resolve();
   }
