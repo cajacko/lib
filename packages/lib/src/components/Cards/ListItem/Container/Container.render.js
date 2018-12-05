@@ -47,7 +47,7 @@ const CardsListItem = ({ action, ...props }: Props) => {
   const Component = getComponent(props);
 
   return (
-    <ListItem button onPress={action}>
+    <ListItem button={!!action} onPress={action}>
       <Component backgroundColor={BACKGROUND_COLOR} {...props} />
     </ListItem>
   );

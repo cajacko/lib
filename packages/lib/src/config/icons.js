@@ -9,3 +9,5 @@ export const HOME = withIcon('home');
 export const PLUS = withIcon('ios-add');
 export const TRASH = withIcon('trash');
 export const CHECK = withIcon('md-checkmark');
+export const CHECKBOX_O = withIcon('ios-square-outline');
+export const CHECKBOX = withIcon('ios-checkbox-outline');
