@@ -43,11 +43,28 @@ const watchLib = () => {
    * @return {Promise} Resolves when the first build has finished
    */
   const buildAndWatchLib = () =>
-    runCommand(`yarn build:lib ${outDirOptions}`, LOCAL_LIB_PATH).then(() => {
-      if (watchDirs !== '') {
-        runCommand(`yarn watch:lib ${watchDirs}`, LOCAL_LIB_PATH);
-      }
-    });
+    runCommand(`yarn build:lib ${outDirOptions}`, LOCAL_LIB_PATH)
+      .catch((e) => {
+        if (watchDirs === '') throw e;
+
+        logger.error('yarn build:lib errored, continuing as watch may pick it up');
+      })
+      .then(() => {
+        if (watchDirs !== '') {
+          /**
+           * Continuously run the watch command if it fails
+           */
+          const watch = () => {
+            runCommand(`yarn watch:lib ${watchDirs}`, LOCAL_LIB_PATH).catch(() => {
+              logger.error('yarn watch:lib failed, starting again');
+
+              return watch();
+            });
+          };
+
+          watch();
+        }
+      });
 
   /**
    * Remove then reinstall the node modules
