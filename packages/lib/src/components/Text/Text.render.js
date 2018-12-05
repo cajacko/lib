@@ -23,7 +23,7 @@ const defaultProps = {
  * Anything from the server should use _textFromConst.
  */
 const getText = (text: TextValue): string => {
-  if (typeof text !== 'string' && text._textFromConst) {
+  if (typeof text !== 'string' && typeof text._textFromConst === 'string') {
     return text._textFromConst;
   }
 
