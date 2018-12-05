@@ -4,6 +4,7 @@ import * as React from 'react';
 import { ListItem } from 'native-base';
 import CardsListItemWithDate from '../WithDate';
 import CardsListItemWithIcon from '../WithIcon';
+import WithTextInput from '../WithTextInput';
 import CardsListItemText from '../Text';
 import { BACKGROUND_COLORS } from '../../../../config/styles/textIconColors';
 import type { Icon } from '../../../types';
@@ -13,6 +14,7 @@ type Props = {
   leftIcon?: Icon,
   rightIcon?: Icon,
   withDate?: boolean,
+  isTextInput?: boolean,
 };
 
 const defaultProps = {
@@ -20,6 +22,7 @@ const defaultProps = {
   leftIcon: null,
   rightIcon: null,
   withDate: false,
+  isTextInput: false,
 };
 
 const BACKGROUND_COLOR = BACKGROUND_COLORS.WHITE;
@@ -27,9 +30,12 @@ const BACKGROUND_COLOR = BACKGROUND_COLORS.WHITE;
 /**
  * Get the card component to render based off the passed in props
  */
-const getComponent = ({ withDate, leftIcon, rightIcon }) => {
+const getComponent = ({
+  withDate, leftIcon, rightIcon, isTextInput,
+}) => {
   if (withDate) return CardsListItemWithDate;
   if (leftIcon || rightIcon) return CardsListItemWithIcon;
+  if (isTextInput) return WithTextInput;
 
   return CardsListItemText;
 };
