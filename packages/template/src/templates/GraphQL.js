@@ -70,7 +70,7 @@ class GraphQL extends Template {
     ])
       .then(([localLibPath]) =>
         copyDependencies(localLibPath, this.tmpFuncDir, {
-          ignore: ['@cajacko/template'],
+          ignore: ['@cajacko/template', 'react-native'],
         }))
       .then(() =>
         Promise.all([
