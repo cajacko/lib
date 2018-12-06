@@ -16,16 +16,12 @@ import replaceInFile from './replaceInFile';
 import resizeImageAndCopyTo from './resizeImageAndCopyTo';
 import CertStorage from './modules/CertStorage';
 import Settings from './modules/Settings';
-import logPromiseFunc from './logPromiseFunc';
-import logPromiseMethods from './logPromiseMethods';
 
 export { parseEnvFromJSON } from './env';
 export { registerCommand, processCommands } from './commands';
 export { getProjectDir, getProjectConfig, getProjectEnv } from './project';
 
 export {
-  logPromiseMethods,
-  logPromiseFunc,
   Settings,
   CertStorage,
   resizeImageAndCopyTo,
