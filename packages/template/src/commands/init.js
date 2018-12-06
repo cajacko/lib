@@ -13,7 +13,9 @@ import SetupRunner from '../modules/SetupRunner';
 const questions = [
   'Do you have branch permission setup correctly in GitHub',
   'Have you setup travis for this project?',
+  'Have you set up travis env vars',
   "Is travis configured to only run on PR's",
+  'Have you setup a private certificate repo at project-name-certificates',
 ];
 
 /**

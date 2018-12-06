@@ -3,11 +3,11 @@
 import {
   runCommand,
   CertStorage,
-  ask,
   replaceInFile,
 } from '@cajacko/template-utils';
 import { join } from 'path';
 import { remove, writeFile } from 'fs-extra';
+import logPromiseFunc from '../../utils/logPromiseFunc';
 
 /**
  * Get the android keys from cert storage
@@ -16,7 +16,7 @@ import { remove, writeFile } from 'fs-extra';
  *
  * @return {Promise} resolves with the keys
  */
-const getAndroidKeys = (certStorage: CertStorage) => certStorage.get();
+const getAndroidKeys = logPromiseFunc('getAndroidKeys')((certStorage: CertStorage) => certStorage.get());
 
 /**
  * Generate the Android keystore file
@@ -46,7 +46,7 @@ const generateAndroidKeys = (
  *
  * @return {Promise} Resolves when the Android keys are there
  */
-export const ensureAndroidKeys = (
+export const ensureAndroidKeys = logPromiseFunc('ensureAndroidKeys')((
   certStorage: CertStorage,
   tmpDir: string,
   bundleID: string,
@@ -57,42 +57,39 @@ export const ensureAndroidKeys = (
   return remove(keyStorePath)
     .then(() => (resetKeys ? null : getAndroidKeys(certStorage)))
     .then((keys) => {
-      if (keys) return keys;
+      if (keys.keystore) return keys;
 
+      const keyStorePassword = Math.random()
+        .toString(36)
+        .slice(-8);
       const alias = 'my-key-alias';
 
-      return ask({
-        type: 'password',
-        message: 'Enter a password for the Android KeyStore',
-        validate: (password) => {
-          if (!password || password.length < 6) {
-            return 'Key password must be at least 6 characters';
-          }
-
-          return true;
-        },
-      }).then(keyStorePassword =>
-        generateAndroidKeys(keyStorePath, keyStorePassword, alias, bundleID)
-          .then(() =>
-            certStorage.add(
-              {
-                title: 'Android Keystore File',
-                key: 'keystore',
-                filePath: keyStorePath,
-              },
-              {
-                title: 'Android Keystore Password',
-                key: 'keystore-password',
-                value: keyStorePassword,
-              },
-              {
-                title: 'Android Keystore Alias',
-                key: 'keystore-alias',
-                value: alias,
-              }
-            ))
-          .then(certStorage.commit)
-          .then(() => getAndroidKeys(certStorage)));
+      return generateAndroidKeys(
+        keyStorePath,
+        keyStorePassword,
+        alias,
+        bundleID
+      )
+        .then(() =>
+          certStorage.add(
+            {
+              title: 'Android Keystore File',
+              key: 'keystore',
+              filePath: keyStorePath,
+            },
+            {
+              title: 'Android Keystore Password',
+              key: 'keystore-password',
+              value: keyStorePassword,
+            },
+            {
+              title: 'Android Keystore Alias',
+              key: 'keystore-alias',
+              value: alias,
+            }
+          ))
+        .then(() => certStorage.commit({ preventDelete: true }))
+        .then(() => getAndroidKeys(certStorage));
     })
     .then((data) => {
       if (!data) throw new Error('Could not set the android keys');
@@ -116,7 +113,7 @@ export const ensureAndroidKeys = (
         ),
       ]);
     });
-};
+});
 
 /**
  * Stub for when we do this
@@ -134,7 +131,7 @@ export const ensureIOSKeys = () => Promise.resolve();
  * @return {Promise} Resolves when the keys have been ensured for the specified
  * platforms
  */
-export const ensureAppKeys = ({
+export const ensureAppKeys = logPromiseFunc('ensureAppKeys')(({
   ios,
   android,
   certStorage,
@@ -142,13 +139,13 @@ export const ensureAppKeys = ({
   resetKeys,
   bundleID,
 }: {
-  ios?: boolean,
-  android?: boolean,
-  certStorage: CertStorage,
-  tmpDir: string,
-  resetKeys: boolean,
-  bundleID: string,
-}) => {
+    ios?: boolean,
+    android?: boolean,
+    certStorage: CertStorage,
+    tmpDir: string,
+    resetKeys: boolean,
+    bundleID: string,
+  }) => {
   const promises = [];
 
   const addAndroid = !promises.length || android;
@@ -161,12 +158,12 @@ export const ensureAppKeys = ({
   }
 
   /**
-   * Loop through each promise
-   *
-   * @param {Number} [i] The index in the loop to process
-   *
-   * @return {Promise} Resolves when the loop is finished
-   */
+     * Loop through each promise
+     *
+     * @param {Number} [i] The index in the loop to process
+     *
+     * @return {Promise} Resolves when the loop is finished
+     */
   const loop = (i = 0) => {
     const promise = promises[i];
 
@@ -176,4 +173,4 @@ export const ensureAppKeys = ({
   };
 
   return loop();
-};
+});
