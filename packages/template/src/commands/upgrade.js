@@ -115,6 +115,8 @@ const upgrade = () => {
       ))
       .then(() =>
         ask({
+          message:
+            'What kind of version bump do you want to apply to the libs?',
           type: 'list',
           choices: ['major', 'minor', 'patch'],
         }))
@@ -158,7 +160,13 @@ const upgrade = () => {
           .then(() => runCommand('yarn install', projectDir))
           .then(() => git.hasUncommitedChanges(projectDir))
           .then(() =>
-            git.commit(projectDir, 'Updated @cajacko/~ packages', true, true)));
+            git.commit(projectDir, 'Updated @cajacko/~ packages', true, true)))
+      .then(() =>
+        ask({
+          type: 'confirm',
+          message:
+            'You must run "yarn run init" now, in case something has updated',
+        }));
   });
 };
 
