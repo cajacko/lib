@@ -40,13 +40,18 @@ class TemplateRunner {
       throw new Error('Cannot create cert storage. No project slug defined');
     }
 
+    const githubRepo = `${projectConfig.slug}-certificates`;
+
     this.certStorage = new CertStorage(
       projectConfig.slug,
-      `https://${this.env.GITHUB_TOKEN}@github.com/cajacko/${
-        projectConfig.slug
-      }-certificates.git`,
+      `https://${this.env.GITHUB_TOKEN}@github.com/cajacko/${githubRepo}.git`,
       null,
-      { preventDelete: true }
+      {
+        preventDelete: true,
+        githubRepo,
+        githubUser: 'cajacko',
+        githubToken: this.env.GITHUB_TOKEN,
+      }
     );
   }
 

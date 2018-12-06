@@ -3,7 +3,6 @@
 import {
   runCommand,
   CertStorage,
-  ask,
   replaceInFile,
 } from '@cajacko/template-utils';
 import { join } from 'path';
@@ -57,42 +56,39 @@ export const ensureAndroidKeys = (
   return remove(keyStorePath)
     .then(() => (resetKeys ? null : getAndroidKeys(certStorage)))
     .then((keys) => {
-      if (keys) return keys;
+      if (keys.keystore) return keys;
 
+      const keyStorePassword = Math.random()
+        .toString(36)
+        .slice(-8);
       const alias = 'my-key-alias';
 
-      return ask({
-        type: 'password',
-        message: 'Enter a password for the Android KeyStore',
-        validate: (password) => {
-          if (!password || password.length < 6) {
-            return 'Key password must be at least 6 characters';
-          }
-
-          return true;
-        },
-      }).then(keyStorePassword =>
-        generateAndroidKeys(keyStorePath, keyStorePassword, alias, bundleID)
-          .then(() =>
-            certStorage.add(
-              {
-                title: 'Android Keystore File',
-                key: 'keystore',
-                filePath: keyStorePath,
-              },
-              {
-                title: 'Android Keystore Password',
-                key: 'keystore-password',
-                value: keyStorePassword,
-              },
-              {
-                title: 'Android Keystore Alias',
-                key: 'keystore-alias',
-                value: alias,
-              }
-            ))
-          .then(certStorage.commit)
-          .then(() => getAndroidKeys(certStorage)));
+      return generateAndroidKeys(
+        keyStorePath,
+        keyStorePassword,
+        alias,
+        bundleID
+      )
+        .then(() =>
+          certStorage.add(
+            {
+              title: 'Android Keystore File',
+              key: 'keystore',
+              filePath: keyStorePath,
+            },
+            {
+              title: 'Android Keystore Password',
+              key: 'keystore-password',
+              value: keyStorePassword,
+            },
+            {
+              title: 'Android Keystore Alias',
+              key: 'keystore-alias',
+              value: alias,
+            }
+          ))
+        .then(() => certStorage.commit({ preventDelete: true }))
+        .then(() => getAndroidKeys(certStorage));
     })
     .then((data) => {
       if (!data) throw new Error('Could not set the android keys');
