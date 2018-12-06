@@ -11,9 +11,13 @@ import { formats } from '../../../../utils/dates/format';
 type Props = {
   date: Date,
   dateFormat?: $Keys<typeof formats>,
+  numberOfLines: number,
 };
 
-const CardsListItem = ({
+/**
+ * Show a card with a date
+ */
+const WithDate = ({
   date,
   dateFormat,
   numberOfLines,
@@ -31,18 +35,18 @@ const CardsListItem = ({
     <Right>
       {dateFormat ? (
         <Text
-          text={{ _textFromConst: format(dateFormat, date) }}
+          text={{ _textFromConst: String(format(dateFormat, date)) }}
           backgroundColor={backgroundColor}
         />
       ) : (
         <Fragment>
           <Text
-            text={{ _textFromConst: getWeekDayName(date) }}
+            text={{ _textFromConst: String(getWeekDayName(date)) }}
             type="overline"
             backgroundColor={backgroundColor}
           />
           <Text
-            text={{ _textFromConst: getDate(date) }}
+            text={{ _textFromConst: String(getDate(date)) }}
             type="h4"
             backgroundColor={backgroundColor}
           />
@@ -52,9 +56,9 @@ const CardsListItem = ({
   </Fragment>
 );
 
-CardsListItem.defaultProps = {
+WithDate.defaultProps = {
   dateFormat: '',
   numberOfLines: 4,
 };
 
-export default CardsListItem;
+export default WithDate;
