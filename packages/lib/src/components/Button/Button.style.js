@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import { Div } from '../UI';
 
 const getTypeThemeStyles = (type) => {
+  if (!type) {
+    throw new Error('You must pass in a button type from config/styles/buttons');
+  }
+
   if (type._isThemeRoot) return type.DEFAULT;
 
   return type;
@@ -61,7 +65,7 @@ const innerStyle = ({ type }) => {
 };
 
 export const nativeStyles = ({ styles }) => {
-  if (styles && styles.button) return styles.button;
+  if (styles) return styles;
 
   return {
     flex: 1,

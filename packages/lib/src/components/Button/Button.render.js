@@ -32,6 +32,7 @@ const Button = ({
   baseWidth,
   noButton,
   noContent,
+  greyedOut,
 }) => {
   /**
    * Render the button component with children
@@ -42,7 +43,12 @@ const Button = ({
    */
   const ButtonWithProps = buttonProps =>
     (noButton ? (
-      <Div {...buttonProps} />
+      <Div
+        style={nativeStyles({
+          type,
+          styles: buttonProps.styles,
+        })}
+      />
     ) : (
       <UIButton
         action={action}
@@ -50,7 +56,6 @@ const Button = ({
           type,
           styles: buttonProps.styles,
         })}
-        {...buttonProps}
       />
     ));
 
@@ -59,7 +64,9 @@ const Button = ({
   let LeftIcon;
 
   if (icon) {
-    const IconComponent = <Icon icon={icon} {...iconStyles(type)} />;
+    const IconComponent = (
+      <Icon icon={icon} {...iconStyles(type)} greyedOut={greyedOut} />
+    );
 
     if (iconLeft) {
       LeftIcon = IconComponent;
@@ -74,12 +81,12 @@ const Button = ({
     <ButtonWithProps styles={styles}>{children || null}</ButtonWithProps>
   ) : (
     <Outer type={type} fullHeight={fullHeight} baseWidth={baseWidth}>
-      <ButtonWithProps>
+      <ButtonWithProps styles={styles}>
         <Inner type={type}>
           {text ? (
             <Fragment>
               {LeftIcon}
-              <Text text={text} {...textStyles(type)} />
+              <Text text={text} {...textStyles(type)} greyedOut={greyedOut} />
               {RightIcon}
             </Fragment>
           ) : (

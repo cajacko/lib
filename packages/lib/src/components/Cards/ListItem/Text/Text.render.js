@@ -1,45 +1,49 @@
 // @flow
 
 import React from 'react';
-import Text from '../../../Text';
-import type { TextValue } from '../../../Text/Text.render';
-import type { BackgroundColor } from '../../../../config/styles/textIconColors';
 import Button from '../../../Button';
+import Text from '../../../Text';
+import { BACKGROUND_COLORS } from '../../../../config/styles/textIconColors';
+import { Container, Inner } from './Text.style';
 
 type Props = {
-  text: TextValue,
-  numberOfLines?: number,
-  backgroundColor: BackgroundColor,
+  text: string,
+  action?: () => void,
   greyedOut?: boolean,
-  textAction: () => void,
+  numberOfLines?: number,
 };
 
 const defaultProps = {
-  numberOfLines: 2,
+  action: null,
   greyedOut: false,
+  numberOfLines: null,
 };
 
 /**
- * Display a text card
+ * Text item for use in the card list item
  */
-const CardsListItemText = ({
-  text,
-  numberOfLines,
-  backgroundColor,
-  greyedOut,
-  textAction,
+const TextListItem = ({
+  text, action, greyedOut, numberOfLines,
 }: Props) => (
-  <Button action={textAction} noButton={!textAction}>
-    <Text
-      numberOfLines={numberOfLines}
-      text={text}
-      type="body2"
-      backgroundColor={backgroundColor}
-      greyedOut={greyedOut}
-    />
-  </Button>
+  <Container>
+    <Button
+      action={action}
+      noButton={!action}
+      styles={{ height: '100%', flex: 1 }}
+    >
+      <Inner>
+        <Text
+          numberOfLines={numberOfLines}
+          text={text}
+          type="body2"
+          backgroundColor={BACKGROUND_COLORS.WHITE}
+          greyedOut={greyedOut}
+        />
+      </Inner>
+    </Button>
+  </Container>
 );
 
-CardsListItemText.defaultProps = defaultProps;
+TextListItem.defaultProps = defaultProps;
 
-export default CardsListItemText;
+export default TextListItem;
