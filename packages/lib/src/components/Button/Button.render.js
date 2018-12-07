@@ -48,6 +48,7 @@ const Button = ({
           type,
           styles: buttonProps.styles,
         })}
+        {...buttonProps}
       />
     ) : (
       <UIButton
@@ -56,6 +57,7 @@ const Button = ({
           type,
           styles: buttonProps.styles,
         })}
+        {...buttonProps}
       />
     ));
 
