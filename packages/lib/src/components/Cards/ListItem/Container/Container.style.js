@@ -5,6 +5,8 @@ import { Div } from '../../../UI';
 import { BACKGROUND_COLORS } from '../../../../config/styles/textIconColors';
 import { GREY_LIGHT } from '../../../../config/styles/colors';
 
+export const CARDS_LIST_ITEM_SPACING = 10;
+
 const BACKGROUND_COLOR = BACKGROUND_COLORS.WHITE;
 
 export const Container = styled(Div)`

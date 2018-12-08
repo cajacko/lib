@@ -2,11 +2,11 @@
 
 import * as React from 'react';
 import Button from '../../../Button';
-import { Container, Inner } from './Container.style';
+import { Container, Inner, CARDS_LIST_ITEM_SPACING } from './Container.style';
 
 type Props = {
   action?: () => void,
-  children: React.Node,
+  children: ({ spacing: number }) => React.Node | React.Node,
 };
 
 const defaultProps = {
@@ -19,7 +19,11 @@ const defaultProps = {
 const CardsListItem = ({ children, action }: Props) => (
   <Container>
     <Button noButton={!action} action={action}>
-      <Inner>{children}</Inner>
+      <Inner>
+        {typeof children === 'function'
+          ? children({ spacing: CARDS_LIST_ITEM_SPACING })
+          : children}
+      </Inner>
     </Button>
   </Container>
 );

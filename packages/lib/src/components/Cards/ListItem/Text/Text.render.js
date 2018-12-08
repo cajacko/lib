@@ -11,19 +11,25 @@ type Props = {
   action?: () => void,
   greyedOut?: boolean,
   numberOfLines?: number,
+  innerStyles?: { [string]: * },
 };
 
 const defaultProps = {
   action: null,
   greyedOut: false,
   numberOfLines: null,
+  innerStyles: null,
 };
 
 /**
  * Text item for use in the card list item
  */
 const TextListItem = ({
-  text, action, greyedOut, numberOfLines,
+  text,
+  action,
+  greyedOut,
+  numberOfLines,
+  innerStyles,
 }: Props) => (
   <Container>
     <Button
@@ -31,7 +37,7 @@ const TextListItem = ({
       noButton={!action}
       styles={{ height: '100%', flex: 1 }}
     >
-      <Inner>
+      <Inner style={innerStyles}>
         <Text
           numberOfLines={numberOfLines}
           text={text}

@@ -4,6 +4,7 @@ import React from 'react';
 import Button from '../../../Button';
 import buttons from '../../../../config/styles/buttons';
 import type { Icon } from '../../../types';
+import { CARDS_LIST_ITEM_SPACING } from '../Container/Container.style';
 
 type Props = {
   icon: Icon,
@@ -26,6 +27,7 @@ const IconListItem = ({ icon, action, greyedOut }: Props) => (
     icon={icon}
     action={action}
     noButton={!action}
+    styles={{ paddingVertical: CARDS_LIST_ITEM_SPACING }}
   />
 );
 
