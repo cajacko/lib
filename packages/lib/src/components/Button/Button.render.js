@@ -42,7 +42,13 @@ const Button = ({
    */
   const ButtonWithProps = buttonProps =>
     (noButton ? (
-      <Div {...buttonProps} />
+      <Div
+        style={nativeStyles({
+          type,
+          styles: buttonProps.styles,
+        })}
+        {...buttonProps}
+      />
     ) : (
       <UIButton
         action={action}
@@ -74,7 +80,7 @@ const Button = ({
     <ButtonWithProps styles={styles}>{children || null}</ButtonWithProps>
   ) : (
     <Outer type={type} fullHeight={fullHeight} baseWidth={baseWidth}>
-      <ButtonWithProps>
+      <ButtonWithProps styles={styles}>
         <Inner type={type}>
           {text ? (
             <Fragment>

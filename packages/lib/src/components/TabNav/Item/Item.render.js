@@ -10,7 +10,7 @@ const TabNavItem = ({
   text, icon, action, isActive, theme,
 }) => (
   <Container isActive={isActive} activeColor={theme.backgroundColorActive}>
-    <Button action={action} styles={{ button: buttonStyles }}>
+    <Button action={action} styles={buttonStyles}>
       {icon && (
         <Icon
           icon={icon}

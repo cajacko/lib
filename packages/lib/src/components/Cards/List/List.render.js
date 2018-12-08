@@ -68,7 +68,6 @@ const CardsList = ({
   cards,
   renderSectionHeader,
   renderItem,
-  renderBottomItem,
   bottomItem,
   keyExtractor,
   ...props
@@ -76,15 +75,10 @@ const CardsList = ({
   const finalCards = cards.slice();
   const finalKeyExtractor = keyExtractor && customKeyExtractor(keyExtractor);
 
-  if (renderBottomItem) {
+  if (bottomItem) {
     finalCards.push({
-      _renderCustom: renderBottomItem,
+      _renderCustom: bottomItem,
       key: '_customBottomRender',
-    });
-  } else if (bottomItem) {
-    finalCards.push({
-      key: '_customBottomRender',
-      ...bottomItem,
     });
   }
 

@@ -1,6 +1,10 @@
 // @flow
 
-import { COLORS, BACKGROUND_COLORS } from './textIconColors';
+import {
+  COLORS,
+  BACKGROUND_COLORS,
+  COLORS_FOR_BACKGROUND,
+} from './textIconColors';
 import { STANDARD_SPACING } from './spacing';
 
 const buttonBorderRadius = 5;
@@ -12,7 +16,14 @@ const styles = {
   ICON: {
     height: buttonHeight,
     width: buttonHeight,
-    iconColor: COLORS.BLACK,
+    themes: {
+      DEFAULT: {
+        iconColor: COLORS_FOR_BACKGROUND[BACKGROUND_COLORS.WHITE].default,
+      },
+      GREYED_OUT: {
+        iconColor: COLORS_FOR_BACKGROUND[BACKGROUND_COLORS.WHITE].greyedOut,
+      },
+    },
   },
   TRANSPARENT: {
     height: buttonHeight,

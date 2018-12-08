@@ -28,6 +28,10 @@ class Store {
    * finished setting up the store
    */
   constructor(reducers: Reducers, existingState: ExistingState) {
+    // Needs to be bound before any calls to this.setupStore, as that tries to puts it's own
+    // binding on it
+    this.loggerMiddleware = this.loggerMiddleware.bind(this);
+
     this.onFinishedStoreSetup = this.setupStore(reducers, existingState);
     this.onFinishedPersist = Promise.resolve();
   }
@@ -84,14 +88,41 @@ class Store {
   }
 
   /**
+   * Get the state as a JS object, converting any immutable structures found
+   * on the reducer roots
+   */
+  getJSState() {
+    const state = this.getState();
+
+    const newState = {};
+
+    Object.keys(state).forEach((key) => {
+      const val = state[key];
+
+      if (val && typeof val.toJS === 'function') {
+        newState[key] = val.toJS();
+      } else {
+        newState[key] = val;
+      }
+    });
+
+    return newState;
+  }
+
+  /**
    * Log in dev mode
    */
   loggerMiddleware() {
     return (next: (action: ActionType) => void) => (action: ActionType) => {
       // We can allow this log in dev mode
-      logger.debug(`REDUX ACTION: ${action.type}`, action);
+      // logger.debug('REDUX BEFORE', this.getJSState());
 
-      return next(action);
+      logger.debug(`REDUX ACTION: ${action.type}`, action);
+      const res = next(action);
+
+      // logger.debug('REDUX AFTER', this.getJSState());
+
+      return res;
     };
   }
 
