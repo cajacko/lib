@@ -21,12 +21,11 @@ const defaultProps = {
  */
 const IconListItem = ({ icon, action, greyedOut }: Props) => (
   <Button
-    type={buttons.ICON}
+    type={greyedOut ? buttons.ICON.GREYED_OUT : buttons.ICON}
     fullHeight
     icon={icon}
     action={action}
     noButton={!action}
-    greyedOut={greyedOut}
   />
 );
 

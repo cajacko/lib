@@ -32,7 +32,6 @@ const Button = ({
   baseWidth,
   noButton,
   noContent,
-  greyedOut,
 }) => {
   /**
    * Render the button component with children
@@ -66,9 +65,7 @@ const Button = ({
   let LeftIcon;
 
   if (icon) {
-    const IconComponent = (
-      <Icon icon={icon} {...iconStyles(type)} greyedOut={greyedOut} />
-    );
+    const IconComponent = <Icon icon={icon} {...iconStyles(type)} />;
 
     if (iconLeft) {
       LeftIcon = IconComponent;
@@ -88,7 +85,7 @@ const Button = ({
           {text ? (
             <Fragment>
               {LeftIcon}
-              <Text text={text} {...textStyles(type)} greyedOut={greyedOut} />
+              <Text text={text} {...textStyles(type)} />
               {RightIcon}
             </Fragment>
           ) : (
