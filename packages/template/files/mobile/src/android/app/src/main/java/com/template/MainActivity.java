@@ -1,4 +1,4 @@
-package com.template;
+package TEMPLATE-BUNDLE-ID;
 
 import com.facebook.react.ReactActivity;
 

@@ -2,7 +2,7 @@
 /* eslint max-lines: 0 */
 
 import { join } from 'path';
-import { ensureDir, copy, readJSON, writeJSON } from 'fs-extra';
+import { ensureDir, copy, readJSON, writeJSON, remove } from 'fs-extra';
 import Color from 'color';
 import {
   runCommand,
@@ -270,6 +270,23 @@ class MobileApp extends Template {
   }
 
   /**
+   * Ensure the android java src path matches the bundle id. Seems to be a
+   * weird thing android wants.
+   */
+  copyAndroidSrc() {
+    const templateJavaPath = 'android/app/src/main/java/com/template';
+    const bundlePath = this.env.BUNDLE_ID.replace(/\./g, '/');
+    const javaPath = join(this.tmpDir, 'android/app/src/main/java', bundlePath);
+    const srcPath = join(this.tmplSrcDir, templateJavaPath);
+    const deletePath = join(this.tmpDir, templateJavaPath);
+
+    return Promise.all([
+      remove(deletePath),
+      ensureDir(javaPath).then(() => copy(srcPath, javaPath)),
+    ]);
+  }
+
+  /**
    * Prepare the mobile app. Copies all the required files into tmp and watches
    * anything that needs watching
    *
@@ -284,9 +301,12 @@ class MobileApp extends Template {
       this.getActiveLibDir(),
       ensureDir(this.tmpDir).then(() =>
         copy(this.tmplSrcDir, this.tmpDir).then(() =>
-          copyDependencies(this.projectDir, this.tmpDir, {
-            ignore: ['@cajacko/template', '@cajacko/commit'],
-          }))),
+          Promise.all([
+            copyDependencies(this.projectDir, this.tmpDir, {
+              ignore: ['@cajacko/template', '@cajacko/commit'],
+            }),
+            this.copyAndroidSrc(),
+          ]))),
     ])
       .then(([localLibPath]) =>
         copyDependencies(localLibPath, this.tmpDir, {
