@@ -3,7 +3,6 @@
 import React, { Fragment } from 'react';
 import GenericErrorBoundary from '../../GenericErrorBoundary';
 import Header from '../../Header';
-import Content from '../../Content';
 import type { Props as HeaderProps } from '../../Header/Header.render';
 
 type Props = {
@@ -18,10 +17,7 @@ type Props = {
 const HeaderWithContent = ({ header, ...props }: Props) => (
   <Fragment>
     <Header {...header} />
-
-    <Content>
-      <GenericErrorBoundary {...props} />
-    </Content>
+    <GenericErrorBoundary {...props} />
   </Fragment>
 );
 
