@@ -9,7 +9,10 @@ type Props = {
   children: React.Node,
 };
 
-type State = {};
+type State = {
+  loading: boolean,
+  error: ?*,
+};
 
 /**
  * Handle whether to keep the splash screen/loading screen going on launch
@@ -30,6 +33,7 @@ class AppLoadingComponent extends React.Component<Props, State> {
     const error = appLoading.isRejected();
 
     this.state = {
+      loading,
       error,
     };
 
@@ -37,9 +41,10 @@ class AppLoadingComponent extends React.Component<Props, State> {
       appLoading
         .getPromise()
         .catch((e) => {
-          this.setState({ error: e });
+          this.setState({ loading: false, error: e });
         })
         .then(() => {
+          this.setState({ loading: false });
           SplashScreen.hide();
         });
     } else {
@@ -53,9 +58,11 @@ class AppLoadingComponent extends React.Component<Props, State> {
    * @return {ReactElement} Markup to render
    */
   render() {
+    // Don't need to show anything when loading, as the splash screen
+    // should be showing. The only time it does show
     return (
       <GenericErrorBoundary error={this.state.error}>
-        {this.props.children}
+        {this.state.loading ? null : this.props.children}
       </GenericErrorBoundary>
     );
   }
