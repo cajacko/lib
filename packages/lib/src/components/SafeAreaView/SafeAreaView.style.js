@@ -1,14 +1,8 @@
 // @flow
 
 import styled from 'styled-components';
-import { StatusBar as RNStatusBar } from 'react-native';
 import { Div } from '../UI';
 import { WHITE } from '../../config/styles/colors';
-
-export const StatusBar = styled(Div)`
-  height: ${RNStatusBar.currentHeight};
-  background-color: ${({ backgroundColor }) => backgroundColor};
-`;
 
 export const Container = styled(Div)`
   flex: 1;
