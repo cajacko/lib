@@ -1,3 +1,4 @@
 // @flow
 
 export const STANDARD_SPACING = 10;
+export const HORIZONTAL_EDGE_PADDING = STANDARD_SPACING * 2;
