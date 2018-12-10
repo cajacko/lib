@@ -13,3 +13,4 @@ export const EDIT = withIcon('create');
 export const CHECK = withIcon('md-checkmark');
 export const CHECKBOX_O = withIcon('ios-square-outline');
 export const CHECKBOX = withIcon('ios-checkbox-outline');
+export const PROFILE = withIcon('md-person');

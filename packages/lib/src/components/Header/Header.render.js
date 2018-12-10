@@ -23,6 +23,7 @@ export type Props = {
   leftText?: TextValue,
   leftAction?: () => void,
   rightButtons?: Array<{
+    key: string,
     text?: TextValue,
     action: () => void,
     icon?: Icon,
