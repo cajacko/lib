@@ -14,3 +14,6 @@ export const CHECK = withIcon('md-checkmark');
 export const CHECKBOX_O = withIcon('ios-square-outline');
 export const CHECKBOX = withIcon('ios-checkbox-outline');
 export const PROFILE = withIcon('md-person');
+export const CHEVRON_UP = withIcon('md-arrow-up');
+export const CHEVRON_DOWN = withIcon('md-arrow-down');
+export const RELOAD = withIcon('md-refresh');
