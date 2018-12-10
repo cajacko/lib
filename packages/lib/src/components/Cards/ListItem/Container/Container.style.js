@@ -12,7 +12,7 @@ import {
 export const CARDS_VERTICAL_SPACING = STANDARD_SPACING;
 export const CARDS_HORIZONTAL_SPACING = HORIZONTAL_EDGE_PADDING;
 
-const BACKGROUND_COLOR = BACKGROUND_COLORS.WHITE;
+export const BACKGROUND_COLOR = BACKGROUND_COLORS.WHITE;
 
 /**
  * Figure out what padding to apply to the inner container
