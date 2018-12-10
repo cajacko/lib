@@ -23,6 +23,7 @@ const getHeaderLayout = ({
   rightAction,
   rightButtonStyle,
   rightButtons,
+  horizontalMargin,
 }: Props) => {
   const elements = {};
 
@@ -91,6 +92,7 @@ const getHeaderLayout = ({
     elements.title = {
       container: {
         hasSides: !!elements.right || !!elements.left,
+        horizontalMargin,
       },
       button: {
         text: title,

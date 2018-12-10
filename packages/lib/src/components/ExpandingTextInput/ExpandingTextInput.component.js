@@ -78,12 +78,14 @@ class ExpandingTextInputC extends Component<Props, State> {
   onChange(event: { nativeEvent: { text: string } }) {
     let { text } = event.nativeEvent;
 
-    if (this.props.disableNewLines) {
-      text = text.replace(LINE_BREAKS, '');
-    }
-
+    // This needs to happen before we transform any text, otherwise
+    // we can't match it accurately
     if (!!text.match(LINE_BREAKS) && this.props.onReturnKey) {
       this.props.onReturnKey(text);
+    }
+
+    if (this.props.disableNewLines) {
+      text = text.replace(LINE_BREAKS, '');
     }
 
     if (text === this.state.hiddenText) return;

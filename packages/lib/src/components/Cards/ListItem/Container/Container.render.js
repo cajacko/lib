@@ -2,7 +2,12 @@
 
 import * as React from 'react';
 import Button from '../../../Button';
-import { Container, Inner, CARDS_LIST_ITEM_SPACING } from './Container.style';
+import {
+  Container,
+  Inner,
+  CARDS_HORIZONTAL_SPACING,
+  CARDS_VERTICAL_SPACING,
+} from './Container.style';
 
 type Props = {
   action?: () => void,
@@ -16,12 +21,15 @@ const defaultProps = {
 /**
  * Display the cards list item container, can optionally be a button
  */
-const CardsListItem = ({ children, action }: Props) => (
+const CardsListItem = ({ children, action, ...props }: Props) => (
   <Container>
     <Button noButton={!action} action={action}>
-      <Inner>
+      <Inner {...props}>
         {typeof children === 'function'
-          ? children({ spacing: CARDS_LIST_ITEM_SPACING })
+          ? children({
+              horizontalSpacing: CARDS_HORIZONTAL_SPACING,
+              verticalSpacing: CARDS_VERTICAL_SPACING,
+            })
           : children}
       </Inner>
     </Button>

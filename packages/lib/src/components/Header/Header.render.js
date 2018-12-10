@@ -27,6 +27,7 @@ export type Props = {
     action: () => void,
     icon?: Icon,
   }>,
+  horizontalMargin?: number,
 };
 
 const defaultProps = {
@@ -38,6 +39,7 @@ const defaultProps = {
   leftText: null,
   leftAction: null,
   rightButtons: null,
+  horizontalMargin: null,
 };
 
 /**
@@ -55,7 +57,7 @@ const Header = (props: Props) => {
       )}
       {!!title && (
         <Body {...title.container}>
-          <Button {...title.button} />
+          <Button {...title.button} numberOfLines={1} />
         </Body>
       )}
       {!!right && (

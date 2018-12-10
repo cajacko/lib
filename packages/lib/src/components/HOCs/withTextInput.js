@@ -39,7 +39,7 @@ const withTextInput = (CustomComponent: *) => {
 
     /**
      * When the text changes, store a ref to it, callback the onChange
-     * handler and seeif we should submit on the return key
+     * handler and see if we should submit on the return key
      */
     onChange(...args: OnChangeArgs) {
       const [text] = args;
@@ -80,12 +80,14 @@ const withTextInput = (CustomComponent: *) => {
 
       delete props.onSubmitEditing;
       delete props.onSubmit;
+      delete props.onChange;
 
       return (
         <CustomComponent
+          onChange={this.onChange}
           onSubmitEditing={this.onSubmit}
-          {...props}
           onReturnKey={this.onReturnKey}
+          {...props}
         />
       );
     }

@@ -2,12 +2,17 @@
 
 import React, { Fragment } from 'react';
 import GenericErrorBoundary from '../../GenericErrorBoundary';
-import Header from '../../Header';
 import Content from '../../Content';
+import Header from '../../Header';
 import type { Props as HeaderProps } from '../../Header/Header.render';
 
 type Props = {
   header: HeaderProps,
+  hasPadding?: boolean,
+};
+
+const defaultProps = {
+  hasPadding: false,
 };
 
 /**
@@ -15,14 +20,19 @@ type Props = {
  * an error boundary, so we can still navigate backwards. The error
  * boundary props are passed through
  */
-const HeaderWithContent = ({ header, ...props }: Props) => (
+const HeaderWithContent = ({ hasPadding, header, ...props }: Props) => (
   <Fragment>
     <Header {...header} />
-
-    <Content>
+    {hasPadding ? (
+      <Content>
+        <GenericErrorBoundary {...props} />
+      </Content>
+    ) : (
       <GenericErrorBoundary {...props} />
-    </Content>
+    )}
   </Fragment>
 );
+
+HeaderWithContent.defaultProps = defaultProps;
 
 export default HeaderWithContent;

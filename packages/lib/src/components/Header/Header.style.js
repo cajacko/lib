@@ -7,14 +7,22 @@ import { GREY_LIGHTER } from '../../config/styles/colors';
 const sideWidth = 40;
 const sideZIndex = 2;
 
+/**
+ * Apply the width if it exists
+ */
 const applyWidth = ({ hasFixedWidth }) =>
   (hasFixedWidth ? `width: ${sideWidth}` : '');
 
-const bodySpacing = ({ hasSides }) => {
+/**
+ * Get the margin for the title, can pass in custom horizontal margin
+ */
+const bodySpacing = ({ hasSides, horizontalMargin }) => {
   if (!hasSides) return '';
 
   return `
-    margin-horizontal: ${sideWidth};
+    margin-horizontal: ${
+  typeof horizontalMargin === 'number' ? horizontalMargin : sideWidth
+};
   `;
 };
 

@@ -12,6 +12,7 @@ type Props = {
   renderItem?: () => React.Component<*, *>,
   renderBottomItem?: () => React.Component<*, *>,
   keyExtractor?: Card => string,
+  bottomPadding?: boolean | number,
 };
 
 const defaultProps = {
@@ -20,6 +21,7 @@ const defaultProps = {
   renderItem: null,
   renderBottomItem: null,
   keyExtractor: null,
+  bottomPadding: null,
 };
 
 type RenderItemProps = {
@@ -50,6 +52,17 @@ const withRenderItem = renderItem => (props: RenderItemProps) => {
 };
 
 /**
+ * Figure out the styling for the scroll containers
+ */
+const contentContainerStyle = ({ bottomPadding }) => {
+  if (!bottomPadding) return {};
+
+  return {
+    paddingBottom: typeof bottomPadding === 'number' ? bottomPadding : 200,
+  };
+};
+
+/**
  * Wrap around the key extractor if one is provided. As we don't want it to
  * run for custom items we add in here
  */
@@ -70,6 +83,7 @@ const CardsList = ({
   renderItem,
   bottomItem,
   keyExtractor,
+  bottomPadding,
   ...props
 }: Props) => {
   const finalCards = cards.slice();
@@ -82,12 +96,15 @@ const CardsList = ({
     });
   }
 
+  const contentContainerStyles = contentContainerStyle({ bottomPadding });
+
   return renderSectionHeader ? (
     <SectionList
       renderSectionHeader={renderSectionHeader}
       sections={finalCards}
       renderItem={withRenderItem(renderItem)}
       keyExtractor={finalKeyExtractor}
+      contentContainerStyle={contentContainerStyles}
       {...props}
     />
   ) : (
@@ -95,6 +112,7 @@ const CardsList = ({
       data={finalCards}
       renderItem={withRenderItem(renderItem)}
       keyExtractor={finalKeyExtractor}
+      contentContainerStyle={contentContainerStyles}
       {...props}
     />
   );

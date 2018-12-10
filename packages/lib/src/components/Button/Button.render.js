@@ -32,6 +32,7 @@ const Button = ({
   baseWidth,
   noButton,
   noContent,
+  numberOfLines,
 }) => {
   /**
    * Render the button component with children
@@ -85,7 +86,11 @@ const Button = ({
           {text ? (
             <Fragment>
               {LeftIcon}
-              <Text text={text} {...textStyles(type)} />
+              <Text
+                text={text}
+                {...textStyles(type)}
+                numberOfLines={numberOfLines}
+              />
               {RightIcon}
             </Fragment>
           ) : (

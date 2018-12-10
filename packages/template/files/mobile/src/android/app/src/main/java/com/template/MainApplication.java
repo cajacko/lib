@@ -1,4 +1,4 @@
-package com.template;
+package TEMPLATE-BUNDLE-ID;
 
 import android.app.Application;
 
