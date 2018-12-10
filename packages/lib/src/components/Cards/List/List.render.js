@@ -84,6 +84,7 @@ const CardsList = ({
   bottomItem,
   keyExtractor,
   bottomPadding,
+  innerRef,
   ...props
 }: Props) => {
   const finalCards = cards.slice();
@@ -100,6 +101,7 @@ const CardsList = ({
 
   return renderSectionHeader ? (
     <SectionList
+      ref={innerRef}
       renderSectionHeader={renderSectionHeader}
       sections={finalCards}
       renderItem={withRenderItem(renderItem)}
@@ -109,6 +111,7 @@ const CardsList = ({
     />
   ) : (
     <FlatList
+      ref={innerRef}
       data={finalCards}
       renderItem={withRenderItem(renderItem)}
       keyExtractor={finalKeyExtractor}
