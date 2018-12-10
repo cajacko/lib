@@ -7,7 +7,7 @@ import {
 } from './textIconColors';
 import { STANDARD_SPACING } from './spacing';
 
-const buttonBorderRadius = 5;
+export const BUTTON_BORDER_RADIUS = 5;
 const buttonWidth = 150;
 const buttonHeight = 40;
 const buttonPaddingHorizontal = STANDARD_SPACING;
@@ -44,13 +44,13 @@ const styles = {
   OUTLINE: {
     height: buttonHeight,
     width: buttonWidth,
-    borderRadius: buttonBorderRadius,
+    borderRadius: BUTTON_BORDER_RADIUS,
     paddingHorizontal: buttonPaddingHorizontal,
   },
   CONTAINED: {
     height: buttonHeight,
     width: buttonWidth,
-    borderRadius: buttonBorderRadius,
+    borderRadius: BUTTON_BORDER_RADIUS,
     paddingHorizontal: buttonPaddingHorizontal,
     themes: {
       PRIMARY: {

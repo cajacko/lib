@@ -9,6 +9,7 @@ import {
   GREY_LIGHTER,
   SECONDARY,
   GREY,
+  ERROR,
 } from './colors';
 
 export const COLORS = {
@@ -18,6 +19,7 @@ export const COLORS = {
   GREY_DARK,
   PRIMARY_DARK,
   GREY,
+  ERROR,
 };
 
 export type Color = $Values<typeof COLORS>;
@@ -36,6 +38,7 @@ const LIGHT_BACKGROUND = {
   default: COLORS.BLACK,
   highlight: COLORS.PRIMARY_DARK,
   greyedOut: COLORS.GREY,
+  error: COLORS.ERROR,
 };
 
 export const COLORS_FOR_BACKGROUND = {
