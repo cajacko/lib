@@ -7,21 +7,23 @@ import CardsListItem from '../ListItem';
 
 type Props = {
   cards: Cards,
-  bottomItem?: Card,
+  bottomItem?: () => React.Component<*, *>,
+  topItem?: () => React.Component<*, *>,
   renderSectionHeader?: RenderSectionHeader,
   renderItem?: () => React.Component<*, *>,
-  renderBottomItem?: () => React.Component<*, *>,
   keyExtractor?: Card => string,
   bottomPadding?: boolean | number,
+  innerRef?: () => void,
 };
 
 const defaultProps = {
   bottomItem: null,
+  topItem: null,
   renderSectionHeader: null,
   renderItem: null,
-  renderBottomItem: null,
   keyExtractor: null,
   bottomPadding: null,
+  innerRef: null,
 };
 
 type RenderItemProps = {
@@ -40,7 +42,7 @@ const withRenderItem = renderItem => (props: RenderItemProps) => {
 
   if (props.item._renderCustom) return props.item._renderCustom(props);
 
-  if (item.key === '_customBottomRender') {
+  if (item.key === '_customBottomRender' || item.key === '_customTopRender') {
     return <CardsListItem {...item} />;
   }
 
@@ -67,9 +69,11 @@ const contentContainerStyle = ({ bottomPadding }) => {
  * run for custom items we add in here
  */
 const customKeyExtractor = keyExtractor => (item) => {
-  // Don't want to run a custom key extractor for the bottom render, as we
+  // Don't want to run a custom key extractor for the bottom/top render, as we
   // pass they key in ourselves
-  if (item.key === '_customBottomRender') return item.key;
+  if (item.key === '_customBottomRender' || item.key === '_customTopRender') {
+    return item.key;
+  }
 
   return keyExtractor(item);
 };
@@ -85,6 +89,7 @@ const CardsList = ({
   keyExtractor,
   bottomPadding,
   innerRef,
+  topItem,
   ...props
 }: Props) => {
   const finalCards = cards.slice();
@@ -94,6 +99,13 @@ const CardsList = ({
     finalCards.push({
       _renderCustom: bottomItem,
       key: '_customBottomRender',
+    });
+  }
+
+  if (topItem) {
+    finalCards.unshift({
+      _renderCustom: topItem,
+      key: '_customTopRender',
     });
   }
 
