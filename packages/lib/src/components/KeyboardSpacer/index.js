@@ -1,5 +1,3 @@
 // @flow
 
-import KeyboardSpacer from 'react-native-keyboard-spacer';
-
-export default KeyboardSpacer;
+export { default } from './KeyboardSpacer.render';
