@@ -19,7 +19,9 @@ const errorAllowance = errorOffset + TYPES[errorType].size + 5;
 
 const shouldOverlayLabel = (label, value) => !!label && !!value && value !== '';
 
-const containerPadding = ({ paddingBottom, paddingTop, paddingVertical }) => {
+const containerPadding = ({
+  customStyles: { paddingBottom, paddingTop, paddingVertical },
+}) => {
   let top = 0;
   let bottom = errorAllowance;
 
@@ -75,7 +77,12 @@ const ErrorContainer = styled(Div)`
 `;
 
 /**
- *
+ * We're using the customStyles prop in the container,
+ * as we don't want to conflict with native supported
+ * props. This can happen sometimes if you use a key
+ * that is also a layout prop. This can cause Android
+ * to crash. Think it was paddingVertical that did, it
+ * But best to be sure
  */
 const TextInputGroup = ({
   label,
@@ -87,9 +94,11 @@ const TextInputGroup = ({
   ...props
 }) => (
   <Container
-    paddingBottom={paddingBottom}
-    paddingVertical={paddingVertical}
-    paddingTop={paddingTop}
+    customStyles={{
+      paddingBottom,
+      paddingVertical,
+      paddingTop,
+    }}
   >
     <Inner>
       {shouldOverlayLabel(label, value) && (

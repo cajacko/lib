@@ -57,7 +57,17 @@ class TextInputComponent extends Component<Props, State> {
    * Render the component
    */
   render() {
-    return <TextInput {...this.props} />;
+    // We're using the customStyles prop in the container, as we don't
+    // want to conflict with native supported props. This can happen
+    // sometimes if you use a key that is also a layout prop. This can
+    // cause Android to crash.
+    const {
+      backgroundColor, error, type, ...props
+    } = this.props;
+
+    return (
+      <TextInput customProps={{ backgroundColor, error, type }} {...props} />
+    );
   }
 }
 

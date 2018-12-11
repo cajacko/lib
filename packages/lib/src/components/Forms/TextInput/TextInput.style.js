@@ -25,7 +25,7 @@ const getStyles = ({ type }) => {
  * Get the border color, if there's an error then get the error
  * colour for the background
  */
-const borderColor = ({ error, backgroundColor }) => {
+const borderColor = ({ customProps: { error, backgroundColor } }) => {
   const errorColor = COLORS_FOR_BACKGROUND[backgroundColor].error;
 
   if (error && errorColor) {
@@ -38,12 +38,13 @@ const borderColor = ({ error, backgroundColor }) => {
 // The + 50 buffer, ensures the text input doesn't go into it's scroll view
 // mode by accident when you do quick line breaks
 export const TextInput = styled(UITextInput)`
-  font-size: ${props => getStyles(props).fontSize};
-  color: ${({ backgroundColor }) => textIconColor({ backgroundColor })};
+  font-size: ${({ customProps }) => getStyles(customProps).fontSize};
+  color: ${({ customProps: { backgroundColor } }) =>
+    textIconColor({ backgroundColor })};
   text-align-vertical: top;
   width: 100%;
   border-radius: ${BUTTON_BORDER_RADIUS};
-  height: ${props => getStyles(props).height};
+  height: ${({ customProps }) => getStyles(customProps).height};
   padding-horizontal: ${STANDARD_SPACING};
   border-width: 1;
   border-color: ${borderColor};
