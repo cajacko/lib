@@ -459,9 +459,16 @@ class MobileApp extends Template {
 
           const clearUpdate = logger.update('debug', () => 'ios is building');
 
-          promises.push(runCommand('npx react-native run-ios', this.tmpDir, {
-            noLog: true,
-          })
+          promises.push(runCommand(
+            'npx react-native run-ios --simulator device',
+            this.tmpDir,
+            {
+              vars: {
+                device: 'iPhone 8',
+              },
+              noLog: true,
+            }
+          )
             .then(() => {
               clearUpdate();
               logger.debug('ios build finished');
