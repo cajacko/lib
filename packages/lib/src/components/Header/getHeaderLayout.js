@@ -1,6 +1,6 @@
 // @flow
 
-import { BACK } from '../../config/icons';
+import { BACK, CLOSE } from '../../config/icons';
 import buttons from '../../config/styles/buttons';
 import type { Props } from './Header.render';
 
@@ -24,17 +24,18 @@ const getHeaderLayout = ({
   rightButtonStyle,
   rightButtons,
   horizontalMargin,
+  cancel,
 }: Props) => {
   const elements = {};
 
-  if (back) {
+  if (back || cancel) {
     elements.left = {
       container: {
         hasFixedWidth: true,
       },
       button: {
-        action: back,
-        icon: BACK,
+        action: back || cancel,
+        icon: back ? BACK : CLOSE,
         type: buttons.ICON,
         fullHeight: true,
       },

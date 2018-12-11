@@ -14,6 +14,7 @@ import type { TextValue } from '../../utils/getText';
 import type { Icon } from '../types';
 
 export type Props = {
+  cancel?: () => void,
   back?: () => void,
   title?: TextValue,
   rightText?: TextValue,
