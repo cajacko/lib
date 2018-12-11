@@ -51,10 +51,18 @@ const applyPadding = direction => ({
   }
 };
 
+const border = ({ noBorder }) => {
+  if (noBorder) return '';
+
+  return `
+    border-bottom-width: 1;
+    border-bottom-color: ${GREY_LIGHT};
+    background-color: ${BACKGROUND_COLOR};
+  `;
+};
+
 export const Container = styled(Div)`
-  border-bottom-width: 1;
-  border-bottom-color: ${GREY_LIGHT};
-  background-color: ${BACKGROUND_COLOR};
+  ${border}
 `;
 
 export const Inner = styled(Div)`

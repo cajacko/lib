@@ -22,8 +22,10 @@ const defaultProps = {
 /**
  * Display the cards list item container, can optionally be a button
  */
-const CardsListItem = ({ children, action, ...props }: Props) => (
-  <Container>
+const CardsListItem = ({
+  children, action, noBorder, ...props
+}: Props) => (
+  <Container noBorder={noBorder}>
     <Button noButton={!action} action={action}>
       <Inner {...props}>
         {typeof children === 'function'
