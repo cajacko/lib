@@ -30,6 +30,7 @@ export const BACKGROUND_COLORS = {
   PRIMARY_DARK,
   GREY_LIGHTER,
   SECONDARY,
+  ERROR,
 };
 
 export type BackgroundColor = $Values<typeof BACKGROUND_COLORS>;
@@ -52,5 +53,8 @@ export const COLORS_FOR_BACKGROUND = {
   [BACKGROUND_COLORS.GREY_LIGHTER]: LIGHT_BACKGROUND,
   [BACKGROUND_COLORS.SECONDARY]: {
     default: COLORS.BLACK,
+  },
+  [BACKGROUND_COLORS.ERROR]: {
+    default: COLORS.WHITE,
   },
 };
