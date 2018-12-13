@@ -7,6 +7,7 @@ const babelConfig = {
     'transform-react-jsx-source',
     'babel-plugin-styled-components',
     'transform-object-rest-spread',
+    'transform-class-properties',
   ],
 };
 
@@ -26,6 +27,10 @@ class Babel extends SetupTemplate {
       promises.push(this.fs.writeJSON(babelConfig, '.babelrc'));
 
       promises.push(this.npm.add({
+        'babel-plugin-transform-class-properties': {
+          type: 'dev',
+          version: '6.24.1',
+        },
         'babel-plugin-styled-components': { type: 'dev', version: '1.6.0' },
         'babel-plugin-transform-object-rest-spread': {
           type: 'dev',

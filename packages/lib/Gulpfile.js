@@ -49,7 +49,8 @@ gulp.task('build', ['copyJSON'], () => {
       plugins: [
         'transform-react-jsx-source',
         'transform-object-rest-spread',
-        'babel-plugin-styled-components',
+        'styled-components',
+        'transform-class-properties',
       ],
     }))
     .pipe(gulp.dest(dest));

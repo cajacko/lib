@@ -15,7 +15,7 @@ const copyAndWatch = (src, dest, optionsArg = {}) => {
   const { transpile, ...options } = optionsArg;
 
   if (transpile) {
-    const command = `yarn babel ${src} --out-dir ${dest} --presets=react,env,flow --plugins=transform-react-jsx-source,transform-object-rest-spread,babel-plugin-styled-components`;
+    const command = `yarn babel ${src} --out-dir ${dest} --presets=react,env,flow --plugins=transform-class-properties,transform-react-jsx-source,transform-object-rest-spread,styled-components`;
     const path = join(__dirname, '../../');
 
     return runCommand(command, path, { noLog: true }).then(() => {
