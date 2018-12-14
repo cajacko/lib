@@ -14,7 +14,7 @@ import {
   setOutDirIsReady,
   unregisterLibOutDir,
 } from '../utils/libOutDirs';
-import copyAndWatch from '../utils/copyAndWatch';
+import copyAndWatch, { copy as UCopy } from '../utils/copyAndWatch';
 
 /**
  * Run the graphQL template
@@ -52,25 +52,59 @@ class GraphQL extends Template {
    * watching
    */
   installAndSetOutDir() {
-    const opts = { withNVM: this.nvmVersion, ignoreEngines: true };
+    const opts = {
+      withNVM: this.command === 'start' ? this.nvmVersion : null,
+      ignoreEngines: true,
+    };
 
     return this.installDependencies(null, opts).then(() =>
       this.runIfUseLocal(() => setOutDirIsReady(this.libOutDir)));
   }
 
   /**
-   * Start the graphQL template
+   * Copy the src file to tmp and watch if required
    *
-   * @return {Promise} Promise that resolves when the template has been built
+   * @return {Promise} Promise that resolves when the copy has finished
    */
-  start() {
+  copyOrWatchSrc() {
+    const tmpSrc = join(this.tmpFuncDir, 'src');
+
+    if (this.shouldWatch) {
+      return copyAndWatch(this.projectSrcDir, tmpSrc, {
+        transpile: true,
+        exitOnError: true,
+      });
+    }
+
+    return UCopy(this.projectSrcDir, tmpSrc, { transpile: true });
+  }
+
+  /**
+   * Deploy the graphql api
+   */
+  deploy() {
+    return this.prepareApp().then(() =>
+      runCommand(
+        `yarn run firebase deploy --only functions --token ${
+          this.env.FIREBASE_TOKEN
+        }`,
+        this.tmpDir
+      ));
+  }
+
+  /**
+   * Prep the graphql dir
+   */
+  prepareApp() {
+    if (this.commander.skipPrepare) return Promise.resolve();
+
     const whitelist = [
       '@cajacko/lib',
       'firebase-functions',
       'express',
       'apollo-server-express',
       'firebase-admin',
-      'graphql'
+      'graphql',
     ];
 
     return Promise.all([
@@ -89,9 +123,7 @@ class GraphQL extends Template {
       .then(() =>
         Promise.all([
           this.installAndSetOutDir(),
-          copyAndWatch(this.projectSrcDir, join(this.tmpFuncDir, 'src'), {
-            transpile: true,
-          }),
+          this.copyOrWatchSrc(),
           copyTmpl(
             join(this.tmplDir, 'config.js'),
             join(this.tmpFuncDir, 'config.js'),
@@ -102,31 +134,39 @@ class GraphQL extends Template {
             join(this.tmpDir, '.firebaserc'),
             { firebaseProjectID: this.env.FIREBASE_PROJECT_ID }
           ),
-        ]))
-      .then(() => {
-        let needToAuthenticate = false;
+        ]));
+  }
 
-        const start = (opts = {}) =>
-          runCommand('yarn start', this.tmpDir, {
-            withNVM: this.nvmVersion,
-            ...opts,
-          });
+  /**
+   * Start the graphQL template
+   *
+   * @return {Promise} Promise that resolves when the template has been built
+   */
+  start() {
+    return this.prepareApp().then(() => {
+      let needToAuthenticate = false;
 
-        return start({
-          onData: (message) => {
-            if (needToAuthenticate) return;
-
-            needToAuthenticate = String(message).includes('Command requires authentication');
-          },
-        }).catch((e) => {
-          if (!needToAuthenticate) throw e;
-
-          logger.log('You need to login to firebase. Follow the prompts to login.');
-          return runCommand('npx firebase login', this.tmpDir, {
-            withNVM: this.nvmVersion,
-          }).then(() => start());
+      const start = (opts = {}) =>
+        runCommand('yarn start', this.tmpDir, {
+          withNVM: this.nvmVersion,
+          ...opts,
         });
+
+      return start({
+        onData: (message) => {
+          if (needToAuthenticate) return;
+
+          needToAuthenticate = String(message).includes('Command requires authentication');
+        },
+      }).catch((e) => {
+        if (!needToAuthenticate) throw e;
+
+        logger.log('You need to login to firebase. Follow the prompts to login.');
+        return runCommand('npx firebase login', this.tmpDir, {
+          withNVM: this.nvmVersion,
+        }).then(() => start());
       });
+    });
   }
 
   /**
