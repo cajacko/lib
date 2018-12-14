@@ -52,7 +52,7 @@ class GraphQL extends Template {
    * watching
    */
   installAndSetOutDir() {
-    const opts = { withNVM: this.nvmVersion };
+    const opts = { withNVM: this.nvmVersion, ignoreEngines: true };
 
     return this.installDependencies(null, opts).then(() =>
       this.runIfUseLocal(() => setOutDirIsReady(this.libOutDir)));
@@ -64,13 +64,27 @@ class GraphQL extends Template {
    * @return {Promise} Promise that resolves when the template has been built
    */
   start() {
+    const whitelist = [
+      '@cajacko/lib',
+      'firebase-functions',
+      'express',
+      'apollo-server-express',
+      'firebase-admin',
+      'graphql'
+    ];
+
     return Promise.all([
       this.getActiveLibDir(),
-      ensureDir(this.tmpDir).then(() => copy(this.tmplSrcDir, this.tmpDir)),
+      ensureDir(this.tmpDir)
+        .then(() => copy(this.tmplSrcDir, this.tmpDir))
+        .then(() =>
+          copyDependencies(this.projectDir, this.tmpFuncDir, {
+            whitelist,
+          })),
     ])
       .then(([localLibPath]) =>
         copyDependencies(localLibPath, this.tmpFuncDir, {
-          ignore: ['@cajacko/template', 'react-native'],
+          whitelist,
         }))
       .then(() =>
         Promise.all([
@@ -82,6 +96,11 @@ class GraphQL extends Template {
             join(this.tmplDir, 'config.js'),
             join(this.tmpFuncDir, 'config.js'),
             this.templateConfig
+          ),
+          copyTmpl(
+            join(this.tmplSrcDir, '.firebaserc'),
+            join(this.tmpDir, '.firebaserc'),
+            { firebaseProjectID: this.env.FIREBASE_PROJECT_ID }
           ),
         ]))
       .then(() => {
