@@ -115,12 +115,12 @@ class Store {
   loggerMiddleware() {
     return (next: (action: ActionType) => void) => (action: ActionType) => {
       // We can allow this log in dev mode
-      // logger.debug('REDUX BEFORE', this.getJSState());
+      logger.debug('REDUX BEFORE', this.getJSState());
 
       logger.debug(`REDUX ACTION: ${action.type}`, action);
       const res = next(action);
 
-      // logger.debug('REDUX AFTER', this.getJSState());
+      logger.debug('REDUX AFTER', this.getJSState());
 
       return res;
     };
