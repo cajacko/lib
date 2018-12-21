@@ -23,6 +23,7 @@ const getProps = ({
   backgroundColor,
   highlight,
   greyedOut,
+  style,
   ...props
 }) => ({
   style: {
@@ -32,6 +33,7 @@ const getProps = ({
       highlight,
       greyedOut,
     }),
+    ...style,
   },
   ...props,
 });

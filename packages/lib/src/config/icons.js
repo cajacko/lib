@@ -18,3 +18,4 @@ export const CHEVRON_UP = withIcon('md-arrow-up');
 export const CHEVRON_DOWN = withIcon('md-arrow-down');
 export const RELOAD = withIcon('md-refresh');
 export const CLOSE = withIcon('md-close');
+export const SPINNER = withIcon('md-sync');
