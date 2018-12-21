@@ -145,6 +145,7 @@ class GraphQL extends Template {
   start() {
     return this.prepareApp().then(() => {
       let needToAuthenticate = false;
+      let needToReAuthenticate = false;
 
       const start = (opts = {}) =>
         runCommand('yarn start', this.tmpDir, {
@@ -154,15 +155,25 @@ class GraphQL extends Template {
 
       return start({
         onData: (message) => {
-          if (needToAuthenticate) return;
+          if (needToAuthenticate || needToReAuthenticate) return;
 
-          needToAuthenticate = String(message).includes('Command requires authentication');
+          if (String(message).includes('Authentication Error')) {
+            needToReAuthenticate = true;
+          } else if (
+            String(message).includes('Command requires authentication')
+          ) {
+            needToAuthenticate = true;
+          }
         },
       }).catch((e) => {
-        if (!needToAuthenticate) throw e;
+        if (!needToAuthenticate && !needToReAuthenticate) throw e;
+
+        const command = needToReAuthenticate
+          ? 'npx firebase login --reauth'
+          : 'npx firebase login';
 
         logger.log('You need to login to firebase. Follow the prompts to login.');
-        return runCommand('npx firebase login', this.tmpDir, {
+        return runCommand(command, this.tmpDir, {
           withNVM: this.nvmVersion,
         }).then(() => start());
       });
