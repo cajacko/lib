@@ -46,7 +46,7 @@ const graphqlClient = (
           .then((data) => {
             const keys = Object.keys(data);
 
-            if (keys.length === 1) return data[keys[0]];
+            if (keys.length === 1) return resolve(data[keys[0]]);
 
             resolve(data);
           })
