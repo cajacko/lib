@@ -6,18 +6,18 @@ set -e
 command="docker create"
 
 # Get all the env keys and pass in from the host
-# str=$(egrep -v '^#' .env | xargs)
-# IFS=" "
-# ary=($str)
-# for key in "${!ary[@]}";
-# do
-#   str2="${ary[$key]}"
-#   IFS="="
-#   ary2=($str2)
-#   command="${command} -e ${ary2[0]}"
-# done
+str=$(egrep -v '^#' .env | xargs)
+IFS=" "
+ary=($str)
+for key in "${!ary[@]}";
+do
+  str2="${ary[$key]}"
+  IFS="="
+  ary2=($str2)
+  command="${command} -e ${ary2[0]}"
+done
 
-command="${command} -it --name=publish node:6.15.1-alpine sh /App/scripts/runPublish.sh"
+command="${command} -it --name=publish node:8.14.1-alpine sh /App/scripts/runPublish.sh"
 
 # Execute the docker run command with all the env set
 eval $command
