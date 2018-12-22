@@ -17,7 +17,7 @@ do
   command="${command} -e ${ary2[0]}"
 done
 
-command="${command} -it --name=publish node:8.14.1-alpine sh /App/scripts/runPublish.sh"
+command="${command} -it --name=publish node:8.14.1 sh /App/scripts/runPublish.sh"
 
 # Execute the docker run command with all the env set
 eval $command
