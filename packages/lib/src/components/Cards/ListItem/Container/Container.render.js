@@ -7,6 +7,7 @@ import {
   Inner,
   CARDS_HORIZONTAL_SPACING,
   CARDS_VERTICAL_SPACING,
+  BACKGROUND_COLOR,
 } from './Container.style';
 
 type Props = {
@@ -21,14 +22,17 @@ const defaultProps = {
 /**
  * Display the cards list item container, can optionally be a button
  */
-const CardsListItem = ({ children, action, ...props }: Props) => (
-  <Container>
+const CardsListItem = ({
+  children, action, noBorder, ...props
+}: Props) => (
+  <Container noBorder={noBorder}>
     <Button noButton={!action} action={action}>
       <Inner {...props}>
         {typeof children === 'function'
           ? children({
               horizontalSpacing: CARDS_HORIZONTAL_SPACING,
               verticalSpacing: CARDS_VERTICAL_SPACING,
+              backgroundColor: BACKGROUND_COLOR,
             })
           : children}
       </Inner>

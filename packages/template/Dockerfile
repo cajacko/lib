@@ -65,6 +65,10 @@ RUN wget $GRADLE_URL -O gradle.zip \
   && rm gradle.zip \
   && mkdir .gradle
 
+# Set default git config, sometimes fails on travis if it isn't set
+RUN git config --global user.email "you@example.com" && git config --global user.name "Your Name"
+
+# Set android home env
 ENV PATH="/home/user/gradle/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools:${PATH}"
 
 # Prepare the app dir

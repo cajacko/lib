@@ -14,6 +14,7 @@ type Props = {
   _dangerouslySetColor?: Color,
   highlight?: boolean,
   greyedOut?: boolean,
+  error?: boolean,
 };
 
 /**
@@ -28,6 +29,7 @@ const textIconColor = ({
   _dangerouslySetColor,
   highlight,
   greyedOut,
+  error,
 }: Props) => {
   let finalTextColor;
   let finalBackgroundColor;
@@ -42,6 +44,8 @@ const textIconColor = ({
 
     if (!finalTextColor) {
       throw new AppError('Could not derive the color for this text/icon');
+    } else if (error && finalTextColor.error) {
+      finalTextColor = finalTextColor.error;
     } else if (highlight && finalTextColor.highlight) {
       finalTextColor = finalTextColor.highlight;
     } else if (greyedOut && finalTextColor.greyedOut) {

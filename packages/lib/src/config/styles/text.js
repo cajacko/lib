@@ -83,8 +83,7 @@ export const TYPES = {
   },
 };
 
-const INPUT_TYPE = TYPES.body1;
-
-export const INPUT_STYLES = {
-  size: INPUT_TYPE.size,
+export const INPUT_TYPES = {
+  body1: TYPES.body1,
+  body2: TYPES.body2,
 };

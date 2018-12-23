@@ -14,7 +14,7 @@ import {
   setOutDirIsReady,
   unregisterLibOutDir,
 } from '../utils/libOutDirs';
-import copyAndWatch from '../utils/copyAndWatch';
+import copyAndWatch, { copy as UCopy } from '../utils/copyAndWatch';
 
 /**
  * Run the graphQL template
@@ -52,10 +52,89 @@ class GraphQL extends Template {
    * watching
    */
   installAndSetOutDir() {
-    const opts = { withNVM: this.nvmVersion };
+    const opts = {
+      withNVM: this.command === 'start' ? this.nvmVersion : null,
+      ignoreEngines: true,
+    };
 
     return this.installDependencies(null, opts).then(() =>
       this.runIfUseLocal(() => setOutDirIsReady(this.libOutDir)));
+  }
+
+  /**
+   * Copy the src file to tmp and watch if required
+   *
+   * @return {Promise} Promise that resolves when the copy has finished
+   */
+  copyOrWatchSrc() {
+    const tmpSrc = join(this.tmpFuncDir, 'src');
+
+    if (this.shouldWatch) {
+      return copyAndWatch(this.projectSrcDir, tmpSrc, {
+        transpile: true,
+        exitOnError: true,
+      });
+    }
+
+    return UCopy(this.projectSrcDir, tmpSrc, { transpile: true });
+  }
+
+  /**
+   * Deploy the graphql api
+   */
+  deploy() {
+    return this.prepareApp().then(() =>
+      runCommand(
+        `yarn run firebase deploy --only functions --token ${
+          this.env.FIREBASE_TOKEN
+        }`,
+        this.tmpDir
+      ));
+  }
+
+  /**
+   * Prep the graphql dir
+   */
+  prepareApp() {
+    if (this.commander.skipPrepare) return Promise.resolve();
+
+    const whitelist = [
+      '@cajacko/lib',
+      'firebase-functions',
+      'express',
+      'apollo-server-express',
+      'firebase-admin',
+      'graphql',
+    ];
+
+    return Promise.all([
+      this.getActiveLibDir(),
+      ensureDir(this.tmpDir)
+        .then(() => copy(this.tmplSrcDir, this.tmpDir))
+        .then(() =>
+          copyDependencies(this.projectDir, this.tmpFuncDir, {
+            whitelist,
+          })),
+    ])
+      .then(([localLibPath]) =>
+        copyDependencies(localLibPath, this.tmpFuncDir, {
+          whitelist,
+        }))
+      .then(() =>
+        Promise.all([
+          this.installAndSetOutDir(),
+          this.copyOrWatchSrc(),
+          copyTmpl(
+            join(this.tmplDir, 'config.js'),
+            join(this.tmpFuncDir, 'config.js'),
+            this.templateConfig
+          ),
+          copyTmpl(
+            join(this.tmplSrcDir, '.firebaserc'),
+            join(this.tmpDir, '.firebaserc'),
+            { firebaseProjectID: this.env.FIREBASE_PROJECT_ID }
+          ),
+        ]));
   }
 
   /**
@@ -64,50 +143,41 @@ class GraphQL extends Template {
    * @return {Promise} Promise that resolves when the template has been built
    */
   start() {
-    return Promise.all([
-      this.getActiveLibDir(),
-      ensureDir(this.tmpDir).then(() => copy(this.tmplSrcDir, this.tmpDir)),
-    ])
-      .then(([localLibPath]) =>
-        copyDependencies(localLibPath, this.tmpFuncDir, {
-          ignore: ['@cajacko/template', 'react-native'],
-        }))
-      .then(() =>
-        Promise.all([
-          this.installAndSetOutDir(),
-          copyAndWatch(this.projectSrcDir, join(this.tmpFuncDir, 'src'), {
-            transpile: true,
-          }),
-          copyTmpl(
-            join(this.tmplDir, 'config.js'),
-            join(this.tmpFuncDir, 'config.js'),
-            this.templateConfig
-          ),
-        ]))
-      .then(() => {
-        let needToAuthenticate = false;
+    return this.prepareApp().then(() => {
+      let needToAuthenticate = false;
+      let needToReAuthenticate = false;
 
-        const start = (opts = {}) =>
-          runCommand('yarn start', this.tmpDir, {
-            withNVM: this.nvmVersion,
-            ...opts,
-          });
-
-        return start({
-          onData: (message) => {
-            if (needToAuthenticate) return;
-
-            needToAuthenticate = String(message).includes('Command requires authentication');
-          },
-        }).catch((e) => {
-          if (!needToAuthenticate) throw e;
-
-          logger.log('You need to login to firebase. Follow the prompts to login.');
-          return runCommand('npx firebase login', this.tmpDir, {
-            withNVM: this.nvmVersion,
-          }).then(() => start());
+      const start = (opts = {}) =>
+        runCommand('yarn start', this.tmpDir, {
+          withNVM: this.nvmVersion,
+          ...opts,
         });
+
+      return start({
+        onData: (message) => {
+          if (needToAuthenticate || needToReAuthenticate) return;
+
+          if (String(message).includes('Authentication Error')) {
+            needToReAuthenticate = true;
+          } else if (
+            String(message).includes('Command requires authentication')
+          ) {
+            needToAuthenticate = true;
+          }
+        },
+      }).catch((e) => {
+        if (!needToAuthenticate && !needToReAuthenticate) throw e;
+
+        const command = needToReAuthenticate
+          ? 'npx firebase login --reauth'
+          : 'npx firebase login';
+
+        logger.log('You need to login to firebase. Follow the prompts to login.');
+        return runCommand(command, this.tmpDir, {
+          withNVM: this.nvmVersion,
+        }).then(() => start());
       });
+    });
   }
 
   /**

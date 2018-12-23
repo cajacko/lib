@@ -15,6 +15,7 @@ const ExpandingTextInput = ({
   setRef,
   hiddenWidth,
   text,
+  type,
   ...props
 }) => (
   <Container>
@@ -23,12 +24,14 @@ const ExpandingTextInput = ({
       multiline
       innerRef={setRef('input')}
       underlineColorAndroid="transparent"
+      type={type}
       {...props}
     />
     <Text
       innerRef={setRef('hidden')}
       onLayout={onLayout('hidden')}
       hiddenWidth={hiddenWidth}
+      type={type}
     >
       {text}
     </Text>

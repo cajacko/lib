@@ -8,6 +8,8 @@ export const SECONDARY = '#f06292';
 export const SECONDARY_LIGHT = '#ff94c2';
 export const SECONDARY_DARK = '#ba2d65';
 
+export const ERROR = SECONDARY_DARK;
+
 export const WHITE = '#eceff1';
 export const GREY_LIGHTER = '#cfd8dc';
 export const GREY_LIGHT = '#b0bec5';

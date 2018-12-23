@@ -295,6 +295,8 @@ class MobileApp extends Template {
   prepareApp() {
     if (this.commander.skipPrepare) return Promise.resolve();
 
+    const ignore = ['@cajacko/template', '@cajacko/commit'];
+
     logger.debug('MobileApp - prepare');
 
     return Promise.all([
@@ -303,14 +305,14 @@ class MobileApp extends Template {
         copy(this.tmplSrcDir, this.tmpDir).then(() =>
           Promise.all([
             copyDependencies(this.projectDir, this.tmpDir, {
-              ignore: ['@cajacko/template', '@cajacko/commit'],
+              ignore,
             }),
             this.copyAndroidSrc(),
           ]))),
     ])
       .then(([localLibPath]) =>
         copyDependencies(localLibPath, this.tmpDir, {
-          ignore: ['@cajacko/template', '@cajacko/commit'],
+          ignore,
         }))
       .then(this.setPackageJSON)
       .then(() =>
@@ -459,9 +461,16 @@ class MobileApp extends Template {
 
           const clearUpdate = logger.update('debug', () => 'ios is building');
 
-          promises.push(runCommand('npx react-native run-ios', this.tmpDir, {
-            noLog: true,
-          })
+          promises.push(runCommand(
+            'npx react-native run-ios --simulator device',
+            this.tmpDir,
+            {
+              vars: {
+                device: 'iPhone 8',
+              },
+              noLog: true,
+            }
+          )
             .then(() => {
               clearUpdate();
               logger.debug('ios build finished');

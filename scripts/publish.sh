@@ -1,5 +1,5 @@
-docker stop rw
-docker rm rw
+docker stop publish
+docker rm publish
 
 set -e
 
@@ -17,16 +17,16 @@ do
   command="${command} -e ${ary2[0]}"
 done
 
-command="${command} -it --name=rw cajacko/android:0.2.0 sh ./.scripts/deploy/runAndroid.sh"
+command="${command} -it --name=publish node:8.14.1 sh /App/scripts/runPublish.sh"
 
 # Execute the docker run command with all the env set
 eval $command
 
-docker cp . rw:/App
-docker start rw
-docker logs --follow rw
-code=$(docker inspect rw --format='{{.State.ExitCode}}')
-docker stop rw
-docker rm rw
+docker cp . publish:/App
+docker start publish
+docker logs --follow publish
+code=$(docker inspect publish --format='{{.State.ExitCode}}')
+docker stop publish
+docker rm publish
 
 exit $code

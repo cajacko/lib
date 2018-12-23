@@ -12,7 +12,9 @@ function logToServer(level, message, data) {
 
   // This is the only time it's ok to console
   // eslint-disable-next-line no-console
-  console[newLevel](message, data);
+  const log = console[newLevel] || console.log;
+
+  log(message, data);
 }
 
 const logLevels = {

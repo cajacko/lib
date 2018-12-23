@@ -14,6 +14,7 @@ import type { TextValue } from '../../utils/getText';
 import type { Icon } from '../types';
 
 export type Props = {
+  cancel?: () => void,
   back?: () => void,
   title?: TextValue,
   rightText?: TextValue,
@@ -23,6 +24,7 @@ export type Props = {
   leftText?: TextValue,
   leftAction?: () => void,
   rightButtons?: Array<{
+    key: string,
     text?: TextValue,
     action: () => void,
     icon?: Icon,

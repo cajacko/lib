@@ -12,7 +12,7 @@ import {
 export const CARDS_VERTICAL_SPACING = STANDARD_SPACING;
 export const CARDS_HORIZONTAL_SPACING = HORIZONTAL_EDGE_PADDING;
 
-const BACKGROUND_COLOR = BACKGROUND_COLORS.WHITE;
+export const BACKGROUND_COLOR = BACKGROUND_COLORS.WHITE;
 
 /**
  * Figure out what padding to apply to the inner container
@@ -51,10 +51,18 @@ const applyPadding = direction => ({
   }
 };
 
+const border = ({ noBorder }) => {
+  if (noBorder) return '';
+
+  return `
+    border-bottom-width: 1;
+    border-bottom-color: ${GREY_LIGHT};
+    background-color: ${BACKGROUND_COLOR};
+  `;
+};
+
 export const Container = styled(Div)`
-  border-bottom-width: 1;
-  border-bottom-color: ${GREY_LIGHT};
-  background-color: ${BACKGROUND_COLOR};
+  ${border}
 `;
 
 export const Inner = styled(Div)`

@@ -76,9 +76,12 @@ class Template {
     installID += 1;
 
     const finalDir = dir || this.tmpDir;
+    const command = opts.ignoreEngines
+      ? 'yarn install --ignore-engines'
+      : 'yarn install';
 
     logger.log(`${installID} - Installing dependencies - ${finalDir}`);
-    return runCommand('yarn install', finalDir, { noLog: true, ...opts }).then(() => {
+    return runCommand(command, finalDir, { noLog: true, ...opts }).then(() => {
       logger.log(`${installID} - Finished installing dependencies - ${finalDir}`);
     });
   }

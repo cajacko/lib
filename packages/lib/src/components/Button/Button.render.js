@@ -34,32 +34,22 @@ const Button = ({
   noContent,
   numberOfLines,
 }) => {
-  /**
-   * Render the button component with children
-   *
-   * @param {Object} buttonProps The props passed to the component
-   *
-   * @return {ReactElement} Markup to render
-   */
-  const ButtonWithProps = buttonProps =>
-    (noButton ? (
-      <Div
-        style={nativeStyles({
-          type,
-          styles: buttonProps.styles,
-        })}
-        {...buttonProps}
-      />
-    ) : (
-      <UIButton
-        action={action}
-        nativeStyles={nativeStyles({
-          type,
-          styles: buttonProps.styles,
-        })}
-        {...buttonProps}
-      />
-    ));
+  let ButtonComponent;
+  const buttonProps = { ...styles };
+
+  const nativeStylesProp = nativeStyles({
+    type,
+    styles,
+  });
+
+  if (noButton) {
+    ButtonComponent = Div;
+    buttonProps.style = nativeStylesProp;
+  } else {
+    ButtonComponent = UIButton;
+    buttonProps.nativeStyles = nativeStylesProp;
+    buttonProps.action = action;
+  }
 
   let IconOnly;
   let RightIcon;
@@ -78,10 +68,10 @@ const Button = ({
   }
 
   return children || noContent ? (
-    <ButtonWithProps styles={styles}>{children || null}</ButtonWithProps>
+    <ButtonComponent {...buttonProps}>{children || null}</ButtonComponent>
   ) : (
     <Outer type={type} fullHeight={fullHeight} baseWidth={baseWidth}>
-      <ButtonWithProps styles={styles}>
+      <ButtonComponent {...buttonProps}>
         <Inner type={type}>
           {text ? (
             <Fragment>
@@ -97,7 +87,7 @@ const Button = ({
             IconOnly
           )}
         </Inner>
-      </ButtonWithProps>
+      </ButtonComponent>
     </Outer>
   );
 };
