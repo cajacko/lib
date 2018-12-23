@@ -73,7 +73,7 @@ const watchLib = () => {
    */
   const reinstallLibNodeModules = () =>
     remove(join(LOCAL_LIB_PATH, 'node_modules')).then(() =>
-      runCommand('yarn install', LOCAL_LIB_PATH, { noLog: true }));
+      runCommand('npm install', LOCAL_LIB_PATH, { noLog: true }));
 
   return buildAndWatchLib()
     .catch(() => reinstallLibNodeModules().then(buildAndWatchLib))

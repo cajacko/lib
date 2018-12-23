@@ -36,7 +36,7 @@ class Website extends Template {
   }
 
   installDependencies() {
-    return this.runCommand('yarn install', this.tmpDir, { noLog: true });
+    return this.runCommand('npm install', this.tmpDir, { noLog: true });
   }
 
   start() {
