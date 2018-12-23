@@ -121,7 +121,7 @@ const upgrade = () => {
           choices: ['major', 'minor', 'patch'],
         }))
       .then(release =>
-        runCommand(`npx lerna version ${release} --yes`, templateDir))
+        runCommand(`npx lerna publish ${release} --yes`, templateDir))
       .then(() =>
         Promise.all([getPackages(), readJSON(projectPackageJSONPath)])
           .then(([packages, packageJSON]) => {
@@ -157,7 +157,7 @@ const upgrade = () => {
               spaces: 2,
             });
           })
-          .then(() => runCommand('npm install', projectDir))
+          .then(() => runCommand('yarn install', projectDir))
           .then(() => git.hasUncommitedChanges(projectDir))
           .then(() =>
             git.commit(projectDir, 'Updated @cajacko/~ packages', true, true)))
