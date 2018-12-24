@@ -27,7 +27,14 @@ class Store {
    * Initialise the class, setting up promises to check if we've
    * finished setting up the store
    */
-  constructor(reducers: Reducers, existingState: ExistingState) {
+  constructor(
+    reducers: Reducers,
+    existingState: ExistingState,
+    { shouldLogState, purgeOnLoad } = {}
+  ) {
+    this.shouldLogState = !!shouldLogState;
+    this.purgeOnLoad = !!purgeOnLoad;
+
     // Needs to be bound before any calls to this.setupStore, as that tries to puts it's own
     // binding on it
     this.loggerMiddleware = this.loggerMiddleware.bind(this);
@@ -73,8 +80,7 @@ class Store {
         resolve
       );
 
-      // Uncomment if you want to test with no cache
-      // persistor.purge();
+      if (this.purgeOnLoad) persistor.purge();
     });
 
     return this.onFinishedPersist;
@@ -114,13 +120,12 @@ class Store {
    */
   loggerMiddleware() {
     return (next: (action: ActionType) => void) => (action: ActionType) => {
-      // We can allow this log in dev mode
-      // logger.debug('REDUX BEFORE', this.getJSState());
+      if (this.shouldLogState) logger.debug('REDUX BEFORE', this.getJSState());
 
       logger.debug(`REDUX ACTION: ${action.type}`, action);
       const res = next(action);
 
-      // logger.debug('REDUX AFTER', this.getJSState());
+      if (this.shouldLogState) logger.debug('REDUX AFTER', this.getJSState());
 
       return res;
     };

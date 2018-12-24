@@ -10,7 +10,13 @@ import StoreOrChildren from '../StoreOrChildren';
 
 const Entry = ({
   config: {
-    REDUCERS, EXISTING_STATE, BLACKLIST, ROUTES, ENTRY_COMPONENT,
+    REDUCERS,
+    EXISTING_STATE,
+    BLACKLIST,
+    ROUTES,
+    ENTRY_COMPONENT,
+    LOG_STORE,
+    PURGE_STORE,
   },
   storage,
 }) => (
@@ -20,6 +26,8 @@ const Entry = ({
       existingState={EXISTING_STATE}
       storage={storage}
       backlist={BLACKLIST}
+      shouldLogState={LOG_STORE}
+      purgeOnLoad={PURGE_STORE}
     >
       <SafeAreaView>
         <AppLoading>

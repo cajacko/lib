@@ -12,11 +12,16 @@ const StoreOrChildren = ({
   blackList,
   children,
   storage,
+  shouldLogState,
+  purgeOnLoad,
 }) => {
   if (!reducers) return children;
 
   if (!store) {
-    store = init(reducers, existingState, storage, blackList);
+    store = init(reducers, existingState, storage, blackList, {
+      shouldLogState,
+      purgeOnLoad,
+    });
   }
 
   return <Provider store={store}>{children}</Provider>;

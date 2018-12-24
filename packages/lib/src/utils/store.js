@@ -5,8 +5,8 @@ import appLoading from './appLoading';
 
 let store;
 
-export const init = (reducers, existingState, Storage, blacklist) => {
-  store = new Store(reducers, existingState);
+export const init = (reducers, existingState, Storage, blacklist, opts) => {
+  store = new Store(reducers, existingState, opts);
 
   const waitForID = 'redux-store';
   appLoading.register(waitForID);
